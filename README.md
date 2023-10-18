@@ -1,4 +1,4 @@
-## ✨ Football League Management website - Group 11/Code of Duty ✨
+## ✨ Football Tournament Management website - Group 11/Code of Duty ✨
 #### *⚽ A Football/Soccer Tournament Management website for the purpose of collaborating on Final Course Project.* 
 
 ### 1. Course information:
