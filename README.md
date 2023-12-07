@@ -22,4 +22,4 @@
 - **Vietnamese name:** Website Quản lý giải đấu bóng đá
 - **Front-end:** HTML, CSS, Javascript
 - **Back-end:** Javascript (Node.js - Express.js) ?
-- **Database:** MySQL
+- **Database:** PostgreSQL
