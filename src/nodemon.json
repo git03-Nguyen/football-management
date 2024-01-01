@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "js",
+    "mjs",
+    "cjs",
+    "json",
+    "hbs",
+    "html",
+    "css"
+  ]
+}
