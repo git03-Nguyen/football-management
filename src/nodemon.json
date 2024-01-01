@@ -1,11 +1,3 @@
 {
-  "watch": [
-    "js",
-    "mjs",
-    "cjs",
-    "json",
-    "hbs",
-    "html",
-    "css"
-  ]
+  "ext": "js,json,hbs,html"
 }

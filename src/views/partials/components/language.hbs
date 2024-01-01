@@ -1,0 +1,16 @@
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" id="lang-dropdown" data-toggle="dropdown" aria-haspopup="true"
+    aria-expanded="false"><span class="flag-icon flag-icon-vn"> </span></a>
+  <div class="dropdown-menu bg-transparent py-0" style="min-width:20px" aria-labelledby="lang-dropdown">
+    <a class="dropdown-item" href="/en"><span class="flag-icon flag-icon-us"></span></a>
+  </div>
+</li>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggle = document.querySelector('#lang-dropdown');
+    dropdownToggle.addEventListener('click', function () {
+      var dropdownMenu = document.querySelector('.dropdown-menu');
+      dropdownMenu.classList.toggle('show');
+    });
+  });
+</script>
