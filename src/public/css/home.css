@@ -1,0 +1,35 @@
+body {
+  background-image: url('/img/home/banner-home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  height: 2000px;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+h1.display-5 {
+  letter-spacing: 3px;
+}
+
+/* make the triangle on the nav-bar top-left */
+.navbar::after {
+  position: absolute;
+  content: '';
+  left: -10px;
+  border-top: 40vh solid #003071;
+  border-right: 60vw solid transparent;
+  width: 0;
+  z-index: -1;
+}

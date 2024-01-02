@@ -1,4 +1,7 @@
+const hbs_sections = require('express-handlebars-sections');
 module.exports = {
+
+  section: hbs_sections(),
 
   ifEquals: function (arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);

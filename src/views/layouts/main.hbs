@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-light-subtle">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -9,6 +9,25 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+
+  <link rel="stylesheet" href="css/style.css">
+  {{{_sections.style}}}
+
+
+  <title>{{title}}</title>
+
+</head>
+
+<body>
+
+  {{#if headerTrans}}
+  {{> header-trans}}
+  {{else}}
+  {{> header}}
+  {{/if}}
+
+  {{{body}}}
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
     integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g=="
@@ -19,30 +38,7 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 
-  <style>
-    .banner-image {
-      background-image: url('img/banner-img.jpg');
-      background-size: cover;
-    }
-  </style>
-
-  <title>{{title}}</title>
-
-</head>
-
-<body>
-
-  {{#if headerWhite}}
-  {{> header}}
-  {{else}}
-  {{> header}}
-  {{/if}}
-
-  {{{body}}}
-
-
-
-
+  {{_sections.script}}
 </body>
 
 </html>
