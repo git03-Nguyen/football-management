@@ -6,6 +6,10 @@ body {
   background-attachment: fixed;
 }
 
+html {
+  padding: 0;
+}
+
 body::-webkit-scrollbar {
   display: none;
 }
