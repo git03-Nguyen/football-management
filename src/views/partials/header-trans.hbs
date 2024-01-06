@@ -13,7 +13,7 @@
       <div class="mx-auto"></div>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white" href="#">Trang chủ</a>
+          <a class="nav-link text-white" href="/">Trang chủ</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="#">Giải đấu</a>
@@ -29,8 +29,8 @@
           {{#if user}}
           {{!-- TODO: user profile --}}
           {{else}}
-          <button class="btn btn-outline-light">Đăng ký</button>
-          <button class="btn btn-light">Đăng nhập</button>
+          <a href="/signup"><button class="btn btn-outline-light">Đăng ký</button></a>
+          <a href="/login"><button class="btn btn-light">Đăng nhập</button></a>
           {{/if}}
         </div>
         <li class="nav-item dropdown">

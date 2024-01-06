@@ -27,12 +27,6 @@ body {
   background-color: rgba(0, 47, 113, 0.9);
 }
 
-
-/* For nav-items */
-.nav-item {
-  padding: 0 0.4rem;
-}
-
 /* For button */
 .btn-primary {
   background-color: #003071;
