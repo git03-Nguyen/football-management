@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
+require('./middlewares/favicon.mw')(app);
 require('./middlewares/hbs/hbs.mw')(app);
 
 const path = require('path');
