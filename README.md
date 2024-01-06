@@ -21,5 +21,5 @@
 ### 3. Technology stack information:
 - **Vietnamese name:** Website Quản lý giải đấu bóng đá
 - **Front-end:** HTML, CSS, Javascript
-- **Back-end:** Javascript (Node.js - Express.js) ?
+- **Back-end:** Javascript (Node.js - Express.js) 
 - **Database:** PostgreSQL

@@ -2,6 +2,7 @@ body {
   box-sizing: border-box;
   font-family: 'Roboto';
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 /* color */
@@ -9,8 +10,16 @@ body {
   color: #003071;
 }
 
+.text-yellow-color {
+  color: #F5FF80;
+}
+
 .bg-primary-color {
   background-color: #003071;
+}
+
+.bg-white-color-90 {
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Transparent background 90% */
@@ -22,4 +31,15 @@ body {
 /* For nav-items */
 .nav-item {
   padding: 0 0.4rem;
+}
+
+/* For button */
+.btn-primary {
+  background-color: #003071;
+  border-color: #003071;
+}
+
+.btn-primary:hover {
+  background-color: #00275d;
+  border-color: #00275d;
 }
