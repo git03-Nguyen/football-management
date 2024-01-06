@@ -1,8 +1,8 @@
 <!-- Navbar  -->
-<nav class="navbar navbar-expand-lg navbar-dark p-md-1">
+<nav class="navbar navbar-expand-lg bg-light p-md-1 border-bottom">
   <div class="container px-0">
     <a class="navbar-brand p-0" href="/">
-      <img src="img/icons/logo-white.svg" alt="" width="80" height="80" class="d-inline-block align-text-top">
+      <img src="img/icons/logo.svg" alt="" width="80" height="80" class="d-inline-block align-text-top">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,24 +13,24 @@
       <div class="mx-auto"></div>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white" href="/">Trang chủ</a>
+          <a class="nav-link text-black" href="/">Trang chủ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/tournament">Giải đấu</a>
+          <a class="nav-link text-black" href="/tournament">Giải đấu</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/teams">Đội bóng</a>
+          <a class="nav-link text-black" href="/teams">Đội bóng</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/about">Giới thiệu</a>
+          <a class="nav-link text-black" href="/about">Giới thiệu</a>
         </li>
         <div class="nav-item mx-auto ">
           {{!-- authentication/user-profile --}}
           {{#if user}}
           {{!-- TODO: user profile --}}
           {{else}}
-          <a href="/signup"><button class="btn btn-outline-light">Đăng ký</button></a>
-          <a href="/login"><button class="btn btn-light">Đăng nhập</button></a>
+          <a href="/signup"><button class="btn btn-outline-dark">Đăng ký</button></a>
+          <a href="/login"><button class="btn btn-primary">Đăng nhập</button></a>
           {{/if}}
         </div>
         <li class="nav-item dropdown">
