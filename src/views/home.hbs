@@ -1,6 +1,6 @@
 <!-- Banner Image  -->
 {{#section 'style'}}
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/pages/home.css">
 {{/section}}
 
 {{!-- Heroes section --}}
@@ -27,19 +27,19 @@
   <div class="col-md-4">
     <div class="d-flex flex-column justify-content-center align-items-center">
       <img src="/img/icons/ic-trophy.png" height="100" width="100" alt="">
-      <p class="h4 text-white mt-3 fw-bold"><span class="text-yellow-color">1</span> giải đấu</p>
+      <p class="h4 text-white mt-3 fw-bold"><span class="text-yellow-color">{{nTournaments}}</span> giải đấu</p>
     </div>
   </div>
   <div class="col-md-4">
     <div class="d-flex flex-column justify-content-center align-items-center">
       <img src="/img/icons/ic-teammate.png" height="100" width="100" alt="">
-      <p class="h4 text-white mt-3 fw-bold"><span class="text-yellow-color">30</span> đội tham dự</p>
+      <p class="h4 text-white mt-3 fw-bold"><span class="text-yellow-color">{{nTeams}}</span> đội tham dự</p>
     </div>
   </div>
   <div class="col-md-4">
     <div class="d-flex flex-column justify-content-center align-items-center">
       <img src="/img/icons/ic-player.png" height="100" width="100" alt="">
-      <p class="h4 text-white mt-3 fw-bold"><span class="text-yellow-color">180</span> cầu thủ</p>
+      <p class="h4 text-white mt-3 fw-bold"><span class="text-yellow-color">{{nPlayers}}</span> cầu thủ</p>
     </div>
   </div>
 </div>
@@ -91,5 +91,25 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+{{!-- Sponsor section --}}
+<div class="row px-5 py-4 align-items-center bg-light">
+  <div class="col-md-6">
+    <p class="h5 fw-bold ms-5">Được tài trợ bởi những cá nhân, tổ chức</p>
+  </div>
+  <div class="col-md-6 align-items-center">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="/img/home/fit-logo.png" height="40" alt="">
+      </div>
+      <div class="col-md-4">
+        <img src="/img/home/vtvcab-logo.png" height="40" alt="">
+      </div>
+      <div class="col-md-4">
+        <img src="/img/home/thanhnien-logo.png" height="40" alt="">
+      </div>
+    </div>
   </div>
 </div>

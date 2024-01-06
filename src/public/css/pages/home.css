@@ -1,0 +1,105 @@
+body {
+  background-image: url('/img/home/banner-home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+h1.display-5 {
+  letter-spacing: 3px;
+}
+
+/* make the triangle on the nav-bar top-left */
+.navbar::after {
+  position: absolute;
+  content: '';
+  left: -10px;
+  border-top: 40vh solid #003071;
+  border-right: 60vw solid transparent;
+  width: 0;
+  z-index: -1;
+}
+
+/* For verticle progress steps */
+.step {
+  position: relative;
+  min-height: 1em;
+  color: #1F2D3E;
+}
+
+.title {
+  line-height: 2em;
+  font-weight: bold;
+}
+
+.caption {
+  font-size: 0.8em;
+}
+
+.step+.step {
+  margin-top: 2em
+}
+
+.step>div:first-child {
+  position: static;
+  height: 0;
+}
+
+.step>div:not(:first-child) {
+  margin-left: 2em;
+  padding-left: 1em;
+}
+
+/* Circle */
+.circle {
+  background: #1F2D3E;
+  position: relative;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  border-radius: 100%;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 0 0 3px #fff;
+}
+
+/* Vertical Line */
+.circle:after {
+  content: ' ';
+  position: absolute;
+  display: block;
+  top: 1px;
+  right: 50%;
+  bottom: 1px;
+  left: 50%;
+  height: 100%;
+  width: 1px;
+  transform: scale(1, 2);
+  transform-origin: 50% -100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: -1;
+}
+
+.step:last-child .circle:after {
+  display: none
+}
+
+.step.step-active {
+  color: #4285f4
+}
+
+.step.step-active .circle {
+  background-color: #4285f4;
+}

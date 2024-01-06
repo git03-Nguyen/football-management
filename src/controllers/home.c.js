@@ -5,7 +5,9 @@ module.exports = {
     res.render('home', {
       title: "Code of Duty",
       headerTrans: true,
-      styleP: () => { return "styles/home" }
+      nTournaments: 1,
+      nTeams: 30,
+      nPlayers: 180,
     });
   },
 
