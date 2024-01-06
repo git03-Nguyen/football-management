@@ -35,7 +35,7 @@ h1.display-5 {
 /* For verticle progress steps */
 .step {
   position: relative;
-  min-height: 1em;
+  min-height: 4em;
   color: #1F2D3E;
 }
 
