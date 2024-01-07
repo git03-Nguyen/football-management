@@ -1,0 +1,14 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
+
+#login-form {
+  width: 40%;
+  margin: auto;
+}
