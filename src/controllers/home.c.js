@@ -1,7 +1,9 @@
-const user = {
-  name: 'Nguyễn Đình Ánh',
-  avatar: '/img/avatars/avt-default.png',
-};
+const user = null;
+// user = {
+//   name: 'Nguyễn Đình Ánh',
+//   avatar: '/img/avatars/avt-default.png',
+// };
+
 
 module.exports = {
 

@@ -4,6 +4,7 @@ module.exports = function (app) {
   app.use('/', require('./auth.r'));
 
   app.use('/tournament', require('./tournament.r'));
+  app.use('/teams', require('./teams.r'));
 
 
   // 404
