@@ -9,6 +9,27 @@ footer {
 }
 
 #login-form {
-  width: 40%;
+  width: 30%;
+  min-width: 300px;
   margin: auto;
+}
+
+.form-group {
+  margin-bottom: 0.8rem;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  background-color: #fbfbfb;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #a9a9a9;
 }

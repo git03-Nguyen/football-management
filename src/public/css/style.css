@@ -37,3 +37,28 @@ body {
   background-color: #00275d;
   border-color: #00275d;
 }
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 47, 113, 0.5);
+}
+
+.btn-outline-dark:hover {
+  color: #fff;
+  background-color: #003071;
+  border-color: #003071;
+}
+
+/* For links */
+a {
+  color: #000;
+}
+
+a:hover {
+  color: #003071;
+}
+
+/* For checkboxes */
+.form-check-input:checked {
+  background-color: #003071;
+  border-color: #003071;
+}
