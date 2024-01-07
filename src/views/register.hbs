@@ -6,8 +6,7 @@
 <div id="login-form" class="">
   <div>
     <p class="h1 lh-5 text-center text-primary-color">{{title}}</p>
-    {{!-- chưa có tài khoản? đăng ký --}}
-    <p class="text-center">Chưa có tài khoản? <a href="/register">Đăng ký</a></p>
+    <p class="text-center">Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
   </div>
   <div class="card-body">
     <form>
@@ -17,11 +16,10 @@
       <div class="form-group">
         <input type="password" class="form-control" id="password" placeholder="Mật khẩu">
       </div>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="remember">
-        <label class="form-check-label" for="remember">Ghi nhớ đăng nhập</label>
+      <div class="form-group">
+        <input type="password" class="form-control" id="retype" placeholder="Nhập lại mật khẩu">
       </div>
-      <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+      <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
 
       {{!-- A horizontal line --}}
       <div class="divider d-flex align-items-center my-4">
@@ -44,13 +42,6 @@
             <img src="/img/icons/ic-facebook-colorful.svg" height="16px" alt="" class="me-2">
             <span>Đăng nhập với Facebook</span>
           </button>
-        </a>
-      </div>
-
-      {{!-- Forgot password --}}
-      <div class="form-group">
-        <a href="/forgot-password">
-          <p class="text-center">Quên mật khẩu?</p>
         </a>
       </div>
 

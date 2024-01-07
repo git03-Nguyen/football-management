@@ -5,7 +5,7 @@ module.exports = {
   // GET /login
   getLogin: function (req, res, next) {
     res.render('login', {
-      title: "Login",
+      title: "Đăng nhập",
       useShortFooter: true,
     });
   },
@@ -17,7 +17,10 @@ module.exports = {
 
   // GET /register
   getRegister: function (req, res, next) {
-    res.send('GET /register');
+    res.render('register', {
+      title: "Đăng ký",
+      useShortFooter: true,
+    });
   },
 
   // POST /register
@@ -32,7 +35,15 @@ module.exports = {
 
   // GET /forgot-password
   getForgotPassword: function (req, res, next) {
-    res.send('GET /forgot-password');
+    res.render('forgot-password', {
+      title: "Quên mật khẩu",
+      useShortFooter: true,
+    });
+  },
+
+  // POST /forgot-password
+  postForgotPassword: function (req, res, next) {
+    res.send('POST /forgot-password');
   },
 
 
