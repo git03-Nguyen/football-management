@@ -27,12 +27,24 @@
         <div class="nav-item mx-auto ">
           {{!-- authentication/user-profile --}}
           {{#if user}}
-          {{!-- TODO: user profile --}}
+          <div class="d-flex align-items-center">
+            <a href="/profile">
+              <img src="{{user.avatar}}" alt="" height="40">
+            </a>
+            <a class="nav-link text-black" href="/profile">{{user.name}}</a>
+          </div>
           {{else}}
           <a href="/register"><button class="btn btn-outline-dark">Đăng ký</button></a>
           <a href="/login"><button class="btn btn-primary">Đăng nhập</button></a>
           {{/if}}
         </div>
+        {{#if user}}
+        <div class="nav-item mx-auto d-flex align-items-center">
+          <a href="#">
+            <i class="far fa-bell text-black" style="font-size: 1.2rem;"></i>
+          </a>
+        </div>
+        {{/if}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="lang-dropdown" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false"><img src="/img/icons/vietnam-flag.svg" style="height:1.5rem"></a>

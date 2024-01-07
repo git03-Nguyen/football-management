@@ -1,4 +1,7 @@
-
+const user = {
+  name: 'Nguyễn Đình Ánh',
+  avatar: '/img/avatars/avt-default.png',
+};
 
 module.exports = {
 
@@ -10,6 +13,7 @@ module.exports = {
       nTournaments: 1,
       nTeams: 30,
       nPlayers: 180,
+      user: user,
     });
   },
 
@@ -18,6 +22,7 @@ module.exports = {
     res.render('about', {
       title: "Giới thiệu",
       useTransHeader: false,
+      user: user,
     });
   },
 

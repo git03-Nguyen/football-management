@@ -4,6 +4,6 @@
 }
 
 /* make underlined when hover */
-.nav-item>a:hover {
+.nav-item a:hover {
   text-decoration: underline;
 }

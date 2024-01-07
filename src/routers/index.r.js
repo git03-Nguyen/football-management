@@ -1,7 +1,9 @@
 
 module.exports = function (app) {
-  app.use('/', require('./general/home.r'));
-  app.use('/', require('./general/auth.r'));
+  app.use('/', require('./home.r'));
+  app.use('/', require('./auth.r'));
+
+  app.use('/tournament', require('./tournament.r'));
 
 
   // 404
