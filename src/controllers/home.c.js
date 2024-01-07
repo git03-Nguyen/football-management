@@ -5,7 +5,7 @@ module.exports = {
   // GET /
   getHome: function (req, res) {
     res.render('home', {
-      title: "Code of Duty",
+      title: "Trang chủ",
       useTransHeader: true,
       nTournaments: 1,
       nTeams: 30,
@@ -15,7 +15,10 @@ module.exports = {
 
   // GET /about
   getAbout: function (req, res) {
-    res.render('about');
+    res.render('about', {
+      title: "Giới thiệu",
+      useTransHeader: false,
+    });
   },
 
 }
