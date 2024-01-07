@@ -2,3 +2,8 @@
 .nav-item {
   padding: 0 0.4rem;
 }
+
+/* make underlined when hover */
+.nav-item>a:hover {
+  text-decoration: underline;
+}
