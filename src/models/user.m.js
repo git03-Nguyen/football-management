@@ -58,7 +58,7 @@ module.exports = class UserModel {
     if (!id) {
       return null;
     }
-    const result = dbUsers.getUserById(id);
+    const result = await dbUsers.getUserById(id);
     if (!result) {
       return null;
     }
@@ -79,7 +79,7 @@ module.exports = class UserModel {
 
   // READ all users
   static async getAllUsers() {
-    const result = dbUsers.getAllUsers();
+    const result = await dbUsers.getAllUsers();
     // return an array of User objects
     const users = [];
     result.rows.forEach(row => {

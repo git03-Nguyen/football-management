@@ -1,4 +1,5 @@
 const UserModel = require('../models/user.m');
+const passport = require('passport');
 
 module.exports = {
 
@@ -11,16 +12,11 @@ module.exports = {
   },
 
   // POST /login
-  postLogin: async function (req, res, next) {
-    const { email, password, remember } = req.body;
-    const user = await UserModel.getUser(email, password);
-
-    if (!user) {
-      return res.send('Email hoặc mật khẩu không đúng');
-    }
-
-    res.send('Đăng nhập thành công' + JSON.stringify(user));
-  },
+  postLogin: passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  }),
 
   // GET /register
   getRegister: function (req, res, next) {
@@ -44,8 +40,11 @@ module.exports = {
   },
 
   // GET /logout
-  getLogout: function (req, res, next) {
-    res.send('GET /logout');
+  getLogout: function (req, res) {
+    req.logout(function (err) {
+      if (err) { return next(err); }
+      res.redirect('/login');
+    });
   },
 
   // GET /forgot-password

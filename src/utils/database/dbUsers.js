@@ -40,17 +40,11 @@ module.exports = {
     return await db.pool.query(query);
   },
 
-  getUserById: (id) => {
+  getUserById: async (id) => {
     const query = `
       SELECT * FROM users WHERE id = $1;
     `;
-    return db.pool.query(query, [id], (err, res) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log(res.rows[0]);
-      }
-    });
+    return await db.pool.query(query, [id]);
   },
 
   getUserByEmail: (email) => {

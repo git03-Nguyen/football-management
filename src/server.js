@@ -10,21 +10,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./middlewares/favicon.mw')(app);
 require('./middlewares/hbs/hbs.mw')(app);
 
-const session = require("express-session");
-
-const sessionSecret = process.env.SESSION_SECRET || "CodeOfDutySecret";
-const maxAge = 3600000;
-app.use(session({
-  secret: sessionSecret,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: maxAge,
-  }
-}));
-
-const passport = require("passport");
-
+require('./middlewares/passport.mw')(app);
 
 require('./routers/index.r')(app);
 
