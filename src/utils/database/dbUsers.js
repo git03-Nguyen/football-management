@@ -10,7 +10,7 @@ module.exports = {
     const query = `
       SELECT * FROM users WHERE email = $1;
     `;
-    const result = await db.pool.query(query, [email]);
+    const result = await db.pool.query(query, [email.toLowerCase()]);
     if (!result.rows[0]) {
       return null;
     }
@@ -30,7 +30,7 @@ module.exports = {
   `;
 
     const passwordHash = await bcrypt.hash(password, saltRounds);
-    return await db.pool.query(query, [email, passwordHash]);
+    return await db.pool.query(query, [email.toLowerCase(), passwordHash]);
   },
 
   getAllUsers: async () => {
@@ -47,24 +47,18 @@ module.exports = {
     return await db.pool.query(query, [id]);
   },
 
-  getUserByEmail: (email) => {
+  getUserByEmail: async (email) => {
     const query = `
       SELECT * FROM users WHERE email = $1;
     `;
-    return db.pool.query(query, [email], (err, res) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log(res.rows[0]);
-      }
-    });
+    return await db.pool.query(query, [email.toLowerCase()]);
   },
 
   updateUserInfo: (id, email, fullname, birthday, phone, introduction) => {
     const query = `
       UPDATE users SET email = $1, fullname = $2, birthday = $3, phone = $4, introduction = $5 WHERE id = $6;
     `;
-    return db.pool.query(query, [email, fullname, birthday, phone, introduction, id], (err, res) => {
+    return db.pool.query(query, [email.toLowerCase(), fullname, birthday, phone, introduction, id], (err, res) => {
       if (err) {
         throw err;
       } else {

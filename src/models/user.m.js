@@ -70,7 +70,7 @@ module.exports = class UserModel {
     if (!email) {
       return null;
     }
-    const result = dbUsers.getUserByEmail(email);
+    const result = await dbUsers.getUserByEmail(email);
     if (!result) {
       return null;
     }

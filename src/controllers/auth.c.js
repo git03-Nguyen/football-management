@@ -11,12 +11,26 @@ module.exports = {
     });
   },
 
-  // POST /login
-  postLogin: passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  }),
+  // POST /login: login and send json response
+  postLogin: function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+      if (err) { return next(err); }
+      if (!user) {
+        return res.status(400).send({ status: 'error', message: 'Email hoặc mật khẩu không chính xác' });
+      }
+      req.logIn(user, function (err) {
+        if (err) { return next(err); }
+        if (req.body.remember) {
+          const oneDay = 1000 * 60 * 60 * 24;
+          req.session.cookie.expires = new Date(Date.now() + oneDay);
+          req.session.cookie.maxAge = oneDay;
+        } else {
+          req.session.cookie.expires = false;
+        }
+        return res.status(200).send({ status: 'success', message: 'Đăng nhập thành công' });
+      });
+    })(req, res, next);
+  },
 
   // GET /register
   getRegister: function (req, res, next) {
@@ -30,20 +44,33 @@ module.exports = {
   postRegister: async function (req, res, next) {
     const { email, password, retype } = req.body;
     if (password !== retype) {
-      return res.send('Mật khẩu không khớp');
+      return res.redirect('/register');
     }
     const user = await UserModel.createUser(email, password);
     if (!user) {
-      return res.send('Email đã được đăng ký');
+      return res.redirect('/register');
     }
-    res.send('Đăng ký thành công' + JSON.stringify(user));
+    res.redirect('/');
+  },
+
+  // POST /register/check
+  postCheckRegister: async function (req, res, next) {
+    const { email, password, retype } = req.body;
+    if (password !== retype) {
+      return res.status(400).send('Mật khẩu không khớp');
+    }
+    const user = await UserModel.getUserByEmail(email);
+    if (user) {
+      return res.status(400).send('Email đã được đăng ký');
+    }
+    res.status(200).send('Email hợp lệ');
   },
 
   // GET /logout
   getLogout: function (req, res, next) {
     req.logout(function (err) {
       if (err) { return next(err); }
-      res.redirect('/login');
+      res.redirect('back');
     });
   },
 

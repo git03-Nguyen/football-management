@@ -7,13 +7,11 @@ const UserModel = require("../models/user.m");
 module.exports = (app) => {
 
   const sessionSecret = process.env.SESSION_SECRET || "CodeOfDutySecret";
-  const oneHour = 3600000;
   app.use(session({
     secret: sessionSecret,
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: oneHour,
       httpOnly: true,
     }
   }));
@@ -38,8 +36,7 @@ module.exports = (app) => {
 
   passport.deserializeUser(async (id, done) => {
     const user = await UserModel.getUserById(id);
-    const avatarPath = "/img/avatars/";
-    user.avatar = avatarPath + user.avatar;
+    user.avatar = user.avatar;
 
     done(null, user);
   });

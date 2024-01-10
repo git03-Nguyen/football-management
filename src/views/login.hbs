@@ -3,7 +3,7 @@
 {{/section}}
 
 {{!-- Login form --}}
-<div id="login-form" class="">
+<div id="login-form">
   <div>
     <p class="h1 lh-5 text-center text-primary-color">{{title}}</p>
     {{!-- chưa có tài khoản? đăng ký --}}
@@ -12,7 +12,7 @@
   <div class="card-body">
     <form action="/login" method="POST">
       <div class="form-group">
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="on">
       </div>
       <div class="form-group">
         <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu">
@@ -57,3 +57,92 @@
     </form>
   </div>
 </div>
+
+<!-- Toast message -->
+<div id="toastMessage" class="toast align-items-center text-white bg-success border-0 position-absolute" role="alert"
+  aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+      aria-label="Close"></button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    let toast = document.getElementById('toastMessage');
+    toast.style.bottom = document.querySelector('footer').offsetHeight + 5 + 'px';
+    toast.style.right = '10px';
+
+    const loginForm = document.querySelector('#login-form');
+    loginForm.onsubmit = validate;
+
+    function showToast(status, message) {
+      if (toast) {
+        toast.classList.remove('bg-success', 'bg-danger', 'show');
+      } else {
+        toast = document.getElementById('toastMessage');
+      }
+
+      toast.querySelector('.toast-body').innerHTML = message;
+
+      if (status == 'success') {
+        toast.classList.add('bg-success', 'show');
+      } else if (status == 'error') {
+        toast.classList.add('bg-danger', 'show');
+      }
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+
+    }
+
+    function validate(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value.toLowerCase();
+      const password = document.getElementById('password').value;
+      const remember = document.getElementById('remember').checked;
+      if (email == '' || password == '') {
+        showToast('error', 'Vui lòng nhập đầy đủ thông tin');
+        return false;
+      }
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!regex.test(email)) {
+        showToast('error', 'Email không hợp lệ');
+        return false;
+      }
+      const data = {
+        email: email,
+        password: password,
+        remember: remember
+      };
+
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status == 'success') {
+            showToast('success', data.message);
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 500);
+          } else {
+            showToast('error', data.message);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+
+  });
+</script>
