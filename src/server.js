@@ -2,13 +2,29 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
-require('./middlewares/favicon.mw')(app);
-require('./middlewares/hbs/hbs.mw')(app);
-
 const path = require('path');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+require('./middlewares/favicon.mw')(app);
+require('./middlewares/hbs/hbs.mw')(app);
+
+const session = require("express-session");
+
+const sessionSecret = process.env.SESSION_SECRET || "CodeOfDutySecret";
+const maxAge = 3600000;
+app.use(session({
+  secret: sessionSecret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: maxAge,
+  }
+}));
+
+const passport = require("passport");
+
 
 require('./routers/index.r')(app);
 
