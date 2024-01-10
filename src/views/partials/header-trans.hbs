@@ -24,30 +24,51 @@
         <li class="nav-item">
           <a class="nav-link text-white" href="/about">Giới thiệu</a>
         </li>
-        <div class="nav-item mx-auto ">
-          {{!-- authentication/user-profile --}}
-          {{#if user}}
+        {{!-- authentication/user-profile --}}
+        {{#if user}}
+        <li class="nav-item mx-auto ">
           <div class="d-flex align-items-center">
             <a href="/profile">
               <img src="{{user.avatar}}" alt="" height="40">
             </a>
-            <a class="nav-link text-light" href="/profile">{{user.name}}</a>
+            <div class="dropdown" id="profile-dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">{{user.fullname}}</a>
+              <div class="dropdown-menu py-1 bg-white-color-90" style="min-width:20px"
+                aria-labelledby="profile-dropdown">
+                <a class="dropdown-item" href="/profile">
+                  <i class="fas fa-user me-1"></i>
+                  <span>Thông tin cá nhân</span>
+                </a>
+                <a class="dropdown-item" href="/management">
+                  <i class="fas fa-futbol me-1"></i>
+                  <span>Trang quản lý</span>
+                </a>
+
+                <div class="dropdown-divider my-1 p-0"></div>
+
+                <a class="dropdown-item" href="/logout">
+                  <i class="fas fa-sign-out-alt me-1"></i>
+                  <span>Đăng xuất</span>
+                </a>
+              </div>
+            </div>
           </div>
-          {{else}}
-          <a href="/register"><button class="btn btn-outline-light">Đăng ký</button></a>
-          <a href="/login"><button class="btn btn-light">Đăng nhập</button></a>
-          {{/if}}
-        </div>
-        {{#if user}}
-        <div class="nav-item mx-auto d-flex align-items-center">
+        </li>
+        <li class="nav-item mx-auto d-flex align-items-center">
           <a href="#">
             <i class="far fa-bell text-light" style="font-size: 1.2rem;"></i>
           </a>
-        </div>
+        </li>
+        {{else}}
+        <li class="nav-item mx-auto ">
+          <a href="/register"><button class="btn btn-outline-light">Đăng ký</button></a>
+          <a href="/login"><button class="btn btn-light">Đăng nhập</button></a>
+        </li>
         {{/if}}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="lang-dropdown" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false"><img src="/img/icons/vietnam-flag.svg" style="height:1.5rem"></a>
+        <li class="nav-item dropdown" id="lang-dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+              src="/img/icons/vietnam-flag.svg" style="height:1.5rem"></a>
           <div class="dropdown-menu py-0" style="min-width:20px" aria-labelledby="lang-dropdown">
             <a class="dropdown-item" href="/en"><img src="/img/icons/us-flag.svg" style="height:1.5rem"></a>
           </div>
@@ -58,10 +79,21 @@
 </nav>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const dropdownToggle = document.querySelector('#lang-dropdown');
+    const dropdownToggle = document.querySelector('#lang-dropdown>.dropdown-toggle');
     dropdownToggle.addEventListener('click', function () {
-      var dropdownMenu = document.querySelector('.dropdown-menu');
+      const dropdownMenu = document.querySelector('#lang-dropdown>.dropdown-menu');
       dropdownMenu.classList.toggle('show');
     });
   });
 </script>
+{{#if user}}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggle = document.querySelector('#profile-dropdown>.dropdown-toggle');
+    dropdownToggle.addEventListener('click', function () {
+      const dropdownMenu = document.querySelector('#profile-dropdown>.dropdown-menu');
+      dropdownMenu.classList.toggle('show');
+    });
+  });
+</script>
+{{/if}}

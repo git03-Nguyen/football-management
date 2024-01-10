@@ -97,11 +97,13 @@ h1.display-5 {
   background-color: #4285f4;
 }
 
-/* For icon */
-i {
+/* For icon  */
+#the-team i,
+#contact i {
   font-size: 1.5em;
-  line-height: 2em;
 }
+
+
 
 /* For maps */
 iframe {

@@ -7,3 +7,22 @@
 .nav-item a:hover {
   text-decoration: underline;
 }
+
+/* drop-down menu, item height */
+#profile-dropdown>.nav-link:hover {
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+#profile-dropdown a.dropdown-item {
+  padding: 0.5rem 1rem;
+}
+
+#profile-dropdown a.dropdown-item i {
+  margin-right: 0.5rem;
+}
+
+#profile-dropdown a.dropdown-item:hover {
+  text-decoration: none;
+  opacity: .9;
+}

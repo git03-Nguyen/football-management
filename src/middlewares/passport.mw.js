@@ -38,6 +38,9 @@ module.exports = (app) => {
 
   passport.deserializeUser(async (id, done) => {
     const user = await UserModel.getUserById(id);
+    const avatarPath = "/img/avatars/";
+    user.avatar = avatarPath + user.avatar;
+
     done(null, user);
   });
 
