@@ -7,15 +7,19 @@ const saltRounds = process.env.SALT_ROUND || 10;
 module.exports = {
 
   getUser: async (email, password) => {
-    const user = this.getUserByEmail(email);
-    if (!user) {
+    const query = `
+      SELECT * FROM users WHERE email = $1;
+    `;
+    const result = await db.pool.query(query, [email]);
+    if (!result.rows[0]) {
       return null;
     }
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(password, result.rows[0].password);
     if (!match) {
       return null;
     }
-    return user;
+    // return the result of the query
+    return result;
   },
 
   createUser: async (email, password) => {
@@ -26,26 +30,14 @@ module.exports = {
   `;
 
     const passwordHash = await bcrypt.hash(password, saltRounds);
-    return db.pool.query(query, [email, passwordHash], (err, res) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log(res.rows[0]);
-      }
-    });
+    return await db.pool.query(query, [email, passwordHash]);
   },
 
-  getAllUsers: () => {
+  getAllUsers: async () => {
     const query = `
       SELECT * FROM users;
     `;
-    return db.pool.query(query, (err, res) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log(res.rows);
-      }
-    });
+    return await db.pool.query(query);
   },
 
   getUserById: (id) => {
@@ -74,11 +66,11 @@ module.exports = {
     });
   },
 
-  updateUserInfo: (id, email, name, birthday, phone, introduction) => {
+  updateUserInfo: (id, email, fullname, birthday, phone, introduction) => {
     const query = `
-      UPDATE users SET email = $1, name = $2, birthday = $3, phone = $4, introduction = $5 WHERE id = $6;
+      UPDATE users SET email = $1, fullname = $2, birthday = $3, phone = $4, introduction = $5 WHERE id = $6;
     `;
-    return db.pool.query(query, [email, name, birthday, phone, introduction, id], (err, res) => {
+    return db.pool.query(query, [email, fullname, birthday, phone, introduction, id], (err, res) => {
       if (err) {
         throw err;
       } else {

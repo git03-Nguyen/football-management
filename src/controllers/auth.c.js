@@ -1,4 +1,4 @@
-
+const UserModel = require('../models/user.m');
 
 module.exports = {
 
@@ -11,8 +11,15 @@ module.exports = {
   },
 
   // POST /login
-  postLogin: function (req, res, next) {
-    res.redirect('/');
+  postLogin: async function (req, res, next) {
+    const { email, password, remember } = req.body;
+    const user = await UserModel.getUser(email, password);
+
+    if (!user) {
+      return res.send('Email hoặc mật khẩu không đúng');
+    }
+
+    res.send('Đăng nhập thành công' + JSON.stringify(user));
   },
 
   // GET /register
@@ -24,8 +31,16 @@ module.exports = {
   },
 
   // POST /register
-  postRegister: function (req, res, next) {
-    res.send('POST /register');
+  postRegister: async function (req, res, next) {
+    const { email, password, retype } = req.body;
+    if (password !== retype) {
+      return res.send('Mật khẩu không khớp');
+    }
+    const user = await UserModel.createUser(email, password);
+    if (!user) {
+      return res.send('Email đã được đăng ký');
+    }
+    res.send('Đăng ký thành công' + JSON.stringify(user));
   },
 
   // GET /logout
