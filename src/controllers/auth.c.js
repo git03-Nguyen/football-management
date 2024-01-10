@@ -40,7 +40,7 @@ module.exports = {
   },
 
   // GET /logout
-  getLogout: function (req, res) {
+  getLogout: function (req, res, next) {
     req.logout(function (err) {
       if (err) { return next(err); }
       res.redirect('/login');
