@@ -27,16 +27,6 @@ module.exports = class UserModel {
     if (!email || !password) {
       return null;
     }
-    // validate email
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (!emailRegex.test(email)) {
-      return null;
-    }
-    // validate password: at least 6 characters, at least 1 number, at least 1 uppercase letter
-    // const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    // if (!passwordRegex.test(password)) {
-    //   return null;
-    // }
     const result = await dbUsers.createUser(email, password);
     if (!result) {
       return null;

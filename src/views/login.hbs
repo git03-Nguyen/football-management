@@ -3,7 +3,7 @@
 {{/section}}
 
 {{!-- Login form --}}
-<div id="login-form">
+<div id="auth-form">
   <div>
     <p class="h1 lh-5 text-center text-primary-color">{{title}}</p>
     {{!-- chưa có tài khoản? đăng ký --}}
@@ -77,7 +77,7 @@
     toast.style.bottom = document.querySelector('footer').offsetHeight + 5 + 'px';
     toast.style.right = '10px';
 
-    const loginForm = document.querySelector('#login-form');
+    const loginForm = document.querySelector('#auth-form');
     loginForm.onsubmit = validate;
 
     function showToast(status, message) {

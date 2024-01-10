@@ -3,7 +3,7 @@
 {{/section}}
 
 {{!-- Login form --}}
-<div id="login-form" class="">
+<div id="auth-form" class="">
   <div>
     <p class="h1 lh-5 text-center text-primary-color">{{title}}</p>
     <p class="text-center">Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
@@ -48,3 +48,97 @@
     </form>
   </div>
 </div>
+
+<!-- Toast message -->
+<div id="toastMessage" class="toast align-items-center text-white bg-success border-0 position-absolute" role="alert"
+  aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+      aria-label="Close"></button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    let toast = document.getElementById('toastMessage');
+    toast.style.bottom = document.querySelector('footer').offsetHeight + 5 + 'px';
+    toast.style.right = '10px';
+
+    const registerForm = document.querySelector('#auth-form');
+    registerForm.onsubmit = validate;
+
+    function showToast(status, message) {
+      if (toast) {
+        toast.classList.remove('bg-success', 'bg-danger', 'show');
+      } else {
+        toast = document.getElementById('toastMessage');
+      }
+
+      toast.querySelector('.toast-body').innerHTML = message;
+
+      if (status == 'success') {
+        toast.classList.add('bg-success', 'show');
+      } else if (status == 'error') {
+        toast.classList.add('bg-danger', 'show');
+      }
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+
+    }
+
+    function validate(event) {
+      event.preventDefault();
+      const email = document.querySelector('#email').value;
+      const password = document.querySelector('#password').value;
+      const retype = document.querySelector('#retype').value;
+
+      if (email == '' || password == '' || retype == '') {
+        showToast('error', 'Vui lòng điền đầy đủ thông tin');
+        return false;
+      }
+
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!regex.test(email)) {
+        showToast('error', 'Email không hợp lệ');
+        return false;
+      }
+
+      if (password != retype) {
+        showToast('error', 'Mật khẩu không khớp');
+        return false;
+      }
+
+      const data = {
+        email: email.toLowerCase(),
+        password: password,
+        retype: retype
+      };
+
+      fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status == 'success') {
+            showToast('success', data.message);
+          } else if (data.status == 'error') {
+            showToast('error', data.message);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+
+  });
+</script>

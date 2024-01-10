@@ -9,7 +9,6 @@ router.post('/login', checkNotAuthenticated, controller.postLogin);
 
 router.get('/register', checkNotAuthenticated, controller.getRegister);
 router.post('/register', checkNotAuthenticated, controller.postRegister);
-router.post('/register/check', checkNotAuthenticated, controller.postCheckRegister);
 
 router.get('/logout', controller.getLogout);
 

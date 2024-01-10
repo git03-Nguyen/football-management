@@ -43,27 +43,22 @@ module.exports = {
   // POST /register
   postRegister: async function (req, res, next) {
     const { email, password, retype } = req.body;
+    if (!email || !password || !retype) {
+      return res.status(400).send({ status: 'error', message: 'Vui lòng nhập đầy đủ thông tin' });
+    }
     if (password !== retype) {
-      return res.redirect('/register');
+      return res.status(400).send({ status: 'error', message: 'Mật khẩu không khớp' });
     }
-    const user = await UserModel.createUser(email, password);
-    if (!user) {
-      return res.redirect('/register');
+    let user;
+    try {
+      user = await UserModel.createUser(email, password);
+      if (!user) {
+        return res.status(400).send({ status: 'error', message: 'Đăng ký thất bại' });
+      }
+      res.status(200).send({ status: 'success', message: 'Đăng ký thành công' });
+    } catch (err) {
+      return res.status(500).send({ status: 'error', message: 'Email đã được đăng ký' });
     }
-    res.redirect('/');
-  },
-
-  // POST /register/check
-  postCheckRegister: async function (req, res, next) {
-    const { email, password, retype } = req.body;
-    if (password !== retype) {
-      return res.status(400).send('Mật khẩu không khớp');
-    }
-    const user = await UserModel.getUserByEmail(email);
-    if (user) {
-      return res.status(400).send('Email đã được đăng ký');
-    }
-    res.status(200).send('Email hợp lệ');
   },
 
   // GET /logout
