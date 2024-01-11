@@ -1,3 +1,27 @@
 body {
-  background-color: rgb(71, 71, 71);
+  background-color: #1f2d3e;
+}
+
+#btnFree {
+  height: 1.5rem;
+  padding: 0.1rem 0.8rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #34A853;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* For sub-nav */
+#sub-navigation p {
+  color: #cccccc;
+}
+
+#sub-navigation p:hover,
+#sub-navigation a.active p {
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
 }

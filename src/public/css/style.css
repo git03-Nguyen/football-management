@@ -18,6 +18,10 @@ body {
   background-color: #003071;
 }
 
+.bg-white-color {
+  background-color: #f9f9f9;
+}
+
 .bg-white-color-90 {
   background-color: rgba(255, 255, 255, 0.9);
 }

@@ -1,0 +1,56 @@
+{{#section 'style'}}
+<link rel="stylesheet" href="/css/pages/tournament.css">
+{{/section}}
+
+<div class="container-fluid mx-5">
+  <div class="my-3 mx-5 d-flex">
+    <img src="{{tournament.logo}}" height="160" width="160" alt="" class="rounded me-4">
+    <div class="ml-3">
+      <div class="d-flex align-items-center mb-3">
+        <p class="h4 text-white my-0 fw-bold text-uppercase">{{tournament.name}}</p>
+        {{#if tournament.isFree}}
+        <button id="btnFree" class="ms-3" disabled>FREE</button>
+        {{else}}
+        <button id="btnTicket" class="ms-3">TICKET</button>
+        {{/if}}
+      </div>
+      <p class="text-light mb-1"><strong>Thể thức: </strong> Bóng đá sân {{tournament.nOfPlayers}} ||
+        {{tournament.format}}</p>
+      <p class="text-light mb-1"><strong>Địa điểm: </strong> {{tournament.place}}</p>
+      <p class="text-light mb-1"><strong>Thời gian: </strong> {{tournament.timeStart}} - {{tournament.timeEnd}}</p>
+      <div class="d-flex align-items-center mt-2">
+        {{!-- number of teams and viewers --}}
+        <i class="fa fa-users fs-5 text-light me-1"></i>
+        <p class="text-light m-0 me-3">{{tournament.nCurrentTeams}}/{{tournament.nMaxTeams}}</p>
+        <i class="fas fa-eye fs-5 text-light me-1"></i>
+        <p class="text-light m-0">{{tournament.nViews}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub-navigation" class="d-flex justify-content-center align-items-center">
+    <!-- <a href="{{#ifNotEquals subNavigation 0}}/tournament{{/ifNotEquals}}#" -->
+    <a href="/tournament"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 0}}active{{/ifEquals}}">
+      <p class="h5">Tổng quan</p>
+    </a>
+    <a href="/tournament/teams"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 1}}active{{/ifEquals}}">
+      <p class="h5">Đội bóng</p>
+    </a>
+    <a href="/tournament/matches"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 2}}active{{/ifEquals}}">
+      <p class="h5">Lịch thi đấu</p>
+    </a>
+    <a href="/tournament/statistics"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 3}}active{{/ifEquals}}">
+      <p class="h5">Thống kê</p>
+    </a>
+    {{#if user.isAdmin}}
+    <a href="/tournament/modification"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 4}}active{{/ifEquals}}">
+      <p class="h5">Tuỳ chỉnh</p>
+    </a>
+    {{/if}}
+  </div>
+</div>

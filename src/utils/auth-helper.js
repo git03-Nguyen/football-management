@@ -18,7 +18,7 @@ module.exports = {
     if (req.isAuthenticated() && req.user.isAdmin) {
       return next();
     }
-    res.redirect('/login');
+    res.redirect('/');
   }
 
 }
