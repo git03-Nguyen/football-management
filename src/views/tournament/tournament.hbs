@@ -3,39 +3,349 @@
   <div class="row mx-5">
     <div class="col-4">
       <div>
+        <!-- Top scorers -->
         <div class="d-flex align-items-center text-primary-color mb-3">
           <i class="fas fa-futbol fa-2x me-2"></i>
           <p class="h5 m-0 fw-bold ">Top ghi bàn</p>
         </div>
+        <div class="row row-cols-3 mb-3">
+          <div class="col text-center top-scorer">
+            <div class="position-relative">
+              <img src="/img/teams/1/Nguyễn Tiến Thái.png" alt="" class="avatar mb-2 rounded-circle border border-2"
+                height="100" width="100">
+              <span class="position-absolute bg-primary-color rounded-circle">15</span>
+              <a href="/teams/1">
+                <img src="/img/teams/1/info/logo.png" alt="" class="position-absolute rounded-circle border border-2"
+                  height="30" width="30">
+              </a>
+            </div>
+            <a href="/teams/1/players/1" class="text-decoration-none">
+              <p class="m-0 w-100 text-wrap">Nguyễn Tiến Thái</p>
+            </a>
+          </div>
 
+          <div class="col text-center top-scorer">
+            <div class="position-relative">
+              <img src="/img/teams/1/Thanh An Thắng.png" alt="" class="avatar mb-2 rounded-circle border border-2"
+                height="100" width="100">
+              <span class="position-absolute bg-primary-color rounded-circle">12</span>
+              <a href="/teams/1">
+                <img src="/img/teams/1/info/logo.png" alt="" class="position-absolute rounded-circle border border-2"
+                  height="30" width="30">
+              </a>
+            </div>
+            <a href="/teams/1/players/1" class="text-decoration-none">
+              <p class="m-0 w-100 text-wrap">Thanh An Thắng</p>
+            </a>
+          </div>
+
+          <div class="col text-center top-scorer">
+            <div class="position-relative">
+              <img src="/img/teams/1/Nguyễn Anh Tuấn.png" alt="" class="avatar mb-2 rounded-circle border border-2"
+                height="100" width="100">
+              <span class="position-absolute bg-primary-color rounded-circle">15</span>
+              <a href="/teams/1">
+                <img src="/img/teams/1/info/logo.png" alt="" class="position-absolute rounded-circle border border-2"
+                  height="30" width="30">
+              </a>
+            </div>
+            <a href="/teams/1/players/1" class="text-decoration-none">
+              <p class="m-0 w-100 text-wrap">Bùi Anh Tuấn</p>
+            </a>
+          </div>
+        </div>
+        <a href="/tournament/statistics">
+          <button class="btn btn-primary w-100 mb-5">
+            <i class="fas fa-chart-line me-2"></i>
+            Thống kê chi tiết
+          </button>
+        </a>
+
+        <!-- Leaderboard -->
         <div class="d-flex align-items-center text-primary-color mb-3">
           <i class="fas fa-medal fa-2x me-2"></i>
           <p class="h5 m-0 fw-bold ">Bảng xếp hạng</p>
         </div>
+        <table class="table table-hover rounded mb-3">
+          <tbody>
+            <tr>
+              <th scope="row" class="py-2 fw-normal text-start">1</th>
+              <td class="py-2">
+                <div class="d-flex align-items-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0">Đội bóng 1</a>
+                </div>
+              </td>
+              <td class="py-2 fw-bold text-end">15 điểm</td>
+            </tr>
+            <tr class="">
+              <th scope="row" class="py-2 pt-3 fw-normal text-start">1</th>
+              <td class="py-2 pt-3">
+                <div class="d-flex align-items-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0">Đội bóng 1</a>
+                </div>
+              </td>
+              <td class="py-2  pt-3 fw-bold text-end">15 điểm</td>
+            </tr>
+            <tr class="">
+              <th scope="row" class="py-2 pt-3 fw-normal text-start">1</th>
+              <td class="py-2 pt-3">
+                <div class="d-flex align-items-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0">Đội bóng 1</a>
+                </div>
+              </td>
+              <td class="py-2  pt-3 fw-bold text-end">15 điểm</td>
+            </tr>
+            <tr class="">
+              <th scope="row" class="py-2 pt-3 fw-normal text-start">1</th>
+              <td class="py-2 pt-3">
+                <div class="d-flex align-items-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0">Đội bóng 1</a>
+                </div>
+              </td>
+              <td class="py-2  pt-3 fw-bold text-end">15 điểm</td>
+            </tr>
+          </tbody>
+        </table>
+        <a href="/tournament/teams">
+          <button class="btn btn-primary w-100 mb-5">
+            <i class="fas fa-medal me-2"></i>
+            Xem chi tiết
+          </button>
+        </a>
 
+
+        <!-- Recent schedules -->
         <div class="d-flex align-items-center text-primary-color mb-3">
           <i class="far fa-calendar fa-2x me-2"></i>
           <p class="h5 m-0 fw-bold ">Lịch thi đấu gần nhất</p>
         </div>
+        <table class="table table-hover rounded mb-3">
+          <tbody>
+            <tr>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center justify-content-end">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0 d-inline-block text-truncate"
+                    style="max-width:120px;">Đội bóng 1</a>
+                  <img src="/img/teams/1/info/logo.png" alt="" class="ms-2" height="25" width="25">
+                </div>
+              </td>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center justify-content-center text-center">
+                  <a href="/tournament/matches/1" class="text-decoration-none">
+                    <p class="m-0 fw-bold text-nowrap text-danger">1 - 5</p>
+                  </a>
+                </div>
+              </td>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0 d-inline-block text-truncate"
+                    style="max-width:120px;">Đội bóng 2dasdasssssss</a>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center justify-content-end">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0 d-inline-block text-truncate"
+                    style="max-width:120px;">Đội bóng 1</a>
+                  <img src="/img/teams/1/info/logo.png" alt="" class="ms-2" height="25" width="25">
+                </div>
+              </td>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center justify-content-center text-center">
+                  <a href="/tournament/matches/1" class="text-decoration-none text-success">
+                    <p class="m-0 text-nowrap">17:45</p>
+                    <hr class="hr hr-blurry m-0 p-0" />
+                    <p class="m-0 text-nowrap">22/12/23</p>
+                  </a>
+                </div>
+              </td>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0 d-inline-block text-truncate"
+                    style="max-width:120px;">Đội bóng 2dasdasssssss</a>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center justify-content-end">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0 d-inline-block text-truncate"
+                    style="max-width:120px;">Đội bóng 1</a>
+                  <img src="/img/teams/1/info/logo.png" alt="" class="ms-2" height="25" width="25">
+                </div>
+              </td>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center justify-content-center text-center">
+                  <a href="/tournament/matches/1" class="text-decoration-none text-success">
+                    <p class="m-0 text-nowrap">17:45</p>
+                    <hr class="hr hr-blurry m-0 p-0" />
+                    <p class="m-0 text-nowrap">22/12/23</p>
+                  </a>
+                </div>
+              </td>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0 d-inline-block text-truncate"
+                    style="max-width:120px;">Đội bóng 2dasdasssssss</a>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center justify-content-end">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0 d-inline-block text-truncate"
+                    style="max-width:120px;">Đội bóng 1</a>
+                  <img src="/img/teams/1/info/logo.png" alt="" class="ms-2" height="25" width="25">
+                </div>
+              </td>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center justify-content-center text-center">
+                  <a href="/tournament/matches/1" class="text-decoration-none text-success">
+                    <p class="m-0 text-nowrap">17:45</p>
+                    <hr class="hr hr-blurry m-0 p-0" />
+                    <p class="m-0 text-nowrap">22/12/23</p>
+                  </a>
+                </div>
+              </td>
+              <td class="pb-0 pt-1 align-middle" style="height:55px !important;">
+                <div class="d-flex align-items-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/1" class="text-decoration-none h6 align-bottom mb-0 d-inline-block text-truncate"
+                    style="max-width:120px;">Đội bóng 2dasdasssssss</a>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        <a href="/tournament/matches">
+          <button class="btn btn-primary w-100  ">
+            <i class="far fa-calendar me-2"></i>
+            Xem tất cả
+          </button>
+        </a>
+
       </div>
     </div>
-    <div class="col-8">
-      <img src="/img/tournament/banner-hdt-league.png" alt="" class="w-100 mb-3">
+    <div class="col-8 ps-4">
+      <!-- league banner -->
+      <img src="/img/tournament/banner-hdt-league.png" alt="" class="w-100 mb-4">
 
+      <!-- league info -->
       <div class="d-flex align-items-center text-primary-color mb-3">
         <i class="fas fa-chart-line fa-2x me-2"></i>
         <p class="h5 m-0 fw-bold ">Thống kê tổng quát</p>
       </div>
+      <div class="row m-0 mb-4" style="height: 28vw;">
+        <div class="col-3 p-0 pe-3">
+          <div class="h-100 text-light d-flex flex-column justify-content-around" style="background-color: #34A853;">
+            <i class="fa fa-users fa-5x "></i>
+            <div class="d-flex justify-content-around align-items-end">
+              <p class="h5 fw-bold text-center">Số cầu thủ<br /> trong giải đấu</p>
+              <p class="h5 fw-bold ">180</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-9 p-0">
+          <div class="row m-0 h-50 pb-3">
+            <div class="col-4 p-0 pe-3">
+              <div class="h-100 text-light d-flex flex-column justify-content-around"
+                style="background-color: #FBBC05;">
+                <img src="/img/icons/ic-goal.svg" alt="" height="80">
+                <div class="d-flex justify-content-around align-items-end">
+                  <p class="h5 fw-bold text-center">Tổng số<br /> bàn thắng</p>
+                  <p class="h5 fw-bold ">63</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 p-0 pe-3">
+              <div class="h-100 text-light d-flex flex-column justify-content-around"
+                style="background-color: #003071;">
+                <img src="/img/icons/ic-stadium.svg" alt="" height="80">
+                <div class="d-flex justify-content-around align-items-end">
+                  <p class="h5 fw-bold text-center">Tổng số<br /> trận đấu</p>
+                  <p class="h5 fw-bold ">15</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 p-0">
+              <div class="h-100 text-light d-flex flex-column justify-content-around"
+                style="background-color: #9747FF;">
+                <img src="/img/icons/ic-ball.svg" alt="" height="80">
+                <div class="d-flex justify-content-around align-items-end">
+                  <p class="h5 fw-bold text-center">Bàn phản<br /> lưới nhà</p>
+                  <p class="h5 fw-bold ">0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row h-50 m-0 pt-1">
+            <div class="col-8 p-0 pe-3">
+              <div class="h-100 text-light d-flex flex-column justify-content-center"
+                style="background-color: #FBBC05;">
+                <p class="h5 fw-bold text-start px-3 mb-3">Trận có nhiều bàn nhất</p>
+                <div class="d-flex align-items-center align-self-center mb-2">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="35">
+                  <a href="/teams/1" class="text-decoration-none h5 fw-bold m-0">Đội bóng 2dasdasssssss</a>
+                </div>
+                <a class="h5 fw-bold text-center mb-2 text-decoration-none" href="/matches/1">5 - 7</a>
+                <div class="d-flex align-items-center align-self-center">
+                  <img src="/img/teams/1/info/logo.png" alt="" class="me-2" height="35">
+                  <a href="/teams/1" class="text-decoration-none h5 fw-bold m-0">Đội bóng 2dasdasssssss</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 p-0">
+              <div class="h-100 text-light d-flex flex-column justify-content-around"
+                style="background-color: #1877F2;">
+                <img src="/img/icons/ic-cards.svg" alt="" height="80">
+                <div class="d-flex justify-content-around align-items-end">
+                  <p class="h5 fw-bold text-center">Tổng số<br /> thẻ phạt</p>
+                  <p class="h5 fw-bold ">12</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- league introduction -->
       <div class="d-flex align-items-center text-primary-color mb-3">
         <i class="far fa-file-lines fa-2x me-2"></i>
         <p class="h5 m-0 fw-bold ">Giới thiệu về giải đấu</p>
       </div>
+      <iframe src="https://drive.google.com/file/d/1oM7kRm2XUMQ9Wdi5Gu6dAJj_fc0umABk/preview" class="w-100 mb-4"
+        height="400"></iframe>
 
+      <!-- league place -->
       <div class="d-flex align-items-center text-primary-color mb-3">
         <i class="fas fa-location-dot fa-2x me-2"></i>
         <p class="h5 m-0 fw-bold ">Địa điểm tổ chức</p>
       </div>
+      <div class="row row-cols-2 m-0">
+        <div class="col text-start p-0 pe-2">
+          <strong>Địa điểm: </strong>Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM, 227 Nguyễn Văn Cừ, Phường 4, Quận 5,
+          Thành phố Hồ Chí Minh.
+        </div>
+        <div class="col p-0">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.635863047679!2d106.6797512748567!3d10.762521589385393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1bfc262bf1%3A0x4e843897f2900135!2zMjI3IMSQLiBOZ3V54buFbiBWxINuIEPhu6ssIFBoxrDhu51uZyA0LCBRdeG6rW4gNSwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1704601347126!5m2!1sen!2s"
+            class="border-0 w-100" height="200" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
 
     </div>
   </div>

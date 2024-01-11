@@ -25,3 +25,32 @@ body {
   text-decoration: underline;
   text-underline-offset: 0.4rem;
 }
+
+/* For top scorers */
+.top-scorer img.avatar {
+  border-color: #003071 !important;
+}
+
+/* For team logo in top scrorer */
+.top-scorer img.position-absolute {
+  border-color: white !important;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+
+.top-scorer span.position-absolute {
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 25px;
+  height: 25px;
+  color: white;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 3px;
+}
+
+/* For general statistics */
+.row-statistics {
+  margin-top: 1rem;
+
+}
