@@ -33,16 +33,14 @@
             <th scope="col" class="bg-yellow-color fw-normal text-light">Số trận</th>
             <th scope="col" class="bg-yellow-color fw-normal text-light">T-H-B</th>
             <th scope="col" class="bg-yellow-color fw-normal text-light">Hiệu số</th>
-            <th scope="col" class="bg-yellow-color fw-normal text-light">
-              🟨/🟥
-            </th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">🟨/🟥</th>
             <th scope="col" class="bg-yellow-color fw-normal text-light">Điểm</th>
           </tr>
         </thead>
         <tbody>
           {{#each teams}}
           <tr>
-            <th scope="row" class="fw-normal">{{@index}}</th>
+            <th scope="row" class="fw-normal">{{sum @index 1}}</th>
             <td>
               <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" height="30px">
             </td>

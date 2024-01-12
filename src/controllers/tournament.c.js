@@ -70,6 +70,7 @@ function getAllTeams() {
       nOfGoals: 22,
       nOfGoalsAgainst: 10,
       goalDifference: 12,
+      nOfOwnGoals: 0,
       score: 10,
       nOfYellowCards: 2,
       nOfRedCards: 0,
@@ -83,6 +84,7 @@ function getAllTeams() {
       nOfLosses: 1,
       nOfGoals: 22,
       nOfGoalsAgainst: 10,
+      nOfOwnGoals: 1,
       goalDifference: 12,
       score: 10,
       nOfYellowCards: 2,
@@ -98,6 +100,7 @@ function getAllTeams() {
       nOfGoals: 22,
       nOfGoalsAgainst: 10,
       goalDifference: 12,
+      nOfOwnGoals: 0,
       score: 10,
       nOfYellowCards: 2,
       nOfRedCards: 0,
@@ -112,6 +115,7 @@ function getAllTeams() {
       nOfGoals: 22,
       nOfGoalsAgainst: 10,
       goalDifference: 12,
+      nOfOwnGoals: 0,
       score: 10,
       nOfYellowCards: 2,
       nOfRedCards: 0,
@@ -126,6 +130,7 @@ function getAllTeams() {
       nOfGoals: 22,
       nOfGoalsAgainst: 10,
       goalDifference: 12,
+      nOfOwnGoals: 0,
       score: 10,
       nOfYellowCards: 2,
       nOfRedCards: 0,
@@ -140,6 +145,7 @@ function getAllTeams() {
       nOfGoals: 22,
       nOfGoalsAgainst: 10,
       goalDifference: 12,
+      nOfOwnGoals: 0,
       score: 10,
       nOfYellowCards: 2,
       nOfRedCards: 0,
@@ -155,6 +161,7 @@ function getAllTeams() {
       nOfGoals: 10,
       nOfGoalsAgainst: 22,
       goalDifference: -12,
+      nOfOwnGoals: 0,
       score: 4,
       nOfYellowCards: 2,
       nOfRedCards: 0,
@@ -169,6 +176,7 @@ function getAllTeams() {
       nOfGoals: 10,
       nOfGoalsAgainst: 22,
       goalDifference: -12,
+      nOfOwnGoals: 0,
       score: 4,
       nOfYellowCards: 2,
       nOfRedCards: 0,
@@ -224,6 +232,56 @@ function getMatches() {
 
     },
   ]
+}
+
+function getPlayerStatistics() {
+  return [
+    {
+      playerId: 1,
+      playerName: 'Nguyễn Tiến Thái',
+      number: 15,
+      teamId: 1,
+      teamName: 'Đội bóng 1',
+      nOfMatches: 5,
+      nOfGoals: 15,
+      nOfOwnGoals: 0,
+      nOfDoubleKicks: 2,
+      nOfHatTricks: 1,
+      nOfPokers: 0,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
+    },
+    {
+      playerId: 2,
+      playerName: 'Thanh An Thắng',
+      number: 22,
+      teamId: 1,
+      teamName: 'Đội bóng 1',
+      nOfMatches: 5,
+      nOfGoals: 12,
+      nOfOwnGoals: 1,
+      nOfDoubleKicks: 1,
+      nOfHatTricks: 0,
+      nOfPokers: 0,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
+    },
+    {
+      playerId: 3,
+      playerName: 'Bùi Anh Tuấn',
+      number: 12,
+      teamId: 1,
+      teamName: 'Đội bóng 1',
+      nOfMatches: 5,
+      nOfGoals: 10,
+      nOfOwnGoals: 0,
+      nOfDoubleKicks: 0,
+      nOfHatTricks: 0,
+      nOfPokers: 0,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
+    },
+  ];
 }
 
 
@@ -304,7 +362,24 @@ module.exports = {
       useTransHeader: true,
       user: user,
       tournament: tournament,
+      teams: getAllTeams(),
       subNavigation: 3,
+      subSubNavigation: 0,
+    });
+  },
+
+  // GET /tournament/statistics/players
+  getStatisticsPlayers: function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const tournament = getTournament();
+    res.render('tournament/statistics-players', {
+      title: "Thống kê",
+      useTransHeader: true,
+      user: user,
+      tournament: tournament,
+      statistics: getPlayerStatistics(),
+      subNavigation: 3,
+      subSubNavigation: 1,
     });
   },
 

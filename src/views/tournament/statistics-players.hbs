@@ -17,7 +17,7 @@
     </div>
 
     <div class="d-flex justify-content-between align-items-end mb-1">
-      <p class="m-0 text-muted text-end">T-H-B: Thắng-Hoà-Bại</p>
+      <p class="m-0 text-muted text-end">Double: 2 bàn; Hattrick: 3 bàn; Poker: 4 bàn.</p>
       <a href="/tournament/statistics/download">
         <button class="btn btn-success">
           <i class="fas fa-download"></i>
@@ -32,35 +32,45 @@
           <tr>
             <th scope="col" class="bg-yellow-color fw-normal text-light">#</th>
             <th scope="col" class="bg-yellow-color fw-normal text-light"></th>
-            <th scope="col" class="bg-yellow-color fw-normal text-light text-start">Tên đội</th>
-            <th scope="col" class="bg-yellow-color fw-normal text-light">Số trận</th>
-            <th scope="col" class="bg-yellow-color fw-normal text-light">T-H-B</th>
-            <th scope="col" class="bg-yellow-color fw-normal text-light">Số bàn thắng</th>
-            <th scope="col" class="bg-yellow-color fw-normal text-light">Số bàn thua</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light text-start">Tên cầu thủ</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Số áo</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Đội thi đấu</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Số bàn ghi được</th>
             <th scope="col" class="bg-yellow-color fw-normal text-light">Phản lưới nhà</th>
-            <th scope="col" class="bg-yellow-color fw-normal text-light">Thẻ vàng</th>
-            <th scope="col" class="bg-yellow-color fw-normal text-light">Thẻ đỏ</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Số double</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Số hattrick</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Số poker</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">🟨/🟥</th>
           </tr>
         </thead>
         <tbody>
-          {{#each teams}}
+          {{#each statistics}}
           <tr>
             <th scope="row" class="fw-normal">{{sum @index 1}}</th>
             <td>
-              <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" height="30px">
+              <img src="/img/teams/{{this.teamId}}/{{this.playerName}}.png" alt="" height="40" class="rounded-circle">
             </td>
             <td>
-              <a href="/tournament/teams/{{this.teamId}}">
-                <p class="m-0 text-start">{{this.name}}</p>
+              <a href="/tournament/players/{{this.playerId}}">
+                <p class="m-0 text-start">{{this.playerName}}</p>
               </a>
             </td>
-            <td>{{this.nOfPlayedMatches}}</td>
-            <td>{{this.nOfWins}}-{{this.nOfDraws}}-{{this.nOfLosses}}</td>
+            <td>{{this.number}}</td>
+            <td>
+              <a href="/tournament/teams/{{this.teamId}}">
+                <div class="d-flex justify-content-center align-items-center">
+                  <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" height="30px" class="me-2">
+                  <p class="m-0 text-start">{{this.teamName}}</p>
+
+                </div>
+              </a>
+            </td>
             <td>{{this.nOfGoals}}</td>
-            <td>{{this.nOfGoalsAgainst}}</td>
             <td>{{this.nOfOwnGoals}}</td>
-            <td>{{this.nOfYellowCards}}</td>
-            <td>{{this.nOfRedCards}}</td>
+            <td>{{this.nOfDoubleKicks}}</td>
+            <td>{{this.nOfHatTricks}}</td>
+            <td>{{this.nOfPokers}}</td>
+            <td>{{this.nOfYellowCards}} / {{this.nOfRedCards}}</td>
           </tr>
           {{/each}}
         </tbody>
