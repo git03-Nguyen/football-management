@@ -1,0 +1,10 @@
+/* For all teams' cards */
+#all-teams .card:hover {
+  background-color: rgb(245, 245, 245);
+}
+
+/* For pagination */
+#teams-pagination .active a {
+  background-color: #003071;
+  border-color: #003071;
+}

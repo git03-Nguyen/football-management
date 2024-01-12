@@ -2,6 +2,76 @@
 <link rel="stylesheet" href="/css/pages/teams.css">
 {{/section}}
 
-<p class="">
-  This is all teams.
-</p>
+<div class="row m-0 px-5 py-4">
+  <div class="px-5">
+    <p class="h1 lh-5 text-center text-primary-color">Tất cả đội bóng</p>
+    <p class="text-center mb-2">Hiển thị tất cả các đội bóng tham gia @CodeOfDutyLeague</p>
+
+    <form action="/teams/search" method="GET" class="mb-4">
+      <div class="d-flex justify-content-between align-items-end">
+        <p class="mb-0 text-start text-muted">Tìm kiếm</p>
+        <input class="mb-1 text-end text-muted border-0 bg-transparent p-0 text-decoration-underline" href="#"
+          type="reset" value="Xóa">
+      </div>
+      <div class="d-flex align-items-center">
+        <input type="text" class="form-control rounded-end-0 border-dark" name="name" placeholder="Tìm kiếm đội bóng"
+          required>
+        <button class="btn btn-primary rounded-start-0" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
+
+    <div class="row row-cols-3 row-gap-4" id="all-teams">
+      {{#each teams}}
+      <div class="col">
+        <div class="card border-black hover">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" class="rounded-circle" width="100px"
+                height="100px">
+              <div class="ms-3">
+                <p class="h4 mb-0 text-primary-color">{{this.name}}</p>
+                <p class="mb-0 text-muted">{{this.level}} - Bóng đá</p>
+                <hr class="hr p-0 mb-2 mt-1 w-25" />
+                <div class="mb-0 p-0 text-truncate" style="max-width: 250px;">Mô tả: {{this.description}}</div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-users me-2"></i>
+                <p class="mb-0">{{this.members.length}} thành viên</p>
+              </div>
+              <a href="/teams/{{this.teamId}}" class="btn btn-primary">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+    {{#if this.nOfPages}}
+    <nav aria-label="Page navigation" class="mt-4" id="teams-pagination">
+      <ul class="pagination justify-content-center">
+        <li class="page-item {{#ifEquals this.page 1}}disabled{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{sum -1 this.page}}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {{#each (range 1 this.nOfPages)}}
+        <li class="page-item {{#ifEquals this ../page}}active" aria-current="page{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{this}}">{{this}}</a>
+        </li>
+        {{/each}}
+        <li class="page-item {{#ifEquals this.page this.nOfPages}}disabled{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{sum 1 this.page}}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    {{/if}}
+
+
+  </div>
+</div>
