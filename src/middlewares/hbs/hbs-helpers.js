@@ -16,6 +16,14 @@ module.exports = {
   },
 
   sum: function (arg1, arg2) {
+    return (+arg1) + (+arg2);
+  },
+
+  substract: function (arg1, arg2) {
+    return arg1 - arg2;
+  },
+
+  concat: function (arg1, arg2) {
     return arg1 + arg2;
   },
 

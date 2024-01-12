@@ -70,3 +70,16 @@ a:hover {
   background-color: #003071;
   border-color: #003071;
 }
+
+/* For dropdown buttons */
+.dropdown.open .btn-outline-dark.dropdown-toggle:hover {
+  background-color: #c0c0c0;
+  border-color: #c0c0c0;
+  color: black;
+}
+
+.dropdown.open .btn-outline-dark.dropdown-toggle.show {
+  background-color: #cecece;
+  border-color: #cecece;
+  color: black;
+}

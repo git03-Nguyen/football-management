@@ -176,6 +176,56 @@ function getAllTeams() {
   ]
 }
 
+function getMatches() {
+  // examples for matches in Round Robin format
+  return [
+    { // round 1
+      dates: [
+        {
+          date: '21/12/2023',
+          matches: [
+            { matchId: 0, teamId1: 1, teamId2: 1, name1: 'Đội bóng 1', name2: 'Đội bóng 2', time: '17:45', isPlayed: true, score1: 2, score2: 1 },
+          ]
+        },
+        {
+          date: '22/12/2023',
+          matches: [
+            { matchId: 1, teamId1: 1, teamId2: 1, name1: 'Đội bóng 7', name2: 'Đội bóng 8', time: '17:45', isPlayed: false },
+            { matchId: 2, teamId1: 1, teamId2: 1, name1: 'Đội bóng 5', name2: 'Đội bóng 6', time: '18:45', isPlayed: false },
+            { matchId: 3, teamId1: 1, teamId2: 1, name1: 'Đội bóng 3', name2: 'Đội bóng 4', time: '17:45', isPlayed: false },
+          ]
+        },
+        {
+          date: '23/12/2023',
+          matches: [
+            { matchId: 4, teamId1: 1, teamId2: 1, name1: 'Đội bóng 1', name2: 'Đội bóng 2', time: '17:45', isPlayed: false },
+          ]
+        }
+      ]
+
+    },
+    { // round 2
+      dates: [
+        {
+          date: '24/12/2023',
+          matches: [
+            { matchId: 5, teamId1: 1, teamId2: 1, name1: 'Đội bóng 1', name2: 'Đội bóng 2', time: '17:45', isPlayed: false },
+          ]
+        },
+        {
+          date: '25/12/2023',
+          matches: [
+            { matchId: 6, teamId1: 1, teamId2: 1, name1: 'Đội bóng 7', name2: 'Đội bóng 8', time: '17:45', isPlayed: false },
+            { matchId: 7, teamId1: 1, teamId2: 1, name1: 'Đội bóng 5', name2: 'Đội bóng 6', time: '17:45', isPlayed: false },
+            { matchId: 8, teamId1: 1, teamId2: 1, name1: 'Đội bóng 3', name2: 'Đội bóng 4', time: '17:45', isPlayed: false },
+          ]
+        },
+      ]
+
+    },
+  ]
+}
+
 
 module.exports = {
 
@@ -223,15 +273,24 @@ module.exports = {
     });
   },
 
-  // GET /tournament/matches
+  // GET /tournament/matches?round=
   getMatches: function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = getTournament();
+    const round = req.query.round || 1;
+    const countMatches = getMatches().reduce((count, round) => {
+      return count + round.dates.reduce((count, date) => {
+        return count + date.matches.length;
+      }, 0);
+    }, 0);
     res.render('tournament/matches', {
       title: "Lịch thi đấu",
       useTransHeader: true,
       user: user,
       tournament: tournament,
+      round: round,
+      rounds: getMatches(),
+      countMatches: countMatches,
       subNavigation: 2,
     });
   },
