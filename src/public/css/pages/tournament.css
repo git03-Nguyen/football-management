@@ -52,5 +52,9 @@ body {
 /* For general statistics */
 .row-statistics {
   margin-top: 1rem;
+}
 
+/* For sub-sub-navigation */
+#sub-sub-navigation a {
+  text-underline-offset: 0.2rem;
 }

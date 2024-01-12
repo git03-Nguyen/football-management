@@ -57,6 +57,77 @@ function getGeneralStatistics() {
   }
 }
 
+function getAllTeams() {
+  return [
+    // 8 teams for testing
+    {
+      teamId: 1,
+      name: 'Đội bóng 1',
+      nOfPlayedMatches: 5,
+      nOfWins: 3,
+      nOfDraws: 1,
+      nOfLosses: 1,
+    },
+    {
+      teamId: 1,
+      name: 'Đội bóng 2',
+      nOfPlayedMatches: 5,
+      nOfWins: 3,
+      nOfDraws: 1,
+      nOfLosses: 1,
+    },
+    {
+      teamId: 1,
+      name: 'Đội bóng 3',
+      nOfPlayedMatches: 5,
+      nOfWins: 3,
+      nOfDraws: 1,
+      nOfLosses: 1,
+    },
+    {
+      teamId: 1,
+      name: 'Đội bóng 4',
+      nOfPlayedMatches: 5,
+      nOfWins: 3,
+      nOfDraws: 1,
+      nOfLosses: 1,
+    },
+    {
+      teamId: 1,
+      name: 'Đội bóng 5',
+      nOfPlayedMatches: 5,
+      nOfWins: 3,
+      nOfDraws: 1,
+      nOfLosses: 1,
+    },
+    {
+      teamId: 1,
+      name: 'Đội bóng 6',
+      nOfPlayedMatches: 5,
+      nOfWins: 3,
+      nOfDraws: 1,
+      nOfLosses: 1,
+    },
+    {
+      teamId: 1,
+      name: 'Đội bóng 7',
+      nOfPlayedMatches: 5,
+      nOfWins: 3,
+      nOfDraws: 1,
+      nOfLosses: 1,
+    },
+    {
+      teamId: 1,
+      name: 'Đội bóng 8',
+      nOfPlayedMatches: 5,
+      nOfWins: 3,
+      nOfDraws: 1,
+      nOfLosses: 1,
+    }
+  ]
+}
+
+
 module.exports = {
 
   // GET /tournament
@@ -82,6 +153,7 @@ module.exports = {
       useTransHeader: true,
       user: user,
       tournament: tournament,
+      allTeams: getAllTeams(),
       subNavigation: 1,
     });
   },

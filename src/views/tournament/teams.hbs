@@ -1,5 +1,57 @@
 {{> tournament-header}}
-<div class="bg-white-color">
-  Doi bong giai dau
+<div class="bg-white-color px-5 py-3 text-center">
+  <div class="row mx-5 mb-2">
+
+    <div class="d-flex" id="sub-sub-navigation" class=" mb-2">
+      {{#if showLeaderboard}}
+      <a href="/tournament/teams" class="h6 fw-bold text-decoration-none">Danh sách</a>
+      <a href="#" class="h6 fw-bold ms-3">Bảng xếp hạng</a>
+      {{else}}
+      <a href="#" class="h6 fw-bold">Danh sách</a>
+      <a href="/tournament/teams/leaderboard" class="h6 fw-bold ms-3 text-decoration-none">Bảng xếp hạng</a>
+      {{/if}}
+    </div>
+
+    <div class="d-flex justify-content-between align-items-end mb-3">
+      <p class="m-0">Có tổng cộng 8 đội và 160 cầu thủ tham gia giải đấu.</p>
+      <a href="/tournament/teams/download">
+        <button class="btn btn-success">
+          <i class="fas fa-download"></i>
+          <span class="ms-2">Tải xuống</span>
+        </button>
+      </a>
+    </div>
+
+    <div class="row row-cols-4 m-0 mt-3 row-gap-5">
+
+      {{#each allTeams}}
+
+      <div class="col m-0 px-4">
+        <div
+          class="d-flex flex-column justify-content-center align-items-center border border-black border-2 rounded p-4 shadow"
+          style="height: 300px;">
+          <a href="/teams/{{this.teamId}}" class="text-decoration-none">
+            <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" height="120"
+              class="rounded-circle border-black border-3 mb-2">
+            <p class="m-0 text-primary-color fw-bold h5 mb-3">{{this.name}}</p>
+          </a>
+          <p class="m-0 text-black mb-2">{{this.nOfPlayedMatches}} trận đã chơi</p>
+          <div class="d-flex justify-content-center align-items-center ">
+            <p class="m-0 badge bg-primary fw-normal">{{this.nOfWins}} thắng</p>
+            <p class="m-0 badge bg-warning ms-2 fw-normal">{{this.nOfDraws}} hoà</p>
+            <p class="m-0 badge bg-danger ms-2 fw-normal">{{this.nOfLosses}} thua</p>
+          </div>
+        </div>
+      </div>
+
+      {{/each}}
+
+
+
+
+    </div>
+
+
+  </div>
 
 </div>
