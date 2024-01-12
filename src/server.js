@@ -14,6 +14,8 @@ require('./middlewares/passport.mw')(app);
 
 require('./routers/index.r')(app);
 
+
+
 const fs = require('fs');
 // read the ssl certificates from certificates/demo.crt and certificates/demo.key
 const privateKey = fs.readFileSync('certificates/demo.key', 'utf8');

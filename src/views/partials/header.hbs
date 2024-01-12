@@ -68,22 +68,23 @@
         </li>
         {{/if}}
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="lang-dropdown" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false"><img src="/img/icons/vietnam-flag.svg" style="height:1.5rem"></a>
+        <li class="nav-item dropdown" id="lang-dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+              src="/img/icons/vietnam-flag.svg" style="height:1.5rem"></a>
           <div class="dropdown-menu py-0" style="min-width:20px" aria-labelledby="lang-dropdown">
             <a class="dropdown-item" href="/en"><img src="/img/icons/us-flag.svg" style="height:1.5rem"></a>
           </div>
         </li>
+
       </ul>
     </div>
   </div>
 </nav>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const dropdownToggle = document.querySelector('#lang-dropdown');
+    const dropdownToggle = document.querySelector('#lang-dropdown>.dropdown-toggle');
     dropdownToggle.addEventListener('click', function () {
-      var dropdownMenu = document.querySelector('.dropdown-menu');
+      const dropdownMenu = document.querySelector('#lang-dropdown>.dropdown-menu');
       dropdownMenu.classList.toggle('show');
     });
   });
