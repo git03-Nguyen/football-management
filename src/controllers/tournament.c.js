@@ -67,6 +67,12 @@ function getAllTeams() {
       nOfWins: 3,
       nOfDraws: 1,
       nOfLosses: 1,
+      nOfGoals: 22,
+      nOfGoalsAgainst: 10,
+      goalDifference: 12,
+      score: 10,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
     },
     {
       teamId: 1,
@@ -75,6 +81,12 @@ function getAllTeams() {
       nOfWins: 3,
       nOfDraws: 1,
       nOfLosses: 1,
+      nOfGoals: 22,
+      nOfGoalsAgainst: 10,
+      goalDifference: 12,
+      score: 10,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
     },
     {
       teamId: 1,
@@ -83,6 +95,12 @@ function getAllTeams() {
       nOfWins: 3,
       nOfDraws: 1,
       nOfLosses: 1,
+      nOfGoals: 22,
+      nOfGoalsAgainst: 10,
+      goalDifference: 12,
+      score: 10,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
     },
     {
       teamId: 1,
@@ -91,6 +109,12 @@ function getAllTeams() {
       nOfWins: 3,
       nOfDraws: 1,
       nOfLosses: 1,
+      nOfGoals: 22,
+      nOfGoalsAgainst: 10,
+      goalDifference: 12,
+      score: 10,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
     },
     {
       teamId: 1,
@@ -99,6 +123,12 @@ function getAllTeams() {
       nOfWins: 3,
       nOfDraws: 1,
       nOfLosses: 1,
+      nOfGoals: 22,
+      nOfGoalsAgainst: 10,
+      goalDifference: 12,
+      score: 10,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
     },
     {
       teamId: 1,
@@ -107,23 +137,42 @@ function getAllTeams() {
       nOfWins: 3,
       nOfDraws: 1,
       nOfLosses: 1,
+      nOfGoals: 22,
+      nOfGoalsAgainst: 10,
+      goalDifference: 12,
+      score: 10,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
     },
+    // below teams will have negative goal difference
     {
       teamId: 1,
       name: 'Đội bóng 7',
       nOfPlayedMatches: 5,
-      nOfWins: 3,
+      nOfWins: 1,
       nOfDraws: 1,
-      nOfLosses: 1,
+      nOfLosses: 3,
+      nOfGoals: 10,
+      nOfGoalsAgainst: 22,
+      goalDifference: -12,
+      score: 4,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
     },
     {
       teamId: 1,
       name: 'Đội bóng 8',
       nOfPlayedMatches: 5,
-      nOfWins: 3,
+      nOfWins: 1,
       nOfDraws: 1,
-      nOfLosses: 1,
-    }
+      nOfLosses: 3,
+      nOfGoals: 10,
+      nOfGoalsAgainst: 22,
+      goalDifference: -12,
+      score: 4,
+      nOfYellowCards: 2,
+      nOfRedCards: 0,
+    },
   ]
 }
 
@@ -155,6 +204,22 @@ module.exports = {
       tournament: tournament,
       allTeams: getAllTeams(),
       subNavigation: 1,
+      subSubNavigation: 0,
+    });
+  },
+
+  // GET /tournament/teams/leaderboard
+  getTeamsLeaderboard: function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const tournament = getTournament();
+    res.render('tournament/teams-leaderboard', {
+      title: "Bảng xếp hạng",
+      useTransHeader: true,
+      user: user,
+      tournament: tournament,
+      teams: getAllTeams(),
+      subNavigation: 1,
+      subSubNavigation: 1,
     });
   },
 

@@ -18,6 +18,10 @@ body {
   background-color: #003071;
 }
 
+.bg-yellow-color {
+  background-color: #FBBC05 !important;
+}
+
 .bg-white-color {
   background-color: #f9f9f9;
 }

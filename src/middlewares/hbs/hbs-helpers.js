@@ -7,8 +7,12 @@ module.exports = {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
   },
 
-  ifNotEquals: function (arg1, arg2, options) {
-    return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+  ifDivisible: function (arg1, arg2, options) {
+    return (arg1 % arg2 == 0) ? options.fn(this) : options.inverse(this);
+  },
+
+  ifPositive: function (arg1, options) {
+    return (arg1 >= 0) ? options.fn(this) : options.inverse(this);
   },
 
   sum: function (arg1, arg2) {

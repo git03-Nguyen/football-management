@@ -8,6 +8,7 @@ const { checkAdmin } = require('../utils/auth-helper');
 router.get('/', controller.getTournament);
 
 router.get('/teams', controller.getTeams);
+router.get('/teams/leaderboard', controller.getTeamsLeaderboard);
 
 router.get('/matches', controller.getMatches);
 

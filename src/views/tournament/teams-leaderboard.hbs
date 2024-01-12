@@ -1,0 +1,73 @@
+{{> tournament-header}}
+<div class="bg-white-color px-5 py-3 text-center">
+  <div class="row mx-5 mb-2">
+
+    <div class="d-flex mb-3" id="sub-sub-navigation">
+      {{#ifEquals subSubNavigation 0}}
+      <a href="#" class="h6 fw-bold active">Danh sách</a>
+      {{else}}
+      <a href="/tournament/teams" class="h6 fw-bold text-decoration-none">Danh sách</a>
+      {{/ifEquals}}
+
+      {{#ifEquals subSubNavigation 1}}
+      <a href="#" class="h6 fw-bold ms-3 active">Bảng xếp hạng</a>
+      {{else}}
+      <a href="/tournament/teams/leaderboard" class="h6 fw-bold ms-3 text-decoration-none">Bảng xếp hạng</a>
+      {{/ifEquals}}
+    </div>
+
+    <div class="d-flex justify-content-between align-items-end mb-1">
+      <a href="/tournament/rules">
+        <p class="m-0">Quy tắc xếp hạng</p>
+      </a>
+      <p class="m-0 text-muted text-end">T-H-B: Thắng-Hoà-Bại</p>
+    </div>
+
+    <div class="table-responsive mb-3" id="table-leaderboard">
+      <table class="table table-hover table-borderless rounded ">
+        <thead>
+          <tr>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">#</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light"></th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light text-start">Tên đội</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Số trận</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">T-H-B</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Hiệu số</th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">
+              🟨/🟥
+            </th>
+            <th scope="col" class="bg-yellow-color fw-normal text-light">Điểm</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each teams}}
+          <tr>
+            <th scope="row" class="fw-normal">{{@index}}</th>
+            <td>
+              <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" height="30px">
+            </td>
+            <td>
+              <a href="/tournament/teams/{{this.teamId}}">
+                <p class="m-0 text-start">{{this.name}}</p>
+              </a>
+            </td>
+            <td>{{this.nOfPlayedMatches}}</td>
+            <td>{{this.nOfWins}}-{{this.nOfDraws}}-{{this.nOfLosses}}</td>
+            <td>
+              {{this.nOfGoals}} / {{this.nOfGoalsAgainst}}
+              {{#ifPositive this.goalDifference}}
+              <span class="text-success"> (+{{this.goalDifference}})</span>
+              {{else}}
+              <span class="text-danger"> ({{this.goalDifference}})</span>
+              {{/ifPositive}}
+            </td>
+            <td>{{this.nOfYellowCards}} / {{this.nOfRedCards}}</td>
+            <td>{{this.score}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
