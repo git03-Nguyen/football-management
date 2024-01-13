@@ -23,9 +23,9 @@
       <p class="h5 m-0 fw-bold ">Đồng phục đội bóng</p>
     </div>
 
-    {{#if team.uniform}}
+    {{#if team.hasUniform}}
     <div class="d-flex justify-content-center align-items-center mb-3">
-      <img src="{{team.uniform}}" class="my-2" alt="uniform" height="60px">
+      <img src="/img/teams/{{team.teamId}}/info/uniform.png" class="my-2" alt="uniform" height="150px">
     </div>
     {{else}}
     <div class="d-flex justify-content-center align-items-center">
