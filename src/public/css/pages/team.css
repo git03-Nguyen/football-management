@@ -17,3 +17,33 @@ body {
 #all-members .card:hover {
   background-color: rgb(245, 245, 245);
 }
+
+/* For sub-sub-navigation */
+#sub-sub-navigation a {
+  text-underline-offset: 0.2rem;
+}
+
+#sub-sub-navigation a:hover {
+  text-decoration: underline;
+}
+
+#sub-sub-navigation a.active {
+  text-decoration: underline !important;
+}
+
+/* For avatar choose */
+label[for="logo"] {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label[for="logo"]:hover {
+  background-color: #cacaca;
+}

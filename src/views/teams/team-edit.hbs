@@ -1,0 +1,135 @@
+{{> teams-header}}
+
+<div class="bg-white-color px-5 py-4 text-center">
+  <div class="row mx-5 mb-0">
+
+    <div class="d-flex mb-3" id="sub-sub-navigation">
+      {{#ifEquals subSubNavigation 0}}
+      <a href="#" class="h6 fw-bold active">Thông tin</a>
+      {{else}}
+      <a href="/teams/{{team.teamId}}/edit" class="h6 fw-bold text-decoration-none">Thông tin</a>
+      {{/ifEquals}}
+
+      {{#ifEquals subSubNavigation 1}}
+      <a href="#" class="h6 fw-bold ms-3 active">Thành viên</a>
+      {{else}}
+      <a href="/teams/{{team.teamId}}/edit/members" class="h6 fw-bold ms-3 text-decoration-none">Thành viên</a>
+      {{/ifEquals}}
+    </div>
+
+
+    <form action="/teams/{{team.teamId}}/edit" method="POST">
+      <!--enctype="multipart/form-data" -->
+      <div class="row m-0 pt-4 row-gap-3" id="team-form">
+
+        <div class="col-4 text-center">
+          <div class="d-flex justify-content-center">
+            <div class="position-relative" style="width: fit-content;">
+              <img src="/img/teams/{{team.teamId}}/info/logo.png" alt="" height="300px" width="300px"
+                class="rounded-circle object-fit-cover" id="logo-img">
+              <div class="position-absolute bottom-0 end-0">
+                <label for="logo" class="btn btn-light border border-3 border-light p-2 m-0"><i
+                    class="fas fa-camera"></i></label>
+                {{!-- Input image png, jpg --}}
+                <input type="file" name="logo" id="logo" class="d-none" accept="image/png, image/jpeg">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-8 text-start">
+          <div class="mb-2">
+            <p class="m-0 text-nowrap mb-0">Tên đội bóng <span class="text-danger">(*)</span></p>
+            <input type="text" class="form-control bg-light text-muted" name="name" id="name" value="{{team.name}}"
+              required>
+          </div>
+
+          <div class="mb-2">
+            <p class="m-0 text-nowrap mb-0">Trình độ <span class="text-danger">(*)</span></p>
+            <select class="form-select bg-light text-muted " name="level" id="level" required>
+              <option value="Vui vẻ" {{#ifEquals team.level "Vui vẻ" }}selected{{/ifEquals}}>Vui vẻ
+              </option>
+              <option value="Sơ cấp" {{#ifEquals team.level "Sơ cấp" }}selected{{/ifEquals}}>Sơ cấp</option>
+              <option value="Trung cấp" {{#ifEquals team.level "Trung cấp" }}selected{{/ifEquals}}>Trung cấp</option>
+              <option value="Chuyên nghiệp" {{#ifEquals team.level "Chuyên nghiệp" }}selected{{/ifEquals}}>Chuyên nghiệp
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-2">
+            <p class="m-0 text-nowrap mb-0">Tên người liên hệ<span class="text-danger">(*)</span></p>
+            <input type="text" class="form-control bg-light text-muted lh-lg" name="contactName" id="contactName"
+              value="{{team.contactName}}" required>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="w-100 me-3">
+              <p class="m-0 text-nowrap mb-0">Số điện thoại<span class="text-danger">(*)</span></p>
+              <input type="text" class="form-control bg-light text-muted lh-lg" name="contactPhone" id="contactPhone"
+                value="{{team.contactPhone}}" required>
+            </div>
+
+            <div class="w-100">
+              <p class="m-0 text-nowrap mb-0">Email<span class="text-danger"></span></p>
+              <input type="text" class="form-control bg-light text-muted lh-lg" name="contactEmail" id="contactEmail"
+                value="{{team.contactEmail}}">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12 text-start">
+          <div class="mb-3 mt-1">
+            <p class="m-0 text-nowrap mb-0">Đồng phục đội bóng</p>
+            <div class="py-3 d-flex justify-content-center align-items-center form-control bg-transparent">
+              <img src="/img/teams/{{team.teamId}}/info/uniform.png" alt="" height="100px" id="uniform-img">
+              <div class="ms-3">
+                <input type="file" class="form-control" name="uniform" id="uniform" accept="image/png, image/jpeg">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 text-start">
+          <div class="mb-3 ">
+            <p class="m-0 text-nowrap mb-0">Giới thiệu đội bóng</p>
+            <textarea class="form-control bg-light text-muted" name="introduction" id="introduction"
+              rows="4">{{team.description}}</textarea>
+          </div>
+        </div>
+
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </div>
+    </form>
+
+
+
+  </div>
+</div>
+
+<script>
+  const profileForm = document.getElementById('team-form');
+  const logo = document.getElementById('logo');
+  const logoImg = document.getElementById('logo-img');
+  logo.addEventListener('change', () => {
+    const file = logo.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      logoImg.src = reader.result;
+    }
+    reader.readAsDataURL(file);
+  });
+
+  const uniform = document.getElementById('uniform');
+  const uniformImg = document.getElementById('uniform-img');
+  uniform.addEventListener('change', () => {
+    const file = uniform.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      uniformImg.src = reader.result;
+    }
+    reader.readAsDataURL(file);
+  });
+
+</script>

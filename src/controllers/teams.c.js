@@ -140,4 +140,20 @@ module.exports = {
     });
   },
 
+  // GET /teams/:teamId/edit
+  getEditTeam: function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = getTeams().find(team => team.teamId == teamId);
+    if (!team) return next();
+    res.render('teams/team-edit', {
+      title: team.name,
+      useTransHeader: true,
+      subNavigation: 3,
+      subSubNavigation: 0,
+      user: user,
+      team: team,
+    });
+  },
+
 }
