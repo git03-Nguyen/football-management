@@ -1,0 +1,46 @@
+#profile {
+  width: 60%;
+  margin: auto;
+}
+
+body {
+  background-color: rgb(248, 249, 250);
+}
+
+/* Round button */
+label[for="avatar"] {
+  cursor: pointer;
+  background: #ebebeb;
+  border-radius: 50%;
+  font-size: 1rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label[for="avatar"]:hover {
+  background-color: #cacaca;
+}
+
+/* 
+.form-group {
+  margin-bottom: 0.8rem;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  background-color: #fbfbfb;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #a9a9a9;
+} */
