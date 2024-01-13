@@ -1,0 +1,40 @@
+{{#section 'style'}}
+<link rel="stylesheet" href="/css/pages/team.css">
+{{/section}}
+
+<div class="container-fluid mx-5">
+  <div class="my-3 mx-5 d-flex">
+    <img src="/img/teams/{{team.teamId}}/info/logo.png" height="160" width="160" alt="" class="rounded me-4">
+    <div class="ml-3">
+      <div class="d-flex align-items-center mb-3">
+        <p class="h4 text-white my-0 fw-bold text-uppercase">{{team.name}}</p>
+      </div>
+      <p class="text-light mb-1"><strong>Người liên hệ: </strong> {{team.contactName}}</p>
+      <p class="text-light mb-1"><strong>Email: </strong> {{team.contactEmail}}</p>
+      <p class="text-light mb-1"><strong>Số điện thoại: </strong> {{team.contactPhone}}</p>
+      <p class="text-light mb-1"><strong>Trình độ: </strong> {{team.level}}</p>
+    </div>
+  </div>
+
+  <div id="sub-navigation" class="d-flex justify-content-center align-items-center">
+
+    <a href="/team/{{team.teamId}}"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 0}}active{{/ifEquals}}">
+      <p class="h5">Thông tin đội</p>
+    </a>
+    <a href="/team/{{team.teamId}}/members"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 1}}active{{/ifEquals}}">
+      <p class="h5">Thành viên</p>
+    </a>
+    <a href="/team/{{team.teamId}}/statistics"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 2}}active{{/ifEquals}}">
+      <p class="h5">Thống kê</p>
+    </a>
+    {{#ifEquals user.id team.managerId}}
+    <a href="/team/{{team.teamId}}/edit"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 3}}active{{/ifEquals}}">
+      <p class="h5">Tuỳ chỉnh</p>
+    </a>
+    {{/ifEquals}}
+  </div>
+</div>

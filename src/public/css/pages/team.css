@@ -1,0 +1,15 @@
+body {
+  background-color: #1f2d3e;
+}
+
+/* For sub-nav */
+#sub-navigation p {
+  color: #cccccc;
+}
+
+#sub-navigation p:hover,
+#sub-navigation a.active p {
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}

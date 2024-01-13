@@ -1,0 +1,38 @@
+{{> teams-header}}
+
+<div class="bg-white-color px-5 py-4 text-center">
+  <div class="row mx-5 mb-1">
+
+    <div class="d-flex align-items-center text-primary-color mb-3 ps-0">
+      <i class="far fa-file-lines fa-2x me-2"></i>
+      <p class="h5 m-0 fw-bold ">Giới thiệu về đội bóng</p>
+    </div>
+
+    <div class="px-1 mb-3">
+      <textarea class="w-100 p-2" style="height: 200px; min-height: 3rem;" readonly>
+      {{~#if team.description~}}
+      {{team.description~}}
+      {{~else~}}
+      Chưa có thông tin.
+      {{~/if~}}
+    </textarea>
+    </div>
+
+    <div class="d-flex align-items-center text-primary-color mb-3 ps-0">
+      <i class="fas fa-shirt fa-2x me-2"></i>
+      <p class="h5 m-0 fw-bold ">Đồng phục đội bóng</p>
+    </div>
+
+    {{#if team.uniform}}
+    <div class="d-flex justify-content-center align-items-center mb-3">
+      <img src="{{team.uniform}}" class="my-2" alt="uniform" height="60px">
+    </div>
+    {{else}}
+    <div class="d-flex justify-content-center align-items-center">
+      <p class="h5 my-2 text-muted">Chưa có thông tin.</p>
+    </div>
+    {{/if}}
+
+
+  </div>
+</div>
