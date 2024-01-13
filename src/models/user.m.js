@@ -20,6 +20,7 @@ module.exports = class UserModel {
     this.birthday = user.birthday;
     this.phone = user.phone;
     this.introduction = user.introduction;
+    this.isAdmin = user.privilege === 1;
   }
 
   // CREATE a new user
