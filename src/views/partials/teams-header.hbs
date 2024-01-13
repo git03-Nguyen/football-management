@@ -30,7 +30,7 @@
       class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 2}}active{{/ifEquals}}">
       <p class="h5">Thống kê</p>
     </a>
-    {{#ifEquals user.id team.managerId}}
+    {{#ifEquals user.id team.ownerId}}
     <a href="/teams/{{team.teamId}}/edit"
       class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 3}}active{{/ifEquals}}">
       <p class="h5">Tuỳ chỉnh</p>

@@ -7,5 +7,7 @@ const { checkAuthenticated, checkAdmin } = require('../utils/auth-helper');
 
 router.get('/', checkAuthenticated, controller.getTeamManagement);
 
+router.get('/tickets', checkAdmin, controller.getTicketManagement);
+
 
 module.exports = router;

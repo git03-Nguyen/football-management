@@ -34,11 +34,11 @@
       class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 0}}active{{/ifEquals}}">
       <p class="h5">Quản lý đội</p>
     </a>
+    {{#if user.isAdmin}}
     <a href="/management/tickets"
       class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 1}}active{{/ifEquals}}">
       <p class="h5">Quản lý vé</p>
     </a>
-    {{#if user.isAdmin}}
     <a href="/tournament/modification" class="text-light fw-bold text-decoration-none me-4">
       <p class="h5">Quản lý giải</p>
     </a>

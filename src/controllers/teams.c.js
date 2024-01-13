@@ -12,7 +12,7 @@ function getTeams() {
       contactName: "Mr. Alex",
       contactPhone: "0123456789",
       contactEmail: "mailmail@gmail.com",
-      managerId: 2,
+      ownerId: 2,
       hasUniform: true,
     },
     {
@@ -25,7 +25,7 @@ function getTeams() {
       contactName: "Mr. Alex",
       contactPhone: "0123456789",
       contactEmail: "mailmail@gmail.com",
-      managerId: 1,
+      ownerId: 1,
     },
     {
       teamId: 2,
@@ -37,7 +37,7 @@ function getTeams() {
       contactName: "Mr. Alex",
       contactPhone: "0123456789",
       contactEmail: "mailmail@gmail.com",
-      managerId: 1,
+      ownerId: 1,
     },
     {
       teamId: 2,
@@ -49,7 +49,7 @@ function getTeams() {
       contactName: "Mr. Alex",
       contactPhone: "0123456789",
       contactEmail: "mailmail@gmail.com",
-      managerId: 1,
+      ownerId: 1,
     },
     {
       teamId: 2,
@@ -61,7 +61,7 @@ function getTeams() {
       contactName: "Mr. Alex",
       contactPhone: "0123456789",
       contactEmail: "mailmail@gmail.com",
-      managerId: 1,
+      ownerId: 1,
     },
     {
       teamId: 2,
@@ -73,7 +73,7 @@ function getTeams() {
       contactName: "Mr. Alex",
       contactPhone: "0123456789",
       contactEmail: "mailmail@gmail.com",
-      managerId: 1,
+      ownerId: 1,
     },
     {
       teamId: 2,
@@ -85,7 +85,7 @@ function getTeams() {
       contactName: "Mr. Alex",
       contactPhone: "0123456789",
       contactEmail: "mailmail@gmail.com",
-      managerId: 1,
+      ownerId: 1,
     },
   ];
 }
@@ -146,6 +146,7 @@ module.exports = {
     const teamId = req.params.teamId;
     const team = getTeams().find(team => team.teamId == teamId);
     if (!team) return next();
+    if (team.ownerId != user.id) return next(); // check if user is owner of this team, TODO: use middleware instead
     res.render('teams/team-edit', {
       title: team.name,
       useTransHeader: true,
@@ -162,6 +163,7 @@ module.exports = {
     const teamId = req.params.teamId;
     const team = getTeams().find(team => team.teamId == teamId);
     if (!team) return next();
+    if (team.ownerId != user.id) return next();// check if user is owner of this team, TODO: use middleware instead
     res.render('teams/team-edit-members', {
       title: team.name,
       useTransHeader: true,
@@ -179,6 +181,21 @@ module.exports = {
       title: "Tạo đội bóng",
       useTransHeader: true,
       user: user,
+    });
+  },
+
+  // GET /teams/:teamId/statistics => not implemented yet
+  getTeamStatistics: function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = getTeams().find(team => team.teamId == teamId);
+    if (!team) return next();
+    res.render('teams/team-statistics', {
+      title: team.name,
+      useTransHeader: true,
+      subNavigation: 2,
+      user: user,
+      team: team,
     });
   },
 

@@ -12,5 +12,16 @@ module.exports = {
     });
   },
 
+  // GET /management/tickets
+  getTicketManagement: function (req, res) {
+    const user = (req.isAuthenticated() ? req.user : null);
+    res.render('management/tickets', {
+      title: "Quản lý vé",
+      useTransHeader: true,
+      user: user,
+      subNavigation: 1,
+    });
+  },
+
 
 };
