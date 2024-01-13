@@ -12,4 +12,6 @@ router.get('/:teamId/members', controller.getTeamMembers);
 router.get('/:teamId/edit',/* */ controller.getEditTeam);
 router.get('/:teamId/edit/members',/* */ controller.getEditTeamMembers);
 
+router.get('/create',/* */ controller.getCreateTeam);
+
 module.exports = router;

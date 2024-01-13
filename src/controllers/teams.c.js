@@ -172,4 +172,14 @@ module.exports = {
     });
   },
 
+  // GET /teams/create
+  getCreateTeam: function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    res.render('teams/team-create', {
+      title: "Tạo đội bóng",
+      useTransHeader: true,
+      user: user,
+    });
+  },
+
 }
