@@ -10,5 +10,6 @@ router.get('/:teamId', controller.getTeam);
 router.get('/:teamId/members', controller.getTeamMembers);
 
 router.get('/:teamId/edit',/* */ controller.getEditTeam);
+router.get('/:teamId/edit/members',/* */ controller.getEditTeamMembers);
 
 module.exports = router;

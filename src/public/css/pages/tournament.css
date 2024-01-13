@@ -100,3 +100,8 @@ body {
 #table-leaderboard .text-danger {
   color: #f94e4e !important;
 }
+
+/* For all teams' cards */
+#teams>div>div:hover {
+  background-color: rgb(234, 234, 234);
+}

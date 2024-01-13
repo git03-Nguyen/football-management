@@ -1,15 +1,29 @@
-{{> management-header}}
+{{> teams-header}}
 
-<div class="bg-white-color px-5 py-3 text-center">
-  <div class="row mx-5 mb-2">
+<div class="bg-white-color px-5 py-4 text-center">
+  <div class="row mx-5 mb-0">
+
+    <div class="d-flex mb-3" id="sub-sub-navigation">
+      {{#ifEquals subSubNavigation 0}}
+      <a href="#" class="h6 fw-bold active">Thông tin</a>
+      {{else}}
+      <a href="/teams/{{team.teamId}}/edit" class="h6 fw-bold text-decoration-none">Thông tin</a>
+      {{/ifEquals}}
+
+      {{#ifEquals subSubNavigation 1}}
+      <a href="#" class="h6 fw-bold ms-3 active">Thành viên</a>
+      {{else}}
+      <a href="/teams/{{team.teamId}}/edit/members" class="h6 fw-bold ms-3 text-decoration-none">Thành viên</a>
+      {{/ifEquals}}
+    </div>
 
     <div class="d-flex justify-content-between align-items-end mb-1">
       <div class="text-muted m-0">
-        Hiển thị <strong>1</strong> đến <strong>10</strong> trong tổng số <strong>100</strong> đội.
+        Hiển thị <strong>1</strong> đến <strong>10</strong> trong tổng số <strong>100</strong> thành viên.
       </div>
       <button class="btn btn-success">
         <i class="fas fa-plus"></i>
-        <span class="ms-2">Thêm đội</span>
+        <span class="ms-1">Thêm người</span>
       </button>
     </div>
 
@@ -19,11 +33,11 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col"></th>
-            <th scope="col" class="text-start">Tên đội</th>
-            <th scope="col">Trình độ</th>
+            <th scope="col" class="text-start">Tên thành viên</th>
+            <th scope="col">Số áo</th>
+            <th scope="col">Năm sinh</th>
+            <th scope="col">Vị trí thi đấu</th>
             <th scope="col">Số điện thoại</th>
-            <th scope="col">Tên liên hệ</th>
-            <th scope="col">Đang tham gia</th>
             <th scope="col">Thao tác</th>
           </tr>
         </thead>
@@ -31,24 +45,18 @@
           <tr>
             <th scope="row">1</th>
             <td>
-              <img src="/img/teams/1/info/logo.png" alt="team-logo" height="40px" width="40px" class="rounded-circle">
+              <img src="/img/teams/1/Nguyễn Tiến Thái.png" alt="team-member" height="40px" width="40px"
+                class="rounded-circle">
             </td>
             <td class="text-start">
-              <a href="/teams/1">TSS FC</a>
+              <a href="/teams/1/members/1">Nguyễn Tiến Thái</a>
             </td>
-            <td>Chuyên nghiệp</td>
-            <td>0345678901</td>
-            <td>Mr. Ánh</td>
-            <td>
-              <a href="/tournament">Có</a>
-            </td>
+            <td>19</td>
+            <td>1960</td>
+            <td>GK, LB</td>
+            <td>0919987654</td>
             <td>
               <div class="d-flex align-items-center justify-content-center">
-                <a href="/teams/1/edit">
-                  <button class="btn btn-outline-dark">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                </a>
                 <button class="btn btn-outline-danger ms-2">
                   <i class="fas fa-trash-alt"></i>
                 </button>
