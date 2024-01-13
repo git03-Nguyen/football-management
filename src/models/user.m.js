@@ -17,7 +17,19 @@ module.exports = class UserModel {
     this.email = user.email;
     this.fullname = user.fullname;
     this.avatar = user.avatar;
-    this.birthday = user.birthday;
+    if (user.birthday) {
+      const date = new Date(user.birthday);
+      this.birthday = {};
+      this.birthday.dd = date.getDate();
+      if (this.birthday.dd < 10) {
+        this.birthday.dd = '0' + this.birthday.dd;
+      }
+      this.birthday.mm = date.getMonth() + 1;
+      if (this.birthday.mm < 10) {
+        this.birthday.mm = '0' + this.birthday.mm;
+      }
+      this.birthday.yyyy = date.getFullYear();
+    }
     this.phone = user.phone;
     this.introduction = user.introduction;
     this.isAdmin = user.privilege === 1;
