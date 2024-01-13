@@ -16,6 +16,9 @@ module.exports = function (app) {
   // "/teams?page=1", "/teams/:teamId"
   app.use('/teams', require('./teams.r'));
 
+  // "/management", "/management/tournament"
+  app.use('/management', require('./management.r'));
+
   // "/test" for testing
   app.get('/test', async function (req, res) {
     console.log(req.user);

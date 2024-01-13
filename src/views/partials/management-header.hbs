@@ -1,0 +1,47 @@
+{{#section 'style'}}
+<link rel="stylesheet" href="/css/pages/management.css">
+{{/section}}
+
+<div class="container-fluid mx-5">
+  <div class="my-3 mx-5 d-flex">
+    <img src="{{user.avatar}}" height="140" width="140" alt="" class="rounded me-4">
+    <div class="ml-3">
+      <div class="d-flex align-items-center mb-3">
+        <p class="h4 text-white my-0 fw-bold text-uppercase">{{user.fullname}}</p>
+        <a href="/profile">
+          <i class="fas fa-edit text-light h4 mb-0 ms-3 text-success"></i>
+        </a>
+      </div>
+      <p class="text-light mb-2"><strong>Email: </strong> {{user.email}}</p>
+      {{#if user.birthday}}
+      <p class="text-light mb-2"><strong>Ngày sinh: </strong>
+        {{user.birthday.dd}}/{{user.birthday.mm}}/{{user.birthday.yyyy}}</p>
+      {{else}}
+      <p class="text-light mb-2"><strong>Ngày sinh: </strong> <em>Chưa cập nhật</em></p>
+      {{/if}}
+      {{#if user.phone}}
+      <p class="text-light mb-2"><strong>SĐT: </strong> {{user.phone}}</p>
+      {{else}}
+      <p class="text-light mb-2"><strong>SĐT: </strong> <em>Chưa cập nhật</em></p>
+      {{/if}}
+
+    </div>
+  </div>
+
+  <div id="sub-navigation" class="d-flex justify-content-center align-items-center">
+
+    <a href="/management"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 0}}active{{/ifEquals}}">
+      <p class="h5">Quản lý đội</p>
+    </a>
+    <a href="/management/tickets"
+      class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 1}}active{{/ifEquals}}">
+      <p class="h5">Quản lý vé</p>
+    </a>
+    {{#if user.isAdmin}}
+    <a href="/tournament/modification" class="text-light fw-bold text-decoration-none me-4">
+      <p class="h5">Quản lý giải</p>
+    </a>
+    {{/if}}
+  </div>
+</div>

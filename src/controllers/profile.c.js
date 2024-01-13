@@ -14,9 +14,8 @@ module.exports = {
   // POST /profile/edit
   postEditProfile: function (req, res) {
     const user = (req.isAuthenticated() ? req.user : null);
-    // testing
     res.json({
-      data: req.body
+      data: req.body,
     });
   },
 

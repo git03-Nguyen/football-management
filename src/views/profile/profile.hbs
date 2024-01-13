@@ -10,7 +10,8 @@
     <p class="m-0 h4">Thông tin tài khoản</p>
   </div>
   <div>
-    <form action="/profile/edit" method="POST" enctype="multipart/form-data" class="row m-0 pt-4" id="profile-form">
+    <!--enctype="multipart/form-data" -->
+    <form action="/profile/edit" method="POST" class="row m-0 pt-4" id="profile-form">
 
       <div class="col-5 text-center">
         <div class="d-flex justify-content-center">
@@ -33,22 +34,22 @@
         <div class="d-flex justify-content-center align-items-center">
           <p class="m-0 text-end me-3 text-nowrap" style="width: 7rem !important;">Họ tên<span
               class="text-danger">(*)</span></p>
-          <input type="text" class="form-control bg-light text-muted" name="fullname" value="{{user.fullname}}"
-            required>
+          <input type="text" class="form-control bg-light text-muted" name="fullname" id="fullname"
+            value="{{user.fullname}}" required>
         </div>
         <div class="d-flex justify-content-center align-items-center mt-3">
           <p class="m-0 text-end me-3 text-nowrap" style="width: 7rem !important;">Ngày sinh</p>
-          <input type="date" class="form-control bg-light text-muted" name="birthday"
+          <input type="date" class="form-control bg-light text-muted" name="birthday" id="birthday"
             value="{{user.birthday.yyyy}}-{{user.birthday.mm}}-{{user.birthday.dd}}">
         </div>
         <div class="d-flex justify-content-center align-items-center mt-3">
           <p class="m-0 text-end me-3 text-nowrap" style="width: 7rem !important;">Điện thoại</p>
-          <input type="tel" class="form-control bg-light text-muted" name="phone" value="{{user.phone}}">
+          <input type="tel" class="form-control bg-light text-muted" name="phone" id="phone" value="{{user.phone}}">
         </div>
         <div class="d-flex justify-content-center align-items-start mt-3">
           <p class="m-0 text-end me-3 text-nowrap" style="width: 7rem !important;">Giới thiệu</p>
           {{!-- Multiline input --}}
-          <textarea class="form-control bg-light text-muted" name="introduction"
+          <textarea class="form-control bg-light text-muted" name="introduction" id="introduction"
             rows="3">{{user.introduction}}</textarea>
         </div>
         <div class="d-flex justify-content-center align-items-start mt-3">
