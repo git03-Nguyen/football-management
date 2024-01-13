@@ -13,6 +13,7 @@ function getTeams() {
       contactPhone: "0123456789",
       contactEmail: "mailmail@gmail.com",
       managerId: 2,
+      hasUniform: true,
     },
     {
       teamId: 2,
@@ -115,10 +116,25 @@ module.exports = {
     const teamId = req.params.teamId;
     const team = getTeams().find(team => team.teamId == teamId);
     if (!team) return next();
-    res.render('teams/team', {
+    res.render('teams/team-info', {
       title: team.name,
       useTransHeader: true,
       subNavigation: 0,
+      user: user,
+      team: team,
+    });
+  },
+
+  // GET /teams/:teamId/members
+  getTeamMembers: function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = getTeams().find(team => team.teamId == teamId);
+    if (!team) return next();
+    res.render('teams/team-members', {
+      title: team.name,
+      useTransHeader: true,
+      subNavigation: 1,
       user: user,
       team: team,
     });

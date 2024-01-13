@@ -13,3 +13,7 @@ body {
   text-decoration: underline;
   text-underline-offset: 0.4rem;
 }
+
+#all-members .card:hover {
+  background-color: rgb(245, 245, 245);
+}
