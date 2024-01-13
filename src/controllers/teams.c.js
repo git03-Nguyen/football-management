@@ -111,4 +111,18 @@ module.exports = {
     });
   },
 
+  // GET /teams/:teamId
+  getTeam: function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = getTeams().find(team => team.teamId == teamId);
+    if (!team) return next();
+    res.render('teams/team', {
+      title: team.name,
+      useTransHeader: false,
+      user: user,
+      team: team,
+    });
+  },
+
 }

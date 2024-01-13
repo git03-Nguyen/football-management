@@ -5,4 +5,6 @@ const controller = require('../controllers/teams.c');
 
 router.get('/', controller.getTeams);
 
+router.get('/:teamId', controller.getTeam);
+
 module.exports = router;

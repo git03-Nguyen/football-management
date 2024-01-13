@@ -22,3 +22,15 @@ a[href="/profile"] i.fa-edit {
 a[href="/profile"] i.fa-edit:hover {
   color: white !important;
 }
+
+/* For tables */
+table td,
+table th {
+  vertical-align: middle;
+}
+
+/* For pagination */
+#teams-pagination .active a {
+  background-color: #003071;
+  border-color: #003071;
+}

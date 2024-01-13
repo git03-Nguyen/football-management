@@ -4,15 +4,83 @@
   <div class="row mx-5 mb-2">
 
     <div class="d-flex justify-content-between align-items-end mb-1">
-      <p class="m-0 text-muted text-end">T-H-B: Thắng-Hoà-Bại</p>
-      <a href="/tournament/statistics/download">
-        <button class="btn btn-success">
-          <i class="fas fa-download"></i>
-          <span class="ms-2">Tải xuống</span>
-        </button>
-      </a>
+      <div class="text-muted m-0">
+        Hiển thị <strong>1</strong> đến <strong>10</strong> trong tổng số <strong>100</strong> đội.
+      </div>
+      <button class="btn btn-success">
+        <i class="fas fa-plus"></i>
+        <span class="ms-2">Thêm đội</span>
+      </button>
     </div>
 
+    <div class="table-responsive mt-3">
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col"></th>
+            <th scope="col" class="text-start">Tên đội</th>
+            <th scope="col">Trình độ</th>
+            <th scope="col">Số điện thoại</th>
+            <th scope="col">Tên liên hệ</th>
+            <th scope="col">Đang tham gia</th>
+            <th scope="col">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>
+              <img src="/img/teams/1/info/logo.png" alt="team-logo" height="40px" width="40px" class="rounded-circle">
+            </td>
+            <td class="text-start">
+              <a href="/teams/1">TSS FC</a>
+            </td>
+            <td>Chuyên nghiệp</td>
+            <td>0345678901</td>
+            <td>Mr. Ánh</td>
+            <td>
+              <a href="/tournament">Có</a>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <a href="/teams/1/edit">
+                  <button class="btn btn-outline-dark">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </a>
+                <button class="btn btn-outline-danger ms-2">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+    {{!-- Pagination --}}
+
+    <nav aria-label="Page navigation" class="mt-4" id="teams-pagination">
+      <ul class="pagination justify-content-center">
+        <li class="page-item {{#ifEquals this.page 1}}disabled{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{sum -1 this.page}}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {{#each (range 1 this.nOfPages)}}
+        <li class="page-item {{#ifEquals this ../page}}active" aria-current="page{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{this}}">{{this}}</a>
+        </li>
+        {{/each}}
+        <li class="page-item {{#ifEquals this.page this.nOfPages}}disabled{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{sum 1 this.page}}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
   </div>
-</div>
