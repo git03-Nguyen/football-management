@@ -412,4 +412,19 @@ module.exports = {
     });
   },
 
+  // GET /tournament/modifications/matches
+  getMatchesModifications: function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const tournament = getTournament();
+    res.render('tournament/modifications-matches', {
+      title: "Chỉnh sửa",
+      useTransHeader: true,
+      user: user,
+      tournament: tournament,
+      rounds: getMatches(),
+      subNavigation: 4,
+      subSubNavigation: 2,
+    });
+  },
+
 }
