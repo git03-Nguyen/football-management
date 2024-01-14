@@ -24,10 +24,97 @@
       {{#ifEquals subSubNavigation 3}}
       <a href="#" class="h6 fw-bold ms-3 active">Khác</a>
       {{else}}
-      <a href="/tournament/modifications/other" class="h6 fw-bold ms-3 text-decoration-none">Khác</a>
+      <a href="/tournament/modifications/others" class="h6 fw-bold ms-3 text-decoration-none">Khác</a>
       {{/ifEquals}}
     </div>
 
+    <div class="mb-1 mt-2 text-muted">
+      {{!-- Hiển thị <input>10</input> bản ghi trên một trang --}}
+      Hiển thị <strong>10</strong> bản ghi trên
+      một trang.
+
+    </div>
+
+    <div class="table-responsive mt-3" id="table-teams">
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col"></th>
+            <th scope="col" class="text-start">Tên đội</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Tên liên hệ</th>
+            <th scope="col">Số điện thoại</th>
+            <th scope="col">Email</th>
+            <th scope="col">Hồ sơ</th>
+            <th scope="col">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>
+              <img src="/img/teams/1/info/logo.png" alt="team-logo" height="40px" width="40px" class="rounded-circle">
+            </td>
+            <td class="text-start">
+              <a href="/teams/1">TSS FC</a>
+            </td>
+            <td>
+              <span class="badge bg-success">Đã duyệt</span>
+            </td>
+            <td>Mr. Ánh</td>
+            <td>0345678901</td>
+            <td>nguyendinhanhvlqt@gmail.com</td>
+            <td>
+              {{!-- Button download --}}
+              <a href="/teams/1/download">
+                <button class="btn btn-outline-dark">
+                  <i class="fas fa-download"></i>
+                </button>
+              </a>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <a>
+                  <button class="btn btn-outline-success" disabled>
+                    <i class="fas fa-check"></i>
+                  </button>
+                </a>
+                <a href="/teams/1/decline">
+                  <button class="btn btn-outline-danger ms-2">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </a>
+              </div>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+    {{!-- Pagination --}}
+
+    <nav aria-label="Page navigation" class="mt-4" id="teams-pagination">
+      <ul class="pagination justify-content-center">
+        <li class="page-item {{#ifEquals this.page 1}}disabled{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{sum -1 this.page}}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {{#each (range 1 this.nOfPages)}}
+        <li class="page-item {{#ifEquals this ../page}}active" aria-current="page{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{this}}">{{this}}</a>
+        </li>
+        {{/each}}
+        <li class="page-item {{#ifEquals this.page this.nOfPages}}disabled{{/ifEquals}}">
+          <a class="page-link" href="/teams?page={{sum 1 this.page}}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
 
 
