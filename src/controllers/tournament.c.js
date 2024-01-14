@@ -397,4 +397,19 @@ module.exports = {
     });
   },
 
+  // GET /tournament/modifications/teams
+  getTeamsModifications: function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const tournament = getTournament();
+    res.render('tournament/modifications-teams', {
+      title: "Chỉnh sửa",
+      useTransHeader: true,
+      user: user,
+      tournament: tournament,
+      teams: getAllTeams(),
+      subNavigation: 4,
+      subSubNavigation: 1,
+    });
+  },
+
 }
