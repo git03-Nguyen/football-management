@@ -15,6 +15,6 @@ router.get('/matches', controller.getMatches);
 router.get('/statistics', controller.getStatistics);
 router.get('/statistics/players', controller.getStatisticsPlayers);
 
-router.get('/modification', checkAdmin, controller.getModification);
+router.get('/modifications', /*checkAdmin,*/ controller.getModifications);
 
 module.exports = router;

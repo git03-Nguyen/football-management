@@ -105,3 +105,18 @@ body {
 #teams>div>div:hover {
   background-color: rgb(234, 234, 234);
 }
+
+/* For modifications */
+#choose-format {
+  background-color: rgb(234, 234, 234);
+}
+
+/* Make the svg (not-checked) black */
+#choose-format .btn-check:not(:checked)+.btn img {
+  filter: invert(1);
+}
+
+#choose-format .btn-check:checked+.btn {
+  background-color: #003071;
+  color: white;
+}

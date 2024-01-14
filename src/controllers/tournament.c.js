@@ -383,16 +383,17 @@ module.exports = {
     });
   },
 
-  // GET /tournament/modification
-  getModification: function (req, res) {
+  // GET /tournament/modifications
+  getModifications: function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = getTournament();
-    res.render('tournament/modification', {
+    res.render('tournament/modifications', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
       tournament: tournament,
       subNavigation: 4,
+      subSubNavigation: 0,
     });
   },
 
