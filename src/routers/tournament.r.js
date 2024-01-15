@@ -11,16 +11,18 @@ router.get('/teams', controller.getTeams);
 router.get('/teams/leaderboard', controller.getTeamsLeaderboard);
 
 router.get('/matches', controller.getMatches);
+router.get('/matches/:id', controller.getMatchById);
 
 router.get('/statistics', controller.getStatistics);
 router.get('/statistics/players', controller.getStatisticsPlayers);
 
-router.get('/modifications', /*checkAdmin,*/ controller.getModifications);
-router.get('/modifications/teams', /*checkAdmin,*/ controller.getTeamsModifications);
-router.get('/modifications/matches', /*checkAdmin,*/ controller.getMatchesModifications);
+// admin
+router.get('/modifications', checkAdmin, controller.getModifications);
+router.get('/modifications/teams', checkAdmin, controller.getTeamsModifications);
+router.get('/modifications/matches', checkAdmin, controller.getMatchesModifications);
 
-router.get('/matches/:id', controller.getMatchById);
-router.get('/matches/:id/edit', /*checkAdmin,*/ controller.getMatchByIdEdit);
-router.get('/matches/:id/edit/players', /*checkAdmin,*/ controller.getMatchByIdEditPlayers);
+router.get('/matches/:id/edit', checkAdmin, controller.getMatchByIdEdit);
+router.get('/matches/:id/edit/players', checkAdmin, controller.getMatchByIdEditPlayers);
+router.get('/matches/:id/edit/tickets', checkAdmin, controller.getMatchByIdEditTickets); // => Not implemente
 
 module.exports = router;
