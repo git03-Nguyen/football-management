@@ -8,11 +8,7 @@
     <div class="ml-3">
       <div class="d-flex align-items-center mb-3">
         <p class="h4 text-white my-0 fw-bold text-uppercase">{{tournament.name}}</p>
-        {{#if tournament.isFree}}
         <button id="btnFree" class="ms-3" disabled>FREE</button>
-        {{else}}
-        <button id="btnTicket" class="ms-3">TICKET</button>
-        {{/if}}
       </div>
       <p class="text-light mb-1"><strong>Thể thức: </strong> Bóng đá sân {{tournament.nOfPlayers}} ||
         {{tournament.format}}</p>

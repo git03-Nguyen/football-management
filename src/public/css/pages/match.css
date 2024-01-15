@@ -1,0 +1,129 @@
+body {
+  background-color: #1f2d3e;
+}
+
+#btnFree {
+  height: 1.5rem;
+  padding: 0.1rem 0.8rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #34A853;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* For sub-nav */
+#sub-navigation p {
+  color: #cccccc;
+}
+
+#sub-navigation p:hover,
+#sub-navigation a.active p {
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}
+
+/* For top scorers */
+.top-scorer img.avatar {
+  border-color: #003071 !important;
+}
+
+/* For team logo in top scrorer */
+.top-scorer img.position-absolute {
+  border-color: white !important;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+
+.top-scorer span.position-absolute {
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 25px;
+  height: 25px;
+  color: white;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 3px;
+}
+
+/* For general statistics */
+.row-statistics {
+  margin-top: 1rem;
+}
+
+/* For sub-sub-navigation */
+#sub-sub-navigation a {
+  text-underline-offset: 0.2rem;
+}
+
+#sub-sub-navigation a:hover {
+  text-decoration: underline;
+}
+
+#sub-sub-navigation a.active {
+  text-decoration: underline !important;
+}
+
+/* For leaderboard table */
+#table-leaderboard {
+  /* background is /img/home/banner-home.webp */
+  background: url('/img/home/banner-home.webp') no-repeat center center;
+  background-size: cover;
+  padding: 0;
+  border-radius: 8px;
+}
+
+#table-leaderboard table thead th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#table-leaderboard table tbody td,
+#table-leaderboard table tbody th {
+  color: white;
+  background-color: transparent;
+  vertical-align: middle;
+}
+
+#table-leaderboard table tbody td a {
+  color: white;
+  text-decoration: none;
+}
+
+#table-leaderboard .text-success {
+  color: #3fc663 !important;
+}
+
+#table-leaderboard .text-danger {
+  color: #f94e4e !important;
+}
+
+/* For all teams' cards */
+#teams>div>div:hover {
+  background-color: rgb(234, 234, 234);
+}
+
+/* For modifications */
+#choose-format {
+  background-color: rgb(234, 234, 234);
+}
+
+/* Make the svg (not-checked) black */
+#choose-format .btn-check:not(:checked)+.btn img {
+  filter: invert(1);
+}
+
+#choose-format .btn-check:checked+.btn {
+  background-color: #003071;
+  color: white;
+}
+
+/* For modifications/teams */
+#table-teams td,
+#table-teams th {
+  vertical-align: middle;
+  text-align: center;
+}

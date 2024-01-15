@@ -427,4 +427,35 @@ module.exports = {
     });
   },
 
+  // GET /tournament/matches/:id
+  getMatchById: function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const tournament = getTournament();
+    const matchId = req.params.id;
+    res.render('tournament/matches/match', {
+      title: "Trận đấu",
+      useTransHeader: true,
+      user: user,
+      tournament: tournament,
+      // match: getMatches()[0].dates[0].matches[0],
+      subNavigation: 0,
+    });
+  },
+
+  // GET /tournament/matches/:id/edit
+  getMatchByIdEdit: function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const tournament = getTournament();
+    const matchId = req.params.id;
+    res.render('tournament/matches/match-edit', {
+      title: "Chỉnh sửa trận đấu",
+      useTransHeader: true,
+      user: user,
+      tournament: tournament,
+      // match: getMatches()[0].dates[0].matches[0],
+      subNavigation: 1,
+    });
+  },
+
+
 }
