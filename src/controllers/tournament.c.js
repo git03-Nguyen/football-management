@@ -476,7 +476,6 @@ module.exports = {
 
   // GET /tournament/matches/:id/edit/tickets => Not implement
   getMatchByIdEditTickets: function (req, res) {
-    console.log("hello");
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = getTournament();
     const matchId = req.params.id;
