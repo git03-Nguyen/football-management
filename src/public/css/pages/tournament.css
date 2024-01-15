@@ -122,8 +122,8 @@ body {
 }
 
 /* For modifications/teams */
-#table-teams td,
-#table-teams th {
+table td,
+table th {
   vertical-align: middle;
   text-align: center;
 }

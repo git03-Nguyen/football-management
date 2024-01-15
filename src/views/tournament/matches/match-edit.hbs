@@ -2,193 +2,248 @@
 <div class="bg-white-color p-5 text-center">
   <div class="row mx-5">
 
-    <div class="col-4">
+    <div class="d-flex mb-3" id="sub-sub-navigation">
+      {{#ifEquals subSubNavigation 0}}
+      <a class="h6 fw-bold active">Thông số</a>
+      {{else}}
+      <a href="/tournament/matches/1/edit" class="h6 fw-bold text-decoration-none">Thông số</a>
+      {{/ifEquals}}
 
-      <div>
-        <!-- Counter -->
-        <div class="d-flex align-items-center text-primary-color mb-3">
-          <i class="fas fa-futbol fa-2x me-2"></i>
-          <p class="h5 m-0 fw-bold ">Sắp diễn ra</p>
-        </div>
-        <div class="row row-cols-4 m-0 mb-3 text-light">
-          <div class="col px-1">
-            <div class="bg-primary-color p-2 rounded">
-              <p class="m-0 display-1 fw-bold">0</p>
-              <p class="m-0 h4 fw-bold">ngày</p>
-            </div>
-          </div>
-          <div class="col px-1">
-            <div class="bg-primary-color p-2 rounded">
-              <p class="m-0 display-1 fw-bold">0</p>
-              <p class="m-0 h4 fw-bold">giờ</p>
-            </div>
-          </div>
-          <div class="col px-1">
-            <div class="bg-primary-color p-2 rounded">
-              <p class="m-0 display-1 fw-bold">0</p>
-              <p class="m-0 h4 fw-bold">phút</p>
-            </div>
-          </div>
-          <div class="col px-1">
-            <div class="bg-primary-color p-2 rounded">
-              <p class="m-0 display-1 fw-bold">0</p>
-              <p class="m-0 h4 fw-bold">giây</p>
-            </div>
-          </div>
-        </div>
+      {{#ifEquals subSubNavigation 1}}
+      <a class="h6 fw-bold ms-3 active">Đội hình</a>
+      {{else}}
+      <a href="/tournament/matches/1/edit/players" class="h6 fw-bold ms-3 text-decoration-none">Đội hình</a>
+      {{/ifEquals}}
 
-        <hr class="hr">
-
-        <!-- Stadium -->
-        <div class="d-flex align-items-center text-primary-color mb-3">
-          <i class="fas fa-location-dot fa-2x me-2"></i>
-          <p class="h5 m-0 fw-bold ">Địa điểm trận đấu</p>
-        </div>
-
-        <p class="mb-1 text-start"><strong>Địa điểm:</strong> Sân vận động Quân khu 7, số 2A, Đ. Phan Đình Giót, Phường
-          2, Tân
-          Bình, TP. HCM.
-        </p>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.635863047679!2d106.6797512748567!3d10.762521589385393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1bfc262bf1%3A0x4e843897f2900135!2zMjI3IMSQLiBOZ3V54buFbiBWxINuIEPhu6ssIFBoxrDhu51uZyA0LCBRdeG6rW4gNSwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1704601347126!5m2!1sen!2s"
-          class="border-0 w-100 mb-3" height="200" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-
-        <!-- Leaderboard -->
-        <div class="d-flex align-items-center text-primary-color mb-3">
-          <i class="fas fa-medal fa-2x me-2"></i>
-          <p class="h5 m-0 fw-bold ">Bảng xếp hạng</p>
-        </div>
-        <table class="table table-hover rounded mb-3">
-          <tbody>
-
-            {{#each stats.leaderboard}}
-
-            <tr>
-              <th scope="row" class="py-2 pt-3 fw-normal text-start">{{#sum @index 1}}{{/sum}}</th>
-              <td class="py-2 pt-3">
-                <div class="d-flex align-items-center">
-                  <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" class="me-2" height="25" width="25">
-                  <a href="/teams/{{this.teamId}}" class="text-decoration-none h6 align-bottom mb-0">{{this.name}}</a>
-                </div>
-              </td>
-              <td class="py-2 pt-3 fw-bold text-end">{{this.score}} điểm</td>
-            </tr>
-
-            {{/each}}
-
-          </tbody>
-        </table>
-        <a href="/tournament/teams">
-          <button class="btn btn-primary w-100 mb-5">
-            <i class="fas fa-medal me-2"></i>
-            Xem chi tiết
-          </button>
-        </a>
-
-      </div>
-
+      {{#ifEquals subSubNavigation 2}}
+      <a class="h6 fw-bold ms-3 active">Bán vé</a>
+      {{else}}
+      <a href="/tournament/matches/1/edit/tickets" class="h6 fw-bold ms-3 text-decoration-none">Bán vé</a>
+      {{/ifEquals}}
     </div>
 
-    <div class="col-8 ps-4">
-      <!-- ra sân -->
-      <div class="d-flex align-items-center text-primary-color mb-3">
-        <i class="fas fa-users fa-2x me-2"></i>
-        <p class="h5 m-0 fw-bold ">Đội hình ra sân</p>
-      </div>
-      <div class="table-responsive mb-3" id="table-leaderboard">
-        <table class="table table-hover table-borderless rounded mb-1">
-          <thead>
-            <tr>
-              <th scope="col" class="bg-yellow-color fw-normal text-light align-middle">#</th>
-              <th scope="col" class="bg-yellow-color fw-normal text-light text-uppercase">
-                <img src="/img/teams/1/info/logo.png" alt="" height="35" class="d-inline me-1">
-                FC HDT
-              </th>
-              <th scope="col" class="bg-yellow-color fw-normal text-light text-uppercase">
-                <img src="/img/teams/1/info/logo.png" alt="" height="35" class="d-inline me-1">
-                FC Liên Quân
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr>
-              <th scope="row" class="fw-normal">1</th>
-              <td>
-                Nguyễn Tiến Thái (19)
-              </td>
-              <td>
-                Thanh An Thắng (23)
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" class="fw-normal">1</th>
-              <td>
-                Nguyễn Tiến Thái (19)
-              </td>
-              <td>
-                Thanh An Thắng (23)
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
-
-      <!-- chi tiết -->
+    <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex align-items-center text-primary-color mb-3">
         <i class="fas fa-file-lines fa-2x me-2"></i>
-        <p class="h5 m-0 fw-bold ">Chi tiết trận đấu</p>
+        <p class="h5 m-0 fw-bold ">Thống kê bàn thắng</p>
       </div>
-      <div class="mb-3 text-start">
-        <p class="m-0"><strong>00'00'':</strong> Trận đấu bắt đầu!</p>
-        <p class="m-0"><strong>05'01'':</strong> Tỉ số 0-1 bởi LÊ ĐÌNH NGUYÊN!</p>
-        <p class="m-0"><strong>36'00'':</strong> Tỉ số 1-1 bởi Nguyễn Văn Dương!</p>
-        <p class="m-0"><strong>42'00'':</strong> Tỉ số 2-1 bởi Phạm Văn Vỹ!</p>
-        <p class="m-0"><strong>42'54'':</strong> Thẻ vàng LÊ ĐÌNH NGUYÊN!</p>
-        <p class="m-0"><strong>50'00'':</strong> Tỉ số 3-1 bởi Nguyễn Văn Đức!</p>
-        <p class="m-0"><strong>54'05'':</strong> Tỉ số 4-1 bởi Nguyễn Thế Hưng!</p>
-        <p class="m-0"><strong>90'05:</strong> Trận đấu kết thúc!</p>
-      </div>
+      <button class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        Thêm
+      </button>
+    </div>
 
-      <!-- thống kê -->
+    <div class="my-3" id="table-goals">
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="text-start">Đội bóng</th>
+            <th scope="col">Ghi bàn</th>
+            <th scope="col">Kiến tạo</th>
+            <th scope="col">Số phút</th>
+            <th scope="col">Phản lưới nhà</th>
+            <th scope="col">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td class="text-start" style="width: 10rem;">
+
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 10rem;">
+                  Chọn đội
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 10rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">TSS FC</a>
+
+                </div>
+              </div>
+            </td>
+            <td class="text-start" style="width: 15rem;">
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
+                  Cầu thủ ghi bàn
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
+
+                </div>
+              </div>
+            </td>
+            <td class="text-start" style="width: 15rem;">
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
+                  Cầu thủ kiến tạo
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
+
+                </div>
+              </div>
+            </td>
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+              </div>
+            </td>
+            <td>
+              <input type="checkbox" name="isOwnGoal" id="isOwnGoal" class="">
+            </td>
+            <td>
+              <a href="">
+                <button class="btn btn-outline-danger">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </a>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+    {{!-- Cards --}}
+    <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex align-items-center text-primary-color mb-3">
-        <i class="fas fa-chart-line fa-2x me-2"></i>
-        <p class="h5 m-0 fw-bold ">Thống kê trận đấu</p>
+        <i class="fas fa-file-lines fa-2x me-2"></i>
+        <p class="h5 m-0 fw-bold ">Thống kê thẻ vàng/đỏ</p>
       </div>
-      <div class="d-flex justify-content-center">
-        <div class="w-50">
-          <div class="d-flex justify-content-around align-items-center mb-1">
-            <img src="/img/teams/1/info/logo.png" alt="" height="50">
-            <p class="m-0 h5 fw-bold text-primary-color">| V.S |</p>
-            <img src="/img/teams/1/info/logo.png" alt="" height="50">
-          </div>
-          <div class="d-flex justify-content-between align-items-center fw-bold">
-            <p class="m-0 text-success">0</p>
-            <p class="m-0">Thẻ vàng</p>
-            <p class="m-0 text-danger">1</p>
-          </div>
-          <hr class="hr mt-0">
-          <div class="d-flex justify-content-between align-items-center fw-bold">
-            <p class="m-0 text-success">0</p>
-            <p class="m-0">Thẻ đỏ</p>
-            <p class="m-0 text-success">0</p>
-          </div>
-          <hr class="hr mt-0">
-          <div class="d-flex justify-content-between align-items-center fw-bold">
-            <p class="m-0 text-success">0</p>
-            <p class="m-0">Phạt đền</p>
-            <p class="m-0 text-danger">1</p>
-          </div>
-          <hr class="hr mt-0">
+      <button class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        Thêm
+      </button>
+    </div>
+
+    <div class="my-3" id="table-cards">
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="text-start">Đội bóng</th>
+            <th scope="col">Cầu thủ</th>
+            <th scope="col">Số phút</th>
+            <th scope="col">Thẻ đỏ</th>
+            <th scope="col">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td class="text-start" style="width: 15rem">
+
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
+                  Chọn đội
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">TSS FC</a>
+
+                </div>
+              </div>
+            </td>
+            <td class="text-start" style="width: 15rem;">
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
+                  Cầu thủ nhận thẻ
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
+
+                </div>
+              </div>
+            </td>
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+              </div>
+            </td>
+            <td>
+              <input type="checkbox" name="isRedCard" id="isRedCard" class="">
+            </td>
+            <td>
+              <a href="">
+                <button class="btn btn-outline-danger">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </a>
+            </td>
+          </tr>
 
 
-        </div>
+        </tbody>
+      </table>
+    </div>
+
+    {{!-- Penalties --}}
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center text-primary-color mb-3">
+        <i class="fas fa-file-lines fa-2x me-2"></i>
+        <p class="h5 m-0 fw-bold ">Thống kê phạt đền</p>
       </div>
+      <button class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        Thêm
+      </button>
+    </div>
+
+    <div class="my-3" id="table-penalties">
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="text-start">Đội bóng</th>
+            <th scope="col">Thực hiện</th>
+            <th scope="col">Số phút</th>
+            <th scope="col">Bàn thắng</th>
+            <th scope="col">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="6">
+              <p class="text-muted mb-0"><em>Không có dữ liệu.</em></p>
+            </td>
+          </tr>
 
 
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-primary">
+        <i class="fas fa-save me-1"></i>
+        Lưu
+      </button>
     </div>
 
   </div>

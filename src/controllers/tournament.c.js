@@ -454,6 +454,7 @@ module.exports = {
       tournament: tournament,
       // match: getMatches()[0].dates[0].matches[0],
       subNavigation: 1,
+      subSubNavigation: 0,
     });
   },
 
