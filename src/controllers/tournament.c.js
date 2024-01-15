@@ -458,5 +458,21 @@ module.exports = {
     });
   },
 
+  // GET /tournament/matches/:id/edit/players
+  getMatchByIdEditPlayers: function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const tournament = getTournament();
+    const matchId = req.params.id;
+    res.render('tournament/matches/match-edit-players', {
+      title: "Chỉnh sửa trận đấu",
+      useTransHeader: true,
+      user: user,
+      tournament: tournament,
+      // match: getMatches()[0].dates[0].matches[0],
+      subNavigation: 1,
+      subSubNavigation: 1,
+    });
+  },
+
 
 }

@@ -21,5 +21,6 @@ router.get('/modifications/matches', /*checkAdmin,*/ controller.getMatchesModifi
 
 router.get('/matches/:id', controller.getMatchById);
 router.get('/matches/:id/edit', /*checkAdmin,*/ controller.getMatchByIdEdit);
+router.get('/matches/:id/edit/players', /*checkAdmin,*/ controller.getMatchByIdEditPlayers);
 
 module.exports = router;

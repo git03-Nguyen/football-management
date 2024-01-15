@@ -1,0 +1,209 @@
+{{> match-header}}
+<div class="bg-white-color p-5 text-center">
+  <div class="row mx-5">
+
+    <div class="d-flex mb-3" id="sub-sub-navigation">
+      {{#ifEquals subSubNavigation 0}}
+      <a class="h6 fw-bold active">Thông số</a>
+      {{else}}
+      <a href="/tournament/matches/1/edit" class="h6 fw-bold text-decoration-none">Thông số</a>
+      {{/ifEquals}}
+
+      {{#ifEquals subSubNavigation 1}}
+      <a class="h6 fw-bold ms-3 active">Đội hình</a>
+      {{else}}
+      <a href="/tournament/matches/1/edit/players" class="h6 fw-bold ms-3 text-decoration-none">Đội hình</a>
+      {{/ifEquals}}
+
+      {{#ifEquals subSubNavigation 2}}
+      <a class="h6 fw-bold ms-3 active">Bán vé</a>
+      {{else}}
+      <a href="/tournament/matches/1/edit/tickets" class="h6 fw-bold ms-3 text-decoration-none">Bán vé</a>
+      {{/ifEquals}}
+    </div>
+
+    {{!-- First team --}}
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center align-items-center text-primary-color mb-3">
+        <img src="/img/teams/1/info/logo.png" height="35" class="me-2" alt="">
+        <p class="h5 m-0 fw-bold ">FC HDT</p>
+      </div>
+      <button class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        Thêm
+      </button>
+    </div>
+
+    <div class="my-3" id="table-goals">
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="text-start">Cầu thủ trên sân</th>
+            <th scope="col">Thời gian vào</th>
+            <th scope="col">Thời gian ra</th>
+            <th scope="col">Thay cho cầu thủ</th>
+            <th scope="col">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+
+            <td class="text-start" style="width: 15rem;">
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
+                  Cầu thủ trên sân
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
+
+                </div>
+              </div>
+            </td>
+
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+              </div>
+            </td>
+
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+              </div>
+            </td>
+
+            <td class="text-start" style="width: 15rem;">
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
+                  -
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
+
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <a href="">
+                <button class="btn btn-outline-danger">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </a>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+    {{!-- Second team --}}
+    <div class="d-flex justify-content-between align-items-center mt-2">
+      <div class="d-flex align-items-center align-items-center text-primary-color mb-3">
+        <img src="/img/teams/1/info/logo.png" height="35" class="me-2" alt="">
+        <p class="h5 m-0 fw-bold ">FC HDT</p>
+      </div>
+      <button class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        Thêm
+      </button>
+    </div>
+
+    <div class="my-3" id="table-goals">
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="text-start">Cầu thủ trên sân</th>
+            <th scope="col">Thời gian vào</th>
+            <th scope="col">Thời gian ra</th>
+            <th scope="col">Thay cho cầu thủ</th>
+            <th scope="col">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+
+            <td class="text-start" style="width: 15rem;">
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
+                  Cầu thủ trên sân
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
+
+                </div>
+              </div>
+            </td>
+
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+              </div>
+            </td>
+
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+              </div>
+            </td>
+
+            <td class="text-start" style="width: 15rem;">
+              <div class="dropdown open">
+                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
+                  -
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+
+                  {{!-- {{#each this.teams}}
+                  <a class="dropdown-item" href="#">{{this}}</a>
+                  {{/each}} --}}
+                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
+
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <a href="">
+                <button class="btn btn-outline-danger">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </a>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-center mt-2">
+      <button class="btn btn-primary">
+        <i class="fas fa-save"></i>
+        Lưu
+      </button>
+    </div>
+
+  </div>
+</div>
