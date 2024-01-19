@@ -10,6 +10,13 @@ module.exports = {
     return await db.pool.query(query);
   },
 
+  countActive: async () => {
+    const query = `
+      SELECT COUNT(*) FROM tournaments WHERE is_closed = false;
+    `;
+    return await db.pool.query(query);
+  },
+
   getCurrentTournament: async () => {
     const query = `
       SELECT * FROM tournaments;

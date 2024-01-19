@@ -1,3 +1,4 @@
+const { checkTournament } = require('../utils/tournament-helper');
 
 module.exports = function (app) {
 
@@ -11,13 +12,13 @@ module.exports = function (app) {
   app.use('/profile', require('./profile.r'));
 
   // "/tournament/", "tournament/teams", "tournament/teams/leaderboard", "tournament/matches", "tournament/statistics", "tournament/statistics/players"
-  app.use('/tournament', require('./tournament.r'));
+  app.use('/tournament', checkTournament, require('./tournament.r'));
 
   // "/teams?page=1", "/teams/:teamId"
-  app.use('/teams', require('./teams.r'));
+  app.use('/teams', checkTournament, require('./teams.r'));
 
   // "/management", "/management/tournament"
-  app.use('/management', require('./management.r'));
+  app.use('/management', checkTournament, require('./management.r'));
 
   // "/test" for testing
   app.get('/test', async function (req, res) {

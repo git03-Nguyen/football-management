@@ -41,6 +41,12 @@ module.exports = class TournamentModel {
     return result.rows[0].count;
   }
 
+  // count number of active tournaments
+  static async countActive() {
+    const result = await dbTournaments.countActive();
+    return result.rows[0].count;
+  }
+
   // Create a new tournament
   static async create(tournament) {
     const result = await dbTournaments.create(tournament);

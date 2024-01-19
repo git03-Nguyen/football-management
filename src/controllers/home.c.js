@@ -25,4 +25,14 @@ module.exports = {
     });
   },
 
+  // GET /create
+  getCreate: function (req, res) {
+    const user = (req.isAuthenticated() ? req.user : null);
+    res.render('tournament/create', {
+      title: "Tạo giải đấu",
+      useTransHeader: false,
+      user: user,
+    });
+  },
+
 }

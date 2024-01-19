@@ -1,0 +1,194 @@
+{{> tournament-header}}
+<div class="bg-white-color">
+  <div class="row mx-5 px-5 pt-3">
+
+    <form action="/tournament/modifications" method="POST" id="tournament-form">
+
+      <div class="mt-2 position-relative text-center py-2">
+        <img src="/img/tournament/banner-hdt-league.png" alt="" height="300px" class="object-fit-cover mt-3 mw-100"
+          id="banner-img">
+        <div class="position-absolute bottom-0 end-0">
+          <label for="banner" class="btn btn-light border border-3 border-light p-2 m-0"><i
+              class="fas fa-camera fa-2x"></i></label>
+          <input type="file" name="banner" id="banner" class="d-none" accept="image/png, image/jpeg">
+        </div>
+      </div>
+
+      <div>
+        <div class="d-flex align-items-center text-primary-color mb-3">
+          <i class="fas fa-futbol fa-2x me-2"></i>
+          <p class="h5 m-0 fw-bold ">Thông tin cơ bản</p>
+        </div>
+
+        <div class="row m-0">
+
+          <div class="col-4 px-0">
+            <div class="text-muted mb-3">Logo giải đấu <span class="text-danger">(*)</span></div>
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="position-relative" style="width: fit-content;">
+                <img src="/img/tournament/logo-hdt-league.png" alt="" height="250" width="250"
+                  class="rounded object-fit-cover" id="logo-img">
+                <div class="position-absolute bottom-0 end-0">
+                  <label for="logo"
+                    class="btn btn-outline-light d-flex justify-content-center align-items-center rounded-circle"
+                    style="width: 3rem; height: 3rem;">
+                    <i class="fas fa-camera"></i>
+                  </label>
+                  <input type="file" name="logo" id="logo" class="d-none" accept="image/png, image/jpeg">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-8 px-0">
+            <div class="mb-3">
+              <div class="text-muted mb-1">Tên giải đấu <span class="text-danger">(*)</span></div>
+              <input type="text" class="form-control bg-light text-muted" name="name" id="name"
+                value="{{tournament.name}}" required>
+            </div>
+
+            <div class="row m-0 mb-3">
+              <div class="col-7 p-0">
+                <div class="text-muted mb-1">Tên người liên hệ <span class="text-danger">(*)</span></div>
+                <input type="text" class="form-control bg-light text-muted" name="contactName" id="contactName"
+                  value="{{tournament.contactName}}" required>
+              </div>
+              <div class="col-5 pe-0 ps-3">
+                <div class="text-muted mb-1">Số điện thoại <span class="text-danger">(*)</span></div>
+                <input type="number" class="form-control bg-light text-muted" name="contactPhone" id="contactPhone"
+                  value="{{tournament.contactPhone}}" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="text-muted mb-1">Địa điểm <span class="text-danger">(*)</span></div>
+              <input type="text" class="form-control bg-light text-muted" name="place" id="place"
+                value="{{tournament.place}}" required>
+            </div>
+
+            <div class="mb-3">
+              <div class="text-muted mb-1">Google Maps</div>
+              <input type="text" class="form-control bg-light text-muted" name="mapURL" id="mapURL"
+                value="{{tournament.mapURL}}" required>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="mt-2">
+        <div class="d-flex align-items-center text-primary-color mb-3">
+          <i class="fas fa-futbol fa-2x me-2"></i>
+          <p class="h5 m-0 fw-bold ">Thể thức thi đấu</p>
+        </div>
+
+        <div class="row m-0 rounded bg-white-color mb-3" id="choose-format">
+          <div class="col-4 p-0 text-center">
+            <input type="radio" name="format" id="round-robin" value="round-robin" autocomplete="off" class="btn-check "
+              checked>
+            <label for="round-robin"
+              class="btn rounded-end-0 d-flex flex-column justify-content-center align-items-center p-2">
+              <img src="/img/icons/ic-davongtron.svg" alt="" height="100" width="100">
+              <p class="m-0 mt-2 fw-bold">Đá vòng tròn</p>
+            </label>
+          </div>
+
+          <div class="col-4 p-0 text-center">
+            <input type="radio" name="format" id="direct-elimination" value="direct-elimination" autocomplete="off"
+              class="btn-check ">
+            <label for="direct-elimination"
+              class="btn rounded-0 d-flex flex-column justify-content-center align-items-center p-2">
+              <img src="/img/icons/ic-loaitructiep.svg" alt="" height="100" width="100">
+              <p class="m-0 mt-2 fw-bold">Loại trực tiếp</p>
+            </label>
+          </div>
+
+          <div class="col-4 p-0">
+            <input type="radio" name="format" id="boards" value="boards" autocomplete="off" class="btn-check ">
+            <label for="boards"
+              class="btn rounded-start-0 d-flex flex-column justify-content-center align-items-center p-2">
+              <img src="/img/icons/ic-chiabangdau.svg" alt="" height="100" width="100">
+              <p class="m-0 mt-2 fw-bold">Chia bảng đấu</p>
+            </label>
+          </div>
+        </div>
+
+        <div class="row m-0 mb-3">
+          <div class="col-6 p-0">
+            <div class="text-muted mb-1">Số đội tham gia <span class="text-danger">(*)</span></div>
+            <input type="number" class="form-control bg-light text-muted" name="nOfTeams" id="nOfTeams"
+              value="{{tournament.nOfTeams}}" required>
+          </div>
+          <div class="col-6 pe-0 ps-3">
+            <div class="text-muted mb-1">Số cầu thủ ra sân <span class="text-danger">(*)</span></div>
+            <input type="number" class="form-control bg-light text-muted" name="nOfPlayers" id="nOfPlayers"
+              value="{{tournament.nOfPlayers}}" required>
+          </div>
+        </div>
+
+        <div class="alert alert-success" role="alert">
+          Đối với cấu hình này, số lượng trận đấu của giải là: <span class="fw-bold">10</span> trận.
+        </div>
+
+      </div>
+
+      <div class="mt-4">
+        <div class="d-flex align-items-center text-primary-color mb-3">
+          <i class="fas fa-futbol fa-2x me-2"></i>
+          <p class="h5 m-0 fw-bold ">Thông tin khác</p>
+        </div>
+
+        <div class="mb-3">
+          <div class="text-muted mb-1">Điều lệ giải đấu <span class="text-danger">(*)</span></div>
+          <input type="text" class="form-control bg-light text-muted" name="rulesURL" id="rulesURL"
+            value="{{tournament.rulesURL}}" required>
+        </div>
+
+        <div class="mb-3">
+          <div class="text-muted mb-1">Giới thiệu giải đấu</div>
+          <textarea name="description" id="description" cols="30" rows="8"
+            class="form-control bg-light text-muted">{{tournament.description}}</textarea>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        {{!-- Submit --}}
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary">Tạo giải đấu</button>
+        </div>
+      </div>
+
+
+    </form>
+
+
+
+  </div>
+</div>
+
+<script>
+  const profileForm = document.getElementById('tournament-form');
+  const banner = document.getElementById('banner');
+  const bannerImg = document.querySelector('#banner-img');
+  banner.addEventListener('change', () => {
+    const file = banner.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      bannerImg.src = reader.result;
+    }
+    reader.readAsDataURL(file);
+  });
+
+  const logo = document.getElementById('logo');
+  const logoImg = document.querySelector('#logo-img');
+  logo.addEventListener('change', () => {
+    const file = logo.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      logoImg.src = reader.result;
+    }
+    reader.readAsDataURL(file);
+  })
+</script>
