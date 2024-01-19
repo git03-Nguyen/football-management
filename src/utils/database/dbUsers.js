@@ -55,6 +55,9 @@ module.exports = {
   },
 
   updateUserInfo: async (id, fullname, birthday, phone, introduction) => {
+    if (birthday.length == 0) { birthday = null; }
+    if (phone.length == 0) { phone = null; }
+    if (introduction.length == 0) { introduction = null; }
     const query = `
       UPDATE users SET fullname = $1, birthday = $2, phone = $3, introduction = $4 WHERE id = $5;
     `;
