@@ -54,30 +54,20 @@ module.exports = {
     return await db.pool.query(query, [email.toLowerCase()]);
   },
 
-  updateUserInfo: (id, email, fullname, birthday, phone, introduction) => {
+  updateUserInfo: async (id, fullname, birthday, phone, introduction) => {
     const query = `
-      UPDATE users SET email = $1, fullname = $2, birthday = $3, phone = $4, introduction = $5 WHERE id = $6;
+      UPDATE users SET fullname = $1, birthday = $2, phone = $3, introduction = $4 WHERE id = $5;
     `;
-    return db.pool.query(query, [email.toLowerCase(), fullname, birthday, phone, introduction, id], (err, res) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log(res.rows[0]);
-      }
-    });
+    return await db.pool.query(query, [fullname, birthday, phone, introduction, id]);
   },
 
-  updateUserAvatar: (id, avatar) => {
+  updateUserAvatar: async (id, avatar) => {
     const query = `
-      UPDATE users SET avatar = $1 WHERE id = $2;
-    `;
-    return db.pool.query(query, [avatar, id], (err, res) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log(res.rows[0]);
-      }
-    });
+        UPDATE users SET avatar = $1 WHERE id = $2;
+      `;
+    console.log(avatar);
+
+    return await db.pool.query(query, [avatar, id]);
   },
 
   updateUserPassword: async (id, password) => {

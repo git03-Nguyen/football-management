@@ -1,3 +1,4 @@
+const UserModel = require('../models/user.m');
 
 module.exports = {
 
@@ -12,11 +13,32 @@ module.exports = {
   },
 
   // POST /profile/edit
-  postEditProfile: function (req, res) {
+  postEditProfile: async function (req, res) {
     const user = (req.isAuthenticated() ? req.user : null);
-    res.json({
-      data: req.body,
-    });
+    const { fullname, birthday, phone, introduction } = JSON.parse(req.body.data);
+    const avatar = req.file ? req.file.filename : user.avatar;
+
+    if (fullname.length == 0) {
+      return res.status(400).send({ status: 'error', message: "Họ tên không được để trống" });
+    }
+    if (birthday.length && !Date.parse(birthday)) {
+      return res.status(400).send({ status: 'error', message: "Ngày sinh không hợp lệ!" });
+    }
+    if (phone.length && !phone.match(/^\d{10}$/)) {
+      return res.status(400).send({ status: 'error', message: "Số điện thoại không hợp lệ!" });
+    }
+    if (introduction.length > 300) {
+      return res.status(400).send({ status: 'error', message: "Giới thiệu không được quá 300 ký tự!" });
+    }
+
+    try {
+      await UserModel.updateUser(user.id, fullname, birthday, phone, introduction, avatar);
+      return res.status(200).send({ status: 'success', message: "Cập nhật thông tin thành công!" });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send({ status: 'error', message: "Cập nhật thông tin thất bại!" });
+    }
+
   },
 
 

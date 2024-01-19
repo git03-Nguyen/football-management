@@ -16,7 +16,8 @@
       <div class="col-5 text-center">
         <div class="d-flex justify-content-center">
           <div class="position-relative" style="width: fit-content;">
-            <img src="{{user.avatar}}" alt="" height="100px" width="100px" class="rounded-circle object-fit-cover">
+            <img src="/img/avatars/{{user.avatar}}" alt="" height="100px" width="100px"
+              class="rounded-circle object-fit-cover">
             <div class="position-absolute bottom-0 end-0">
               <label for="avatar" class="btn btn-light border border-3 border-light p-2 m-0"><i
                   class="fas fa-camera"></i></label>
@@ -59,7 +60,7 @@
         <div class="d-flex justify-content-center align-items-start mt-3">
           <div style="width: 7rem !important;"></div>
           <div class="text-center">
-            <button class="btn btn-primary" type="submit">Lưu</button>
+            <button class="btn btn-primary" type="submit" id="btn-submit">Lưu</button>
           </div>
         </div>
       </div>
@@ -79,4 +80,137 @@
     }
     reader.readAsDataURL(file);
   })
+</script>
+
+<!-- Toast message -->
+<div id="toastMessage" class="toast align-items-center text-white bg-success border-0 position-absolute" role="alert"
+  aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+      aria-label="Close"></button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    let toast = document.getElementById('toastMessage');
+    toast.style.bottom = '130px';
+    toast.style.right = '10px';
+
+    const profileForm = document.querySelector('#profile-form');
+    profileForm.onsubmit = validate;
+
+    function showToast(status, message) {
+      if (toast) {
+        toast.classList.remove('bg-success', 'bg-danger', 'show');
+      } else {
+        toast = document.getElementById('toastMessage');
+      }
+
+      toast.querySelector('.toast-body').innerHTML = message;
+
+      if (status == 'success') {
+        toast.classList.add('bg-success', 'show');
+      } else if (status == 'error') {
+        toast.classList.add('bg-danger', 'show');
+      }
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+
+    function validate(event) {
+      event.preventDefault();
+
+      const fullname = document.getElementById('fullname').value;
+      const birthday = document.getElementById('birthday').value;
+      const phone = document.getElementById('phone').value;
+      const introduction = document.getElementById('introduction').value;
+
+      if (fullname.length == 0) {
+        showToast('error', 'Họ tên không được để trống');
+        return false;
+      } else if (fullname.length > 50) {
+        showToast('error', 'Họ tên không được quá 50 ký tự');
+        return false;
+      }
+
+      if (birthday.length > 0) {
+        const birthdayDate = new Date(birthday);
+        const today = new Date();
+        if (birthdayDate > today) {
+          showToast('error', 'Ngày sinh không hợp lệ');
+          return false;
+        }
+      }
+
+      if (phone.length > 0) {
+        const regex = /^\d{10}$/;
+        if (phone.length != 10 || !regex.test(phone)) {
+          showToast('error', 'Số điện thoại không hợp lệ');
+          return false;
+        }
+      }
+
+      if (introduction.length > 300) {
+        showToast('error', 'Giới thiệu không được quá 300 ký tự');
+        return false;
+      }
+
+      const avatar = document.getElementById('avatar');
+      if (avatar.files.length > 0) {
+        const avatarFile = avatar.files[0];
+        const avatarFileSize = avatarFile.size / 1024 / 1024; // MB
+        const avatarFileType = avatarFile.type;
+        const avatarFileName = avatarFile.name;
+
+        if (avatarFileSize > 10) {
+          showToast('error', 'Kích thước ảnh không được quá 10MB');
+          return false;
+        }
+
+        if (avatarFileType != 'image/png' && avatarFileType != 'image/jpeg') {
+          showToast('error', 'Ảnh phải có định dạng png hoặc jpg');
+          return false;
+        }
+
+        if (avatarFileName.length > 100) {
+          showToast('error', 'Tên ảnh không được quá 100 ký tự');
+          return false;
+        }
+      }
+
+      const data = {
+        fullname,
+        birthday,
+        phone,
+        introduction
+      }
+
+      const formData = new FormData();
+      formData.append('data', JSON.stringify(data));
+      formData.append('avatar', document.getElementById('avatar').files[0]);
+
+      fetch('/profile/edit', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status == 'success') {
+            showToast('success', data.message);
+          } else if (data.status == 'error') {
+            showToast('error', data.message);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  });
 </script>

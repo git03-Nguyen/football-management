@@ -103,6 +103,19 @@ module.exports = class UserModel {
     return new UserModel(result.rows[0]);
   }
 
+  // UPDATE a user
+  static async updateUser(id, fullname, birthday, phone, introduction, avatar) {
+    if (!id) {
+      return null;
+    }
+    let result = await dbUsers.updateUserInfo(id, fullname, birthday, phone, introduction);
+    if (!result) {
+      return null;
+    }
+    await dbUsers.updateUserAvatar(id, avatar);
+    return true;
+  }
+
 
 
 }
