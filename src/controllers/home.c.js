@@ -1,16 +1,17 @@
+const TournamentModel = require("../models/tournament.m");
+
 module.exports = {
 
   // GET /
-  getHome: function (req, res) {
+  getHome: async function (req, res) {
     const user = (req.isAuthenticated() ? req.user : null);
     res.render('home', {
       title: "Trang chủ",
       useTransHeader: true,
-      // TODO: get data from database
-      nTournaments: 1,
-      nTeams: 30,
-      nPlayers: 180,
       user: user,
+      nOfTournaments: await TournamentModel.count(),
+      nOfTeams: 0,
+      nOfPlayers: 0,
     });
   },
 
