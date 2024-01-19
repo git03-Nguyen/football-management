@@ -11,4 +11,6 @@ router.get('/', checkAuthenticated, controller.getProfile);
 
 router.post('/edit', checkAuthenticated, upload.single('avatar'), controller.postEditProfile);
 
+router.get('/change-password', checkAuthenticated, controller.getChangePassword);
+
 module.exports = router;

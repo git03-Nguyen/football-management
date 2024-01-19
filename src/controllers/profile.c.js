@@ -41,6 +41,16 @@ module.exports = {
 
   },
 
+  // GET /profile/change-password
+  getChangePassword: function (req, res) {
+    const user = (req.isAuthenticated() ? req.user : null);
+    res.render('profile/change-password', {
+      title: "Đổi mật khẩu",
+      useTransHeader: false,
+      user: user,
+    });
+  },
+
 
 
 
