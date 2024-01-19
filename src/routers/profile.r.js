@@ -13,4 +13,6 @@ router.post('/edit', checkAuthenticated, upload.single('avatar'), controller.pos
 
 router.get('/change-password', checkAuthenticated, controller.getChangePassword);
 
+router.post('/change-password', checkAuthenticated, controller.postChangePassword);
+
 module.exports = router;
