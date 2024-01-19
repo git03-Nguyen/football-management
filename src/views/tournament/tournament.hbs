@@ -155,7 +155,7 @@
     </div>
     <div class="col-8 ps-4">
       <!-- league banner -->
-      <img src="{{tournament.banner}}" alt="" class="w-100 mb-4">
+      <img src="/img/tournaments/{{tournament.id}}/banner.png" alt="" class="w-100 mb-4">
 
       <!-- league info -->
       <div class="d-flex align-items-center text-primary-color mb-3">
@@ -246,7 +246,7 @@
         <i class="far fa-file-lines fa-2x me-2"></i>
         <p class="h5 m-0 fw-bold ">Giới thiệu về giải đấu</p>
       </div>
-      <iframe src="{{stats.rulesLink}}" class="w-100 mb-4" height="400"></iframe>
+      <iframe src="{{tournament.rulesURL}}" class="w-100 mb-4" height="400"></iframe>
 
       <!-- league place -->
       <div class="d-flex align-items-center text-primary-color mb-3">
@@ -255,10 +255,10 @@
       </div>
       <div class="row row-cols-2 m-0">
         <div class="col text-start p-0 pe-4">
-          <strong>Địa điểm: </strong>{{stats.place.name}}, {{stats.place.address}}
+          <strong>Địa điểm: </strong>{{tournament.place}}, {{tournament.address}}.
         </div>
         <div class="col p-0 ">
-          <iframe src="{{stats.place.embedLink}}" class="border-0 w-100" height="200" allowfullscreen="" loading="lazy"
+          <iframe src="{{tournament.mapURL}}" class="border-0 w-100" height="200" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>

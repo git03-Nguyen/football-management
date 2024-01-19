@@ -1,18 +1,7 @@
+const TournamentModel = require('../models/tournament.m');
+
 function getTournament() {
-  return {
-    logo: '/img/tournament/logo-hdt-league.png',
-    banner: '/img/tournament/banner-hdt-league.png',
-    name: 'HDT League Season 1',
-    isFree: true,
-    nOfPlayers: 7,
-    format: 'Đá vòng tròn',
-    place: 'Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM',
-    timeStart: '1/1/2024',
-    timeEnd: '20/1/2024',
-    nCurrentTeams: 30,
-    nMaxTeams: 30,
-    nViews: 234,
-  }
+  return TournamentModel.getCurrentTournament();
 }
 
 function getGeneralStatistics() {
@@ -284,32 +273,29 @@ function getPlayerStatistics() {
   ];
 }
 
-
 module.exports = {
 
   // GET /tournament
-  getTournament: function (req, res) {
+  getTournament: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     res.render('tournament/tournament', {
       title: "Giải đấu",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       stats: getGeneralStatistics(),
       subNavigation: 0,
     });
   },
 
   // GET /tournament/teams
-  getTeams: function (req, res) {
+  getTeams: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     res.render('tournament/teams', {
       title: "Danh sách đội",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       allTeams: getAllTeams(),
       subNavigation: 1,
       subSubNavigation: 0,
@@ -317,14 +303,13 @@ module.exports = {
   },
 
   // GET /tournament/teams/leaderboard
-  getTeamsLeaderboard: function (req, res) {
+  getTeamsLeaderboard: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     res.render('tournament/teams-leaderboard', {
       title: "Bảng xếp hạng",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       teams: getAllTeams(),
       subNavigation: 1,
       subSubNavigation: 1,
@@ -332,9 +317,8 @@ module.exports = {
   },
 
   // GET /tournament/matches?round=
-  getMatches: function (req, res) {
+  getMatches: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     const round = req.query.round || 1;
     const countMatches = getMatches().reduce((count, round) => {
       return count + round.dates.reduce((count, date) => {
@@ -345,7 +329,7 @@ module.exports = {
       title: "Lịch thi đấu",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       round: round,
       rounds: getMatches(),
       countMatches: countMatches,
@@ -354,14 +338,13 @@ module.exports = {
   },
 
   // GET /tournament/statistics
-  getStatistics: function (req, res) {
+  getStatistics: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     res.render('tournament/statistics', {
       title: "Thống kê",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       teams: getAllTeams(),
       subNavigation: 3,
       subSubNavigation: 0,
@@ -369,14 +352,13 @@ module.exports = {
   },
 
   // GET /tournament/statistics/players
-  getStatisticsPlayers: function (req, res) {
+  getStatisticsPlayers: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     res.render('tournament/statistics-players', {
       title: "Thống kê",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       statistics: getPlayerStatistics(),
       subNavigation: 3,
       subSubNavigation: 1,
@@ -384,28 +366,26 @@ module.exports = {
   },
 
   // GET /tournament/modifications
-  getModifications: function (req, res) {
+  getModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     res.render('tournament/modifications', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       subNavigation: 4,
       subSubNavigation: 0,
     });
   },
 
   // GET /tournament/modifications/teams
-  getTeamsModifications: function (req, res) {
+  getTeamsModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     res.render('tournament/modifications-teams', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       teams: getAllTeams(),
       subNavigation: 4,
       subSubNavigation: 1,
@@ -413,14 +393,13 @@ module.exports = {
   },
 
   // GET /tournament/modifications/matches
-  getMatchesModifications: function (req, res) {
+  getMatchesModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     res.render('tournament/modifications-matches', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       rounds: getMatches(),
       subNavigation: 4,
       subSubNavigation: 2,
@@ -428,30 +407,28 @@ module.exports = {
   },
 
   // GET /tournament/matches/:id
-  getMatchById: function (req, res) {
+  getMatchById: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     const matchId = req.params.id;
     res.render('tournament/matches/match', {
       title: "Trận đấu",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       // match: getMatches()[0].dates[0].matches[0],
       subNavigation: 0,
     });
   },
 
   // GET /tournament/matches/:id/edit
-  getMatchByIdEdit: function (req, res) {
+  getMatchByIdEdit: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     const matchId = req.params.id;
     res.render('tournament/matches/match-edit', {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       // match: getMatches()[0].dates[0].matches[0],
       subNavigation: 1,
       subSubNavigation: 0,
@@ -459,15 +436,14 @@ module.exports = {
   },
 
   // GET /tournament/matches/:id/edit/players
-  getMatchByIdEditPlayers: function (req, res) {
+  getMatchByIdEditPlayers: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     const matchId = req.params.id;
     res.render('tournament/matches/match-edit-players', {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       // match: getMatches()[0].dates[0].matches[0],
       subNavigation: 1,
       subSubNavigation: 1,
@@ -475,15 +451,14 @@ module.exports = {
   },
 
   // GET /tournament/matches/:id/edit/tickets => Not implement
-  getMatchByIdEditTickets: function (req, res) {
+  getMatchByIdEditTickets: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
-    const tournament = getTournament();
     const matchId = req.params.id;
     res.render('tournament/matches/match-edit-tickets', {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
-      tournament: tournament,
+      tournament: await getTournament(),
       subNavigation: 1,
       subSubNavigation: 2,
     });

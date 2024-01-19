@@ -1,13 +1,31 @@
 const dbTournaments = require("../utils/database/dbTournaments");
 
+function convertDate(mDate) {
+  if (mDate) {
+    const date = new Date(mDate);
+    mDate = {};
+    mDate.dd = date.getDate();
+    if (mDate.dd < 10) {
+      mDate.dd = '0' + mDate.dd;
+    }
+    mDate.mm = date.getMonth() + 1;
+    if (mDate.mm < 10) {
+      mDate.mm = '0' + mDate.mm;
+    }
+    mDate.yyyy = date.getFullYear();
+  }
+  return `${mDate.dd}/${mDate.mm}/${mDate.yyyy}`
+}
+
 module.exports = class TournamentModel {
 
   constructor(tournament) {
     this.id = tournament.id;
     this.name = tournament.name;
-    this.timeStart = tournament.time_start;
-    this.timeEnd = tournament.time_end;
+    this.timeStart = convertDate(tournament.time_start);
+    this.timeEnd = convertDate(tournament.time_end);
     this.place = tournament.place;
+    this.address = tournament.address;
     this.mapURL = tournament.map_url;
     this.rulesURL = tournament.rules_url;
     this.nOfFollowers = tournament.n_of_followers;
