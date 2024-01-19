@@ -35,4 +35,25 @@ module.exports = {
     });
   },
 
+  // POST /create
+  postCreate: async function (req, res) {
+    const user = (req.isAuthenticated() ? req.user : null);
+
+    const tournament = {
+      name: req.body.name,
+      timeStart: req.body.timeStart,
+      timeEnd: req.body.timeEnd,
+      place: req.body.place,
+      mapURL: req.body.mapURL,
+      rulesURL: req.body.rulesURL,
+      nOfFollowers: req.body.nOfFollowers,
+      formatId: req.body.formatId,
+      maxTeams: req.body.maxTeams,
+      nOfPlayers: req.body.nOfPlayers,
+    };
+    console.log(tournament);
+    const result = await TournamentModel.create(tournament);
+    res.redirect('/tournament/modifications');
+  },
+
 }

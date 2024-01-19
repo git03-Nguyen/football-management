@@ -56,33 +56,28 @@
           <div class="col-8 px-0">
             <div class="mb-3">
               <div class="text-muted mb-1">Tên giải đấu <span class="text-danger">(*)</span></div>
-              <input type="text" class="form-control bg-light text-muted" name="name" id="name"
-                value="{{tournament.name}}" required>
+              <input type="text" class="form-control bg-light text-muted" name="name" id="name" required>
             </div>
 
             <div class="row m-0 mb-3">
-              <div class="col-7 p-0">
-                <div class="text-muted mb-1">Tên người liên hệ <span class="text-danger">(*)</span></div>
-                <input type="text" class="form-control bg-light text-muted" name="contactName" id="contactName"
-                  value="{{tournament.contactName}}" required>
+              <div class="col-6 p-0">
+                <div class="text-muted mb-1">Ngày bắt đầu <span class="text-danger">(*)</span></div>
+                <input type="date" class="form-control bg-light text-muted" name="timeStart" id="timeStart" required>
               </div>
-              <div class="col-5 pe-0 ps-3">
-                <div class="text-muted mb-1">Số điện thoại <span class="text-danger">(*)</span></div>
-                <input type="number" class="form-control bg-light text-muted" name="contactPhone" id="contactPhone"
-                  value="{{tournament.contactPhone}}" required>
+              <div class="col-6 pe-0 ps-3">
+                <div class="text-muted mb-1">Ngày kết thúc <span class="text-danger">(*)</span></div>
+                <input type="date" class="form-control bg-light text-muted" name="timeEnd" id="timeEnd" required>
               </div>
             </div>
 
             <div class="mb-3">
               <div class="text-muted mb-1">Địa điểm <span class="text-danger">(*)</span></div>
-              <input type="text" class="form-control bg-light text-muted" name="place" id="place"
-                value="{{tournament.place}}" required>
+              <input type="text" class="form-control bg-light text-muted" name="place" id="place" required>
             </div>
 
             <div class="mb-3">
               <div class="text-muted mb-1">Google Maps</div>
-              <input type="text" class="form-control bg-light text-muted" name="mapURL" id="mapURL"
-                value="{{tournament.mapURL}}" required>
+              <input type="text" class="form-control bg-light text-muted" name="mapURL" id="mapURL" required>
             </div>
 
           </div>
@@ -99,8 +94,7 @@
 
         <div class="row m-0 rounded bg-white-color mb-3" id="choose-format">
           <div class="col-4 p-0 text-center">
-            <input type="radio" name="format" id="round-robin" value="round-robin" autocomplete="off" class="btn-check "
-              checked>
+            <input type="radio" name="format" id="round-robin" value="1" autocomplete="off" class="btn-check " checked>
             <label for="round-robin"
               class="btn rounded-end-0 d-flex flex-column justify-content-center align-items-center p-2">
               <img src="/img/icons/ic-davongtron.svg" alt="" height="100" width="100">
@@ -109,8 +103,7 @@
           </div>
 
           <div class="col-4 p-0 text-center">
-            <input type="radio" name="format" id="direct-elimination" value="direct-elimination" autocomplete="off"
-              class="btn-check ">
+            <input type="radio" name="format" id="direct-elimination" value="2" autocomplete="off" class="btn-check ">
             <label for="direct-elimination"
               class="btn rounded-0 d-flex flex-column justify-content-center align-items-center p-2">
               <img src="/img/icons/ic-loaitructiep.svg" alt="" height="100" width="100">
@@ -119,7 +112,7 @@
           </div>
 
           <div class="col-4 p-0">
-            <input type="radio" name="format" id="boards" value="boards" autocomplete="off" class="btn-check ">
+            <input type="radio" name="format" id="boards" value="3" autocomplete="off" class="btn-check ">
             <label for="boards"
               class="btn rounded-start-0 d-flex flex-column justify-content-center align-items-center p-2">
               <img src="/img/icons/ic-chiabangdau.svg" alt="" height="100" width="100">
@@ -131,18 +124,17 @@
         <div class="row m-0 mb-3">
           <div class="col-6 p-0">
             <div class="text-muted mb-1">Số đội tham gia <span class="text-danger">(*)</span></div>
-            <input type="number" class="form-control bg-light text-muted" name="nOfTeams" id="nOfTeams"
-              value="{{tournament.nOfTeams}}" required>
+            <input type="number" class="form-control bg-light text-muted" name="maxTeams" id="maxTeams" required>
           </div>
           <div class="col-6 pe-0 ps-3">
             <div class="text-muted mb-1">Số cầu thủ ra sân <span class="text-danger">(*)</span></div>
-            <input type="number" class="form-control bg-light text-muted" name="nOfPlayers" id="nOfPlayers"
-              value="{{tournament.nOfPlayers}}" required>
+            <input type="number" class="form-control bg-light text-muted" name="nOfPlayers" id="nOfPlayers" required>
           </div>
         </div>
 
         <div class="alert alert-success" role="alert">
-          Đối với cấu hình này, số lượng trận đấu của giải là: <span class="fw-bold">10</span> trận.
+          Đối với cấu hình này, số lượng trận đấu của giải là: <span class="fw-bold" id="calculateMatches">10</span>
+          trận.
         </div>
 
       </div>
@@ -155,14 +147,13 @@
 
         <div class="mb-3">
           <div class="text-muted mb-1">Điều lệ giải đấu <span class="text-danger">(*)</span></div>
-          <input type="text" class="form-control bg-light text-muted" name="rulesURL" id="rulesURL"
-            value="{{tournament.rulesURL}}" required>
+          <input type="text" class="form-control bg-light text-muted" name="rulesURL" id="rulesURL" required>
         </div>
 
         <div class="mb-3">
           <div class="text-muted mb-1">Giới thiệu giải đấu</div>
-          <textarea name="description" id="description" cols="30" rows="8"
-            class="form-control bg-light text-muted">{{tournament.description}}</textarea>
+          <textarea name="introduction" id="introduction" cols="30" rows="8"
+            class="form-control bg-light text-muted">{{tournament.introduction}}</textarea>
         </div>
       </div>
 
@@ -182,7 +173,6 @@
 </div>
 
 <script>
-  const profileForm = document.getElementById('tournament-form');
   const banner = document.getElementById('banner');
   const bannerImg = document.querySelector('#banner-img');
   banner.addEventListener('change', () => {
@@ -203,5 +193,37 @@
       logoImg.src = reader.result;
     }
     reader.readAsDataURL(file);
-  })
+  });
+
+  const tournamentForm = document.getElementById('tournament-form');
+  const calculateMatches = document.getElementById('calculateMatches');
+
+  function calculateNOfMatches(event) {
+    const type = document.querySelector('input[name="format"]:checked').value;
+    const nOfTeams = parseInt(document.getElementById('maxTeams').value);
+
+    if (type == 1) {
+      nMatches = nOfTeams * (nOfTeams - 1) / 2;
+    } else if (type == 2) {
+      nMatches = nOfTeams - 1;
+    } else {
+      nMatches = nOfTeams * (nOfTeams - 1) / 2;
+    }
+
+    calculateMatches.innerText = nMatches ? nMatches : 0;
+
+  }
+
+  calculateNOfMatches();
+
+  // set event on change of radios and maxTeams
+  document.querySelectorAll('input[name="format"]').forEach(radio => {
+    radio.addEventListener('change', calculateNOfMatches);
+  });
+
+  document.getElementById('maxTeams').addEventListener('change', calculateNOfMatches);
+
+
+
+
 </script>

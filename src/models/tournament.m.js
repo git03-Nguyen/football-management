@@ -49,7 +49,7 @@ module.exports = class TournamentModel {
   // Create a new tournament
   static async create(tournament) {
     const result = await dbTournaments.create(tournament);
-    return new TournamentModel(result[0]);
+    return true;
   }
 
   // Get current tournament

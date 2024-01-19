@@ -10,5 +10,6 @@ router.get('/', controller.getHome);
 router.get('/about', controller.getAbout);
 
 router.get('/create', checkAdmin, controller.getCreate);
+router.post('/create', checkAdmin, controller.postCreate);
 
 module.exports = router;
