@@ -30,7 +30,7 @@ module.exports = {
     const user = (req.isAuthenticated() ? req.user : null);
     res.render('tournament/create', {
       title: "Tạo giải đấu",
-      useTransHeader: false,
+      useTransHeader: true,
       user: user,
     });
   },

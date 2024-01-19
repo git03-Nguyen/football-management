@@ -1,16 +1,29 @@
-{{> tournament-header}}
+{{#section 'style'}}
+<link rel="stylesheet" href="/css/pages/tournament.css">
+{{/section}}
+
+<div class="container-fluid mx-5 text-light pb-4 pt-3">
+  <div class="my-3 mx-5">
+    <p class="h2 fw-bold mb-0">TẠO GIẢI ĐẤU MỚI</p>
+    <p class="text-light">Vui lòng điền đầy đủ thông tin để tạo giải đấu mới</p>
+  </div>
+
+</div>
+
+<!-- ----------------- -->
+
 <div class="bg-white-color">
   <div class="row mx-5 px-5 pt-3">
 
-    <form action="/tournament/modifications" method="POST" id="tournament-form">
+    <form action="/create" method="POST" id="tournament-form">
 
       <div class="mt-2 position-relative text-center py-2">
-        <img src="/img/tournament/banner-hdt-league.png" alt="" height="300px" class="object-fit-cover mt-3 mw-100"
+        <img src="/img/avatars/avt-default.png" alt="" height="300px" class="object-fit-cover mt-3 mw-100"
           id="banner-img">
         <div class="position-absolute bottom-0 end-0">
           <label for="banner" class="btn btn-light border border-3 border-light p-2 m-0"><i
               class="fas fa-camera fa-2x"></i></label>
-          <input type="file" name="banner" id="banner" class="d-none" accept="image/png, image/jpeg">
+          <input type="file" name="banner" id="banner" class="d-none" accept="image/png, image/jpeg" required>
         </div>
       </div>
 
@@ -26,15 +39,15 @@
             <div class="text-muted mb-3">Logo giải đấu <span class="text-danger">(*)</span></div>
             <div class="d-flex justify-content-center align-items-center">
               <div class="position-relative" style="width: fit-content;">
-                <img src="/img/tournament/logo-hdt-league.png" alt="" height="250" width="250"
-                  class="rounded object-fit-cover" id="logo-img">
+                <img src="/img/avatars/avt-default.png" alt="" height="250" width="250" class="rounded object-fit-cover"
+                  id="logo-img">
                 <div class="position-absolute bottom-0 end-0">
                   <label for="logo"
                     class="btn btn-outline-light d-flex justify-content-center align-items-center rounded-circle"
                     style="width: 3rem; height: 3rem;">
                     <i class="fas fa-camera"></i>
                   </label>
-                  <input type="file" name="logo" id="logo" class="d-none" accept="image/png, image/jpeg">
+                  <input type="file" name="logo" id="logo" class="d-none" accept="image/png, image/jpeg" required>
                 </div>
               </div>
             </div>

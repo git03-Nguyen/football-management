@@ -25,7 +25,6 @@ module.exports = class TournamentModel {
     this.timeStart = convertDate(tournament.time_start);
     this.timeEnd = convertDate(tournament.time_end);
     this.place = tournament.place;
-    this.address = tournament.address;
     this.mapURL = tournament.map_url;
     this.rulesURL = tournament.rules_url;
     this.nOfFollowers = tournament.n_of_followers;
