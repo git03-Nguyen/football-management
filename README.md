@@ -23,4 +23,3 @@
 - **Front-end:** HTML, CSS, Javascript
 - **Back-end:** Javascript (Node.js - Express.js) 
 - **Database:** PostgreSQL
-
