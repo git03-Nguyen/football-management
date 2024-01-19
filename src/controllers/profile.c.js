@@ -59,7 +59,7 @@ module.exports = {
       return res.status(400).send({ status: 'error', message: "Mật khẩu mới phải có ít nhất 6 ký tự!" });
     }
     if (newPassword === password) {
-      return res.status(400).send({ status: 'error', message: "Mật khẩu mới không được trùng với mật khẩu cũ!" });
+      return res.status(400).send({ status: 'error', message: "Mật khẩu mới không được trùng mật khẩu cũ!" });
     }
 
     // check password is coorect
