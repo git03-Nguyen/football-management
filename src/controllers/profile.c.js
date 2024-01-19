@@ -51,6 +51,30 @@ module.exports = {
     });
   },
 
+  // POST /profile/change-password
+  postChangePassword: async function (req, res) {
+    const user = (req.isAuthenticated() ? req.user : null);
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    if (newPassword.length < 6) {
+      return res.status(400).send({ status: 'error', message: "Mật khẩu mới phải có ít nhất 6 ký tự!" });
+    }
+    if (newPassword !== confirmPassword) {
+      return res.status(400).send({ status: 'error', message: "Mật khẩu mới không trùng khớp!" });
+    }
+
+    try {
+      const result = await UserModel.changePassword(user.id, oldPassword, newPassword);
+      if (result) {
+        return res.status(200).send({ status: 'success', message: "Đổi mật khẩu thành công!" });
+      } else {
+        return res.status(400).send({ status: 'error', message: "Mật khẩu cũ không chính xác!" });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send({ status: 'error', message: "Đổi mật khẩu thất bại!" });
+    }
+  },
 
 
 
