@@ -53,7 +53,32 @@ module.exports = {
 
   // POST /profile/change-password
   postChangePassword: async function (req, res) {
-    // some comments
+    const user = (req.isAuthenticated() ? req.user : null);
+    const { password, newPassword } = req.body;
+    if (newPassword.length < 6) {
+      return res.status(400).send({ status: 'error', message: "Mật khẩu mới phải có ít nhất 6 ký tự!" });
+    }
+    if (newPassword === password) {
+      return res.status(400).send({ status: 'error', message: "Mật khẩu mới không được trùng với mật khẩu cũ!" });
+    }
+
+    // check password is coorect
+    const result = await UserModel.getUserById(user.id);
+    if (!result) {
+      return res.status(400).send({ status: 'error', message: "Đổi mật khẩu thất bại!" });
+    }
+    const match = await UserModel.getUser(user.email, password);
+    if (!match) {
+      return res.status(400).send({ status: 'error', message: "Mật khẩu cũ không đúng!" });
+    }
+
+    try {
+      await UserModel.changePassword(user.id, password, newPassword);
+      return res.status(200).send({ status: 'success', message: "Đổi mật khẩu thành công!" });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send({ status: 'error', message: "Đổi mật khẩu thất bại!" });
+    }
   },
 
 

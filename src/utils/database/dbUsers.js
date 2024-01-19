@@ -70,32 +70,14 @@ module.exports = {
     return await db.pool.query(query, [avatar, id]);
   },
 
-  updateUserPassword: async (id, password) => {
+  updateUserPassword: async (id, newPassword) => {
     const query = `
       UPDATE users SET password = $1 WHERE id = $2;
     `;
-    const passwordHash = await bcrypt.hash(password, saltRounds);
-    return db.pool.query(query, [passwordHash, id], (err, res) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log(res.rows[0]);
-      }
-    });
+    const passwordHash = await bcrypt.hash(newPassword, saltRounds);
+    return await db.pool.query(query, [passwordHash, id]);
   },
 
-  deleteUser: (id) => {
-    const query = `
-      DELETE FROM users WHERE id = $1;
-    `;
-    return db.pool.query(query, [id], (err, res) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log(res.rows[0]);
-      }
-    });
-  },
 
 };
 

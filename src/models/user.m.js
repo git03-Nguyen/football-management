@@ -116,6 +116,19 @@ module.exports = class UserModel {
     return true;
   }
 
+  // UPDATE a user's password
+  static async changePassword(id, password, newPassword) {
+    if (!id) {
+      return null;
+    }
+
+    const result = await dbUsers.updateUserPassword(id, newPassword);
+    if (!result) {
+      return null;
+    }
+    return true;
+  }
+
 
 
 }
