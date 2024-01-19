@@ -53,7 +53,7 @@ module.exports = {
 
   // POST /profile/change-password
   postChangePassword: async function (req, res) {
-    // some comment
+    // some comments
   },
 
 
