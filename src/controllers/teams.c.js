@@ -128,10 +128,10 @@ module.exports = {
   },
 
   // GET /teams/:teamId/members
-  getTeamMembers: function (req, res, next) {
+  getTeamMembers: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
     const teamId = req.params.teamId;
-    const team = getTeams().find(team => team.teamId == teamId);
+    const team = await TeamModel.getTeam(teamId);
     if (!team) return next();
     res.render('teams/team-members', {
       title: team.name,
