@@ -17,6 +17,13 @@ module.exports = {
     return await db.pool.query(query);
   },
 
+  getCurrentTournamentId: async () => {
+    const query = `
+      SELECT id FROM tournaments WHERE is_closed = false ORDER BY time_start DESC LIMIT 1;
+    `;
+    return await db.pool.query(query);
+  },
+
   getCurrentTournament: async () => {
     const query = `
       SELECT * FROM tournaments WHERE is_closed = false ORDER BY time_start DESC LIMIT 1;

@@ -22,7 +22,6 @@ module.exports = function (app) {
 
   // "/test" for testing
   app.get('/test', async function (req, res) {
-    console.log(req.user);
     if (req.user) {
       res.json(req.user);
     } else {
@@ -30,6 +29,10 @@ module.exports = function (app) {
         message: "No user"
       });
     }
+  });
+  app.post('/test', async function (req, res) {
+    console.log("BODY: ", req.body);
+    res.json(req.body);
   });
 
   // 404

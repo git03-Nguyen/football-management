@@ -10,4 +10,12 @@ module.exports = {
     next();
   },
 
+  checkNoTournament: async function (req, res, next) {
+    const countActive = await TournamentModel.countActive();
+    if (countActive > 0) {
+      return res.redirect('/');
+    }
+    next();
+  },
+
 }

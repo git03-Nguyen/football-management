@@ -35,25 +35,26 @@ module.exports = {
     });
   },
 
-  // POST /create
-  postCreate: async function (req, res) {
+  // POST /create/info
+  postCreate: async function (req, res, next) {
     const user = (req.isAuthenticated() ? req.user : null);
+    console.log(req.body);
 
-    const tournament = {
-      name: req.body.name,
-      timeStart: req.body.timeStart,
-      timeEnd: req.body.timeEnd,
-      place: req.body.place,
-      mapURL: req.body.mapURL,
-      rulesURL: req.body.rulesURL,
-      nOfFollowers: req.body.nOfFollowers,
-      formatId: req.body.formatId,
-      maxTeams: req.body.maxTeams,
-      nOfPlayers: req.body.nOfPlayers,
-    };
-    console.log(tournament);
-    const result = await TournamentModel.create(tournament);
-    res.redirect('/tournament/modifications');
+    const tournament = req.body;
+    await TournamentModel.create(tournament);
+
+    res.send({
+      status: "success",
+      message: "Tạo giải đấu thành công!",
+    });
   },
 
-}
+  // POST /create/logo and /create/banner : after upload logo and banner
+  postCreateImg: async function (req, res) {
+    res.send({
+      status: "success",
+      message: "Tạo giải đấu thành công!",
+    });
+  },
+
+};

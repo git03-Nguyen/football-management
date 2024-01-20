@@ -15,7 +15,7 @@
 <div class="bg-white-color">
   <div class="row mx-5 px-5 pt-3">
 
-    <form action="/create" method="POST" id="tournament-form">
+    <form id="tournament-form" method="POST" action="/create">
 
       <div class="mt-2 position-relative text-center py-2">
         <img src="/img/avatars/avt-default.png" alt="" height="300px" class="object-fit-cover mt-3 mw-100"
@@ -195,7 +195,6 @@
     reader.readAsDataURL(file);
   });
 
-  const tournamentForm = document.getElementById('tournament-form');
   const calculateMatches = document.getElementById('calculateMatches');
 
   function calculateNOfMatches(event) {
@@ -224,6 +223,96 @@
   document.getElementById('maxTeams').addEventListener('change', calculateNOfMatches);
 
 
+  const tournamentForm = document.getElementById('tournament-form');
+  tournamentForm.onsubmit = validate;
+  function validate(event) {
+    event.preventDefault();
+
+    //const formData = new FormData();
+    //formData.append('banner', banner.files[0]);
+    //formData.append('logo', logo.files[0]);
+
+    /* const data = {
+      name: document.getElementById('name').value,
+      timeStart: document.getElementById('timeStart').value,
+      timeEnd: document.getElementById('timeEnd').value,
+      place: document.getElementById('place').value,
+      mapURL: document.getElementById('mapURL').value,
+      format: document.querySelector('input[name="format"]:checked').value,
+      maxTeams: document.getElementById('maxTeams').value,
+      nOfPlayers: document.getElementById('nOfPlayers').value,
+      rulesURL: document.getElementById('rulesURL').value,
+      introduction: document.getElementById('introduction').value,
+    }; 
+
+    formData.append('data', JSON.stringify(data)); */
+
+    const data = {
+      name: document.getElementById('name').value,
+      timeStart: document.getElementById('timeStart').value,
+      timeEnd: document.getElementById('timeEnd').value,
+      place: document.getElementById('place').value,
+      mapURL: document.getElementById('mapURL').value,
+      formatId: document.querySelector('input[name="format"]:checked').value,
+      nOfFollowers: 0,
+      maxTeams: document.getElementById('maxTeams').value,
+      nOfPlayers: document.getElementById('nOfPlayers').value,
+      rulesURL: document.getElementById('rulesURL').value,
+      introduction: document.getElementById('introduction').value,
+    };
+
+    const dataLogo = new FormData();
+    dataLogo.append('logo', logo.files[0]);
+    const dataBanner = new FormData();
+    dataBanner.append('banner', banner.files[0]);
+
+    fetch('/create/info', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status == 'success') {
+          fetch('/create/logo', {
+            method: 'POST',
+            body: dataLogo,
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.status == 'success') {
+                fetch('/create/banner', {
+                  method: 'POST',
+                  body: dataBanner,
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.status == 'success') {
+                      window.location.href = '/tournament/modifications';
+                    } else {
+                      throw new Error(data.message);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                  });
+              } else {
+                throw new Error(data.message);
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        } else {
+          throw new Error(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 
 
 </script>

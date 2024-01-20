@@ -61,5 +61,13 @@ module.exports = class TournamentModel {
     return new TournamentModel(result.rows[0]);
   }
 
+  static async getCurrentTournamentId() {
+    const result = await dbTournaments.getCurrentTournamentId();
+    if (!result.rows) {
+      return null;
+    }
+    return result.rows[0].id;
+  }
+
 
 }
