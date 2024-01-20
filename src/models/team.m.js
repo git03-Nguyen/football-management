@@ -20,6 +20,10 @@ module.exports = class TeamModel {
     return await dbTeams.countAllTeams();
   }
 
+  static async getAllTeams() {
+    return await dbTeams.getAllTeams();
+  }
+
 }
 
 

@@ -1,3 +1,4 @@
+const TeamModel = require('../models/team.m');
 
 function getTeams() {
   return [
@@ -93,12 +94,13 @@ function getTeams() {
 module.exports = {
 
   // GET /teams
-  getTeams: function (req, res, next) {
+  getTeams: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
-    const page = req.query.page || 1;
+    const allTeams = await TeamModel.getAllTeams();
     const nPerPage = 9;
-    const nOfPages = Math.ceil(getTeams().length / nPerPage);
-    const teams = getTeams().slice((page - 1) * nPerPage, page * nPerPage);
+    const page = req.query.page || 1;
+    const nOfPages = Math.ceil(allTeams.length / nPerPage);
+    const teams = allTeams.slice((page - 1) * nPerPage, page * nPerPage);
     if (page > nOfPages) return next();
     res.render('teams/teams', {
       title: "Tất cả đội bóng",
