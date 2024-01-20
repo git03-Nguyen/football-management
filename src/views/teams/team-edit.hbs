@@ -7,25 +7,25 @@
       {{#ifEquals subSubNavigation 0}}
       <a href="#" class="h6 fw-bold active">Thông tin</a>
       {{else}}
-      <a href="/teams/{{team.teamId}}/edit" class="h6 fw-bold text-decoration-none">Thông tin</a>
+      <a href="/teams/{{team.id}}/edit" class="h6 fw-bold text-decoration-none">Thông tin</a>
       {{/ifEquals}}
 
       {{#ifEquals subSubNavigation 1}}
       <a href="#" class="h6 fw-bold ms-3 active">Thành viên</a>
       {{else}}
-      <a href="/teams/{{team.teamId}}/edit/members" class="h6 fw-bold ms-3 text-decoration-none">Thành viên</a>
+      <a href="/teams/{{team.id}}/edit/members" class="h6 fw-bold ms-3 text-decoration-none">Thành viên</a>
       {{/ifEquals}}
     </div>
 
 
-    <form action="/teams/{{team.teamId}}/edit" method="POST">
+    <form action="/teams/{{team.id}}/edit" method="POST">
       <!--enctype="multipart/form-data" -->
       <div class="row m-0 pt-4 row-gap-3" id="team-form">
 
         <div class="col-4 text-center">
           <div class="d-flex justify-content-center">
             <div class="position-relative" style="width: fit-content;">
-              <img src="/img/teams/{{team.teamId}}/info/logo.png" alt="" height="300px" width="300px"
+              <img src="/img/teams/{{team.id}}/info/logo.png" alt="" height="300px" width="300px"
                 class="rounded-circle object-fit-cover" id="logo-img">
               <div class="position-absolute bottom-0 end-0">
                 <label for="logo" class="btn btn-light border border-3 border-light p-2 m-0"><i
@@ -82,7 +82,7 @@
           <div class="mb-3 mt-1">
             <p class="m-0 text-nowrap mb-0">Đồng phục đội bóng</p>
             <div class="py-3 d-flex justify-content-center align-items-center form-control bg-transparent">
-              <img src="/img/teams/{{team.teamId}}/info/uniform.png" alt="" height="100px" id="uniform-img">
+              <img src="/img/teams/{{team.id}}/info/uniform.png" alt="" height="100px" id="uniform-img">
               <div class="ms-3">
                 <input type="file" class="form-control" name="uniform" id="uniform" accept="image/png, image/jpeg">
               </div>

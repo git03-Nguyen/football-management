@@ -7,13 +7,13 @@
       {{#ifEquals subSubNavigation 0}}
       <a href="#" class="h6 fw-bold active">Thông tin</a>
       {{else}}
-      <a href="/teams/{{team.teamId}}/edit" class="h6 fw-bold text-decoration-none">Thông tin</a>
+      <a href="/teams/{{team.id}}/edit" class="h6 fw-bold text-decoration-none">Thông tin</a>
       {{/ifEquals}}
 
       {{#ifEquals subSubNavigation 1}}
       <a href="#" class="h6 fw-bold ms-3 active">Thành viên</a>
       {{else}}
-      <a href="/teams/{{team.teamId}}/edit/members" class="h6 fw-bold ms-3 text-decoration-none">Thành viên</a>
+      <a href="/teams/{{team.id}}/edit/members" class="h6 fw-bold ms-3 text-decoration-none">Thành viên</a>
       {{/ifEquals}}
     </div>
 
