@@ -1,4 +1,5 @@
 const dbTournaments = require("../utils/database/dbTournaments");
+const dbFormats = require("../utils/database/dbFormats");
 
 function convertDate(mDate) {
   if (mDate) {
@@ -29,6 +30,7 @@ module.exports = class TournamentModel {
     this.rulesURL = tournament.rules_url;
     this.nOfFollowers = tournament.n_of_followers;
     this.formatId = tournament.format_id;
+    this.format = tournament.format;
     this.maxTeams = tournament.max_teams;
     this.nOfPlayers = tournament.n_of_players;
     this.requireTickets = tournament.require_tickets;
@@ -58,7 +60,9 @@ module.exports = class TournamentModel {
     if (!result.rows) {
       return null;
     }
-    return new TournamentModel(result.rows[0]);
+    const tournament = new TournamentModel(result.rows[0]);
+    tournament.format = await dbFormats.getFormatName(tournament.formatId);
+    return tournament;
   }
 
   static async getCurrentTournamentId() {
