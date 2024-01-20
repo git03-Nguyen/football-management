@@ -1,5 +1,6 @@
 require('dotenv').config();
 const db = require('./db-config');
+const TeamModel = require('../../models/team.m');
 
 module.exports = {
 
@@ -50,6 +51,14 @@ module.exports = {
       tournament.nOfPlayers,
     ];
     return await db.pool.query(query, values);
+  },
+
+  getTeamsInTournament: async (id) => {
+    const query = `
+      SELECT * FROM teams WHERE tournament_id = $1 AND status = true;
+    `;
+    const res = await db.pool.query(query, [id]);
+    return res.rows;
   },
 
 };

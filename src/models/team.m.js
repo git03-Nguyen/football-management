@@ -13,6 +13,8 @@ module.exports = class TeamModel {
     this.level = team.level;
     this.introduction = team.introduction;
     this.hasUniform = team.has_uniform;
+    this.profile = team.profile;
+    this.status = team.status;
     //members, statistics, and schedule are not included in the constructor
   }
 
@@ -20,16 +22,8 @@ module.exports = class TeamModel {
     return await dbTeams.countAllTeams();
   }
 
-  static async getAllTeams() {
-    const res = await dbTeams.getAllTeams();
-    let array = [];
-    for (const team of res) {
-      let teamObj = new TeamModel(team);
-      teamObj.players = {};
-      teamObj.players.length = await dbTeams.countPlayers(team.id);
-      array.push(teamObj);
-    }
-    return array;
+  static async countTeamsInTournament(id) {
+    return await dbTeams.countTeamsInTournament(id);
   }
 
   static async getAllCurrentTeams() {

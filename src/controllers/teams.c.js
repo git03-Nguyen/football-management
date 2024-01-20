@@ -143,10 +143,10 @@ module.exports = {
   },
 
   // GET /teams/:teamId/edit
-  getEditTeam: function (req, res, next) {
+  getEditTeam: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
     const teamId = req.params.teamId;
-    const team = getTeams().find(team => team.teamId == teamId);
+    const team = await TeamModel.getTeam(teamId);
     if (!team) return next();
     if (team.ownerId != user.id) return next(); // check if user is owner of this team, TODO: use middleware instead
     res.render('teams/team-edit', {
@@ -160,10 +160,10 @@ module.exports = {
   },
 
   // GET /teams/:teamId/edit/members
-  getEditTeamMembers: function (req, res, next) {
+  getEditTeamMembers: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
     const teamId = req.params.teamId;
-    const team = getTeams().find(team => team.teamId == teamId);
+    const team = await TeamModel.getTeam(teamId);
     if (!team) return next();
     if (team.ownerId != user.id) return next();// check if user is owner of this team, TODO: use middleware instead
     res.render('teams/team-edit-members', {
@@ -187,10 +187,10 @@ module.exports = {
   },
 
   // GET /teams/:teamId/statistics => not implemented yet
-  getTeamStatistics: function (req, res, next) {
+  getTeamStatistics: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
     const teamId = req.params.teamId;
-    const team = getTeams().find(team => team.teamId == teamId);
+    const team = await TeamModel.getTeam(teamId);
     if (!team) return next();
     res.render('teams/team-statistics', {
       title: team.name,

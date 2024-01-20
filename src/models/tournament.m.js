@@ -1,5 +1,6 @@
 const dbTournaments = require("../utils/database/dbTournaments");
 const dbFormats = require("../utils/database/dbFormats");
+const TeamModel = require("./team.m");
 
 function convertDate(mDate) {
   if (mDate) {
@@ -62,6 +63,11 @@ module.exports = class TournamentModel {
     }
     const tournament = new TournamentModel(result.rows[0]);
     tournament.format = await dbFormats.getFormatName(tournament.formatId);
+    const teams = await dbTournaments.getTeamsInTournament(tournament.id);
+    tournament.teams = [];
+    for (const team of teams) {
+      tournament.teams.push(new TeamModel(team));
+    }
     return tournament;
   }
 

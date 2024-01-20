@@ -1,9 +1,5 @@
 const TournamentModel = require('../models/tournament.m');
 
-function getTournament() {
-  return TournamentModel.getCurrentTournament();
-}
-
 function getGeneralStatistics() {
   return {
     topScorers: [
@@ -278,11 +274,12 @@ module.exports = {
   // GET /tournament
   getTournament: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     res.render('tournament/tournament', {
       title: "Giải đấu",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       stats: getGeneralStatistics(),
       subNavigation: 0,
     });
@@ -295,7 +292,7 @@ module.exports = {
       title: "Danh sách đội",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       allTeams: getAllTeams(),
       subNavigation: 1,
       subSubNavigation: 0,
@@ -309,7 +306,7 @@ module.exports = {
       title: "Bảng xếp hạng",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       teams: getAllTeams(),
       subNavigation: 1,
       subSubNavigation: 1,
@@ -329,7 +326,7 @@ module.exports = {
       title: "Lịch thi đấu",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       round: round,
       rounds: getMatches(),
       countMatches: countMatches,
@@ -344,7 +341,7 @@ module.exports = {
       title: "Thống kê",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       teams: getAllTeams(),
       subNavigation: 3,
       subSubNavigation: 0,
@@ -358,7 +355,7 @@ module.exports = {
       title: "Thống kê",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       statistics: getPlayerStatistics(),
       subNavigation: 3,
       subSubNavigation: 1,
@@ -372,7 +369,7 @@ module.exports = {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       subNavigation: 4,
       subSubNavigation: 0,
     });
@@ -385,7 +382,7 @@ module.exports = {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       teams: getAllTeams(),
       subNavigation: 4,
       subSubNavigation: 1,
@@ -399,7 +396,7 @@ module.exports = {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       rounds: getMatches(),
       subNavigation: 4,
       subSubNavigation: 2,
@@ -414,7 +411,7 @@ module.exports = {
       title: "Trận đấu",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       // match: getMatches()[0].dates[0].matches[0],
       subNavigation: 0,
     });
@@ -428,7 +425,7 @@ module.exports = {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       // match: getMatches()[0].dates[0].matches[0],
       subNavigation: 1,
       subSubNavigation: 0,
@@ -443,7 +440,7 @@ module.exports = {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       // match: getMatches()[0].dates[0].matches[0],
       subNavigation: 1,
       subSubNavigation: 1,
@@ -458,7 +455,7 @@ module.exports = {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
-      tournament: await getTournament(),
+      tournament: await TournamentModel.getCurrentTournament(),
       subNavigation: 1,
       subSubNavigation: 2,
     });

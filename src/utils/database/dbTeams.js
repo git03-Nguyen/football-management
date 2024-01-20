@@ -12,6 +12,14 @@ module.exports = {
     return res.rows[0].count;
   },
 
+  countTeamsInTournament: async (id) => {
+    const query = `
+      SELECT COUNT(*) FROM teams WHERE tournament_id = $1;
+    `;
+    const res = await db.pool.query(query, [id]);
+    return res.rows[0].count;
+  },
+
   getAllTeams: async () => {
     const query = `
       SELECT * FROM teams;
