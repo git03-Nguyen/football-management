@@ -1,4 +1,5 @@
 const TournamentModel = require("../models/tournament.m");
+const TeamModel = require("../models/team.m");
 
 module.exports = {
 
@@ -10,7 +11,7 @@ module.exports = {
       useTransHeader: true,
       user: user,
       nOfTournaments: await TournamentModel.count(),
-      nOfTeams: 0,
+      nOfTeams: await TeamModel.countAllTeams(),
       nOfPlayers: 0,
     });
   },
