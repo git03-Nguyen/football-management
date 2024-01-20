@@ -10,8 +10,8 @@
 
     <div class="px-1 mb-3">
       <textarea class="w-100 p-2" style="height: 200px; min-height: 3rem;" readonly>
-      {{~#if team.description~}}
-      {{team.description~}}
+      {{~#if team.introduction~}}
+      {{team.introduction~}}
       {{~else~}}
       Chưa có thông tin.
       {{~/if~}}
@@ -25,7 +25,7 @@
 
     {{#if team.hasUniform}}
     <div class="d-flex justify-content-center align-items-center mb-3">
-      <img src="/img/teams/{{team.teamId}}/info/uniform.png" class="my-2" alt="uniform" height="150px">
+      <img src="/img/teams/{{team.id}}/uniform.png" class="my-2" alt="uniform" height="150px">
     </div>
     {{else}}
     <div class="d-flex justify-content-center align-items-center">

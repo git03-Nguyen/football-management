@@ -96,7 +96,7 @@ module.exports = {
   // GET /teams
   getTeams: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
-    const allTeams = await TeamModel.getAllTeams();
+    const allTeams = await TeamModel.getAllCurrentTeams();
     const nPerPage = 9;
     const page = req.query.page || 1;
     const nOfPages = Math.ceil(allTeams.length / nPerPage);
@@ -113,10 +113,10 @@ module.exports = {
   },
 
   // GET /teams/:teamId
-  getTeam: function (req, res, next) {
+  getTeam: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
     const teamId = req.params.teamId;
-    const team = getTeams().find(team => team.teamId == teamId);
+    const team = await TeamModel.getTeam(teamId);
     if (!team) return next();
     res.render('teams/team-info', {
       title: team.name,
