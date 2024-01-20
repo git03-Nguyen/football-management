@@ -46,6 +46,18 @@ module.exports = class TeamModel {
     return team;
   }
 
+  static async getTeamsByOwner(ownerId) {
+    const res = await dbTeams.getTeamsByOwner(ownerId);
+    if (!res) return null;
+    let teams = [];
+    for (const team of res) {
+      let teamObj = new TeamModel(team);
+      teamObj.players = await dbTeams.getPlayers(team.id);
+      teams.push(teamObj);
+    }
+    return teams;
+  }
+
 }
 
 

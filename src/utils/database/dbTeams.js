@@ -61,4 +61,12 @@ module.exports = {
     return res.rows;
   },
 
+  getTeamsByOwner: async (ownerId) => {
+    const query = `
+      SELECT * FROM teams WHERE owner_id = $1 ORDER BY id ASC;
+    `;
+    const res = await db.pool.query(query, [ownerId]);
+    return res.rows;
+  },
+
 };
