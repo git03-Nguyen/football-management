@@ -399,6 +399,29 @@ module.exports = {
     });
   },
 
+  // POST /tournament/modifications/info
+  postModificationsInfo: async function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
+
+    const info = req.body;
+    await TournamentModel.updateInfo(tournament.id, info);
+
+    res.json({ status: 'success' });
+  },
+
+  // POST /tournament/modifications/logo
+  posModificationsLogo: async function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    res.json({ status: 'success' });
+  },
+
+  // POST /tournament/modifications/banner
+  postModificationsBanner: async function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    res.json({ status: 'success' });
+  },
+
   // GET /tournament/modifications/teams
   getTeamsModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;

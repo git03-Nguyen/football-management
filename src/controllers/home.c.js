@@ -40,7 +40,6 @@ module.exports = {
   // POST /create/info
   postCreate: async function (req, res, next) {
     const user = (req.isAuthenticated() ? req.user : null);
-    console.log(req.body);
 
     const tournament = req.body;
     await TournamentModel.create(tournament);

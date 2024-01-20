@@ -26,8 +26,8 @@
     <form action="/tournament/modifications" method="POST" id="tournament-form">
 
       <div class="mt-2 position-relative text-center py-2">
-        <img src="/img/tournament/banner-hdt-league.png" alt="" height="300px" class="object-fit-cover mt-3 mw-100"
-          id="banner-img">
+        <img src="/img/tournaments/{{tournament.id}}/banner.png" alt="" height="300px"
+          class="object-fit-cover mt-3 mw-100" id="banner-img">
         <div class="position-absolute bottom-0 end-0">
           <label for="banner" class="btn btn-light border border-3 border-light p-2 m-0"><i
               class="fas fa-camera fa-2x"></i></label>
@@ -47,7 +47,7 @@
             <div class="text-muted mb-3">Logo giải đấu <span class="text-danger">(*)</span></div>
             <div class="d-flex justify-content-center align-items-center">
               <div class="position-relative" style="width: fit-content;">
-                <img src="/img/tournament/logo-hdt-league.png" alt="" height="250" width="250"
+                <img src="/img/tournaments/{{tournament.id}}/logo.png" alt="" height="250" width="250"
                   class="rounded object-fit-cover" id="logo-img">
                 <div class="position-absolute bottom-0 end-0">
                   <label for="logo"
@@ -69,15 +69,15 @@
             </div>
 
             <div class="row m-0 mb-3">
-              <div class="col-7 p-0">
-                <div class="text-muted mb-1">Tên người liên hệ <span class="text-danger">(*)</span></div>
-                <input type="text" class="form-control bg-light text-muted" name="contactName" id="contactName"
-                  value="{{tournament.contactName}}" required>
+              <div class="col-6 p-0">
+                <div class="text-muted mb-1">Ngày bắt đầu <span class="text-danger">(*)</span></div>
+                <input type="date" class="form-control bg-light text-muted" name="timeStart" id="timeStart"
+                  value="{{tournament.timeStart}}" required>
               </div>
-              <div class="col-5 pe-0 ps-3">
-                <div class="text-muted mb-1">Số điện thoại <span class="text-danger">(*)</span></div>
-                <input type="number" class="form-control bg-light text-muted" name="contactPhone" id="contactPhone"
-                  value="{{tournament.contactPhone}}" required>
+              <div class="col-6 pe-0 ps-3">
+                <div class="text-muted mb-1">Ngày kết thúc <span class="text-danger">(*)</span></div>
+                <input type="date" class="form-control bg-light text-muted" name="timeEnd" id="timeEnd"
+                  value="{{tournament.timeEnd}}" required>
               </div>
             </div>
 
@@ -107,8 +107,8 @@
 
         <div class="row m-0 rounded bg-white-color mb-3" id="choose-format">
           <div class="col-4 p-0 text-center">
-            <input type="radio" name="format" id="round-robin" value="round-robin" autocomplete="off" class="btn-check "
-              checked>
+            <input type="radio" name="format" id="round-robin" value="1" autocomplete="off" class="btn-check "
+              {{#ifEquals tournament.formatId 1}}checked{{/ifEquals}}>
             <label for="round-robin"
               class="btn rounded-end-0 d-flex flex-column justify-content-center align-items-center p-2">
               <img src="/img/icons/ic-davongtron.svg" alt="" height="100" width="100">
@@ -117,8 +117,8 @@
           </div>
 
           <div class="col-4 p-0 text-center">
-            <input type="radio" name="format" id="direct-elimination" value="direct-elimination" autocomplete="off"
-              class="btn-check ">
+            <input type="radio" name="format" id="direct-elimination" value="2" autocomplete="off" class="btn-check "
+              {{#ifEquals tournament.formatId 2}}checked{{/ifEquals}}>
             <label for="direct-elimination"
               class="btn rounded-0 d-flex flex-column justify-content-center align-items-center p-2">
               <img src="/img/icons/ic-loaitructiep.svg" alt="" height="100" width="100">
@@ -127,7 +127,8 @@
           </div>
 
           <div class="col-4 p-0">
-            <input type="radio" name="format" id="boards" value="boards" autocomplete="off" class="btn-check ">
+            <input type="radio" name="format" id="boards" value="3" autocomplete="off" class="btn-check " {{#ifEquals
+              tournament.formatId 3}}checked{{/ifEquals}}>
             <label for="boards"
               class="btn rounded-start-0 d-flex flex-column justify-content-center align-items-center p-2">
               <img src="/img/icons/ic-chiabangdau.svg" alt="" height="100" width="100">
@@ -139,8 +140,8 @@
         <div class="row m-0 mb-3">
           <div class="col-6 p-0">
             <div class="text-muted mb-1">Số đội tham gia <span class="text-danger">(*)</span></div>
-            <input type="number" class="form-control bg-light text-muted" name="nOfTeams" id="nOfTeams"
-              value="{{tournament.nOfTeams}}" required>
+            <input type="number" class="form-control bg-light text-muted" name="maxTeams" id="maxTeams"
+              value="{{tournament.maxTeams}}" required>
           </div>
           <div class="col-6 pe-0 ps-3">
             <div class="text-muted mb-1">Số cầu thủ ra sân <span class="text-danger">(*)</span></div>
@@ -150,7 +151,8 @@
         </div>
 
         <div class="alert alert-success" role="alert">
-          Đối với cấu hình này, số lượng trận đấu của giải là: <span class="fw-bold">10</span> trận.
+          Đối với cấu hình này, số lượng trận đấu của giải là: <span class="fw-bold" id="calculateMatches">10</span>
+          trận.
         </div>
 
       </div>
@@ -169,8 +171,8 @@
 
         <div class="mb-3">
           <div class="text-muted mb-1">Giới thiệu giải đấu</div>
-          <textarea name="description" id="description" cols="30" rows="8"
-            class="form-control bg-light text-muted">{{tournament.description}}</textarea>
+          <textarea name="introduction" id="introduction" cols="30" rows="8"
+            class="form-control bg-light text-muted">{{tournament.introduction}}</textarea>
         </div>
       </div>
 
@@ -190,7 +192,6 @@
 </div>
 
 <script>
-  const profileForm = document.getElementById('tournament-form');
   const banner = document.getElementById('banner');
   const bannerImg = document.querySelector('#banner-img');
   banner.addEventListener('change', () => {
@@ -211,5 +212,106 @@
       logoImg.src = reader.result;
     }
     reader.readAsDataURL(file);
-  })
+  });
+
+  const calculateMatches = document.getElementById('calculateMatches');
+
+  function calculateNOfMatches(event) {
+    const type = document.querySelector('input[name="format"]:checked').value;
+    const nOfTeams = parseInt(document.getElementById('maxTeams').value);
+
+    if (type == 1) {
+      nMatches = nOfTeams * (nOfTeams - 1) / 2;
+    } else if (type == 2) {
+      nMatches = nOfTeams - 1;
+    } else {
+      nMatches = nOfTeams * (nOfTeams - 1) / 2;
+    }
+
+    calculateMatches.innerText = nMatches ? nMatches : 0;
+
+  }
+
+  calculateNOfMatches();
+
+  // set event on change of radios and maxTeams
+  document.querySelectorAll('input[name="format"]').forEach(radio => {
+    radio.addEventListener('change', calculateNOfMatches);
+  });
+
+  document.getElementById('maxTeams').addEventListener('change', calculateNOfMatches);
+
+
+  const tournamentForm = document.getElementById('tournament-form');
+  tournamentForm.onsubmit = validate;
+  function validate(event) {
+    event.preventDefault();
+
+    const data = {
+      name: document.getElementById('name').value,
+      timeStart: document.getElementById('timeStart').value,
+      timeEnd: document.getElementById('timeEnd').value,
+      place: document.getElementById('place').value,
+      mapURL: document.getElementById('mapURL').value,
+      formatId: document.querySelector('input[name="format"]:checked').value,
+      maxTeams: document.getElementById('maxTeams').value,
+      nOfPlayers: document.getElementById('nOfPlayers').value,
+      rulesURL: document.getElementById('rulesURL').value,
+      introduction: document.getElementById('introduction').value,
+    };
+
+    const dataLogo = new FormData();
+    dataLogo.append('logo', logo.files[0]);
+    const dataBanner = new FormData();
+    dataBanner.append('banner', banner.files[0]);
+
+    fetch('/tournament/modifications/info', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status == 'success') {
+          fetch('/tournament/modifications/logo', {
+            method: 'POST',
+            body: dataLogo,
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.status == 'success') {
+                fetch('/tournament/modifications/banner', {
+                  method: 'POST',
+                  body: dataBanner,
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.status == 'success') {
+                      window.location.href = '/tournament/modifications';
+                    } else {
+                      throw new Error(data.message);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                  });
+              } else {
+                throw new Error(data.message);
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        } else {
+          throw new Error(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
+
 </script>

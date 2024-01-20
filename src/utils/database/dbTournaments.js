@@ -90,5 +90,27 @@ module.exports = {
     return res.rows[0].total_count;
   },
 
+  updateInfo: async (id, tournament) => {
+    const query = `
+      UPDATE tournaments
+      SET name = $1, time_start = $2, time_end = $3, place = $4, map_url = $5, rules_url = $6, format_id = $7, max_teams = $8, n_of_players = $9
+      WHERE id = $10
+      RETURNING *;
+    `;
+    const values = [
+      tournament.name,
+      tournament.timeStart,
+      tournament.timeEnd,
+      tournament.place,
+      tournament.mapURL,
+      tournament.rulesURL,
+      tournament.formatId,
+      tournament.maxTeams,
+      tournament.nOfPlayers,
+      id,
+    ];
+    return await db.pool.query(query, values);
+  },
+
 };
 

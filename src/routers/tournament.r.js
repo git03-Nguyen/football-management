@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const controller = require('../controllers/tournament.c');
+const uploadLogo = require('../utils/multer/upload-logo');
+const uploadBanner = require('../utils/multer/upload-banner');
 
 const { checkAdmin } = require('../utils/auth-helper');
 
@@ -20,6 +22,10 @@ router.get('/statistics/players', controller.getStatisticsPlayers);
 router.get('/modifications', checkAdmin, controller.getModifications);
 router.get('/modifications/teams', checkAdmin, controller.getTeamsModifications);
 router.get('/modifications/matches', checkAdmin, controller.getMatchesModifications);
+
+router.post('/modifications/info', checkAdmin, controller.postModificationsInfo);
+router.post('/modifications/logo', checkAdmin, uploadLogo.single('logo'), controller.posModificationsLogo);
+router.post('/modifications/banner', checkAdmin, uploadBanner.single('banner'), controller.postModificationsBanner);
 
 router.get('/matches/:id/edit', checkAdmin, controller.getMatchByIdEdit);
 router.get('/matches/:id/edit/players', checkAdmin, controller.getMatchByIdEditPlayers);

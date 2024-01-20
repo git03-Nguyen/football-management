@@ -15,7 +15,7 @@ function convertDate(mDate) {
     }
     mDate.yyyy = date.getFullYear();
   }
-  return `${mDate.dd}/${mDate.mm}/${mDate.yyyy}`
+  return `${mDate.yyyy}-${mDate.mm}-${mDate.dd}`
 }
 
 module.exports = class TournamentModel {
@@ -83,6 +83,12 @@ module.exports = class TournamentModel {
   static async countPlayersInTournament(id) {
     const count = await dbTournaments.countPlayersInTournament(id);
     return count;
+  }
+
+  // Update tournament info
+  static async updateInfo(id, tournament) {
+    const result = await dbTournaments.updateInfo(id, tournament);
+    return true;
   }
 
 }
