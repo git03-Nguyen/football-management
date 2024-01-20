@@ -1,6 +1,5 @@
 require('dotenv').config();
 const db = require('./db-config');
-const TeamModel = require('../../models/team.m');
 
 module.exports = {
 
@@ -67,6 +66,28 @@ module.exports = {
     `;
     const res = await db.pool.query(query, [id]);
     return res.rows;
+  },
+
+  countPlayersInTournament: async (id) => {
+    const query = `
+      SELECT COALESCE(SUM(count), 0) AS total_count
+      FROM teams t
+      LEFT JOIN (
+          SELECT team_id, COUNT(*) AS count
+          FROM public.players
+          WHERE team_id IN (
+              SELECT id 
+              FROM teams
+              WHERE status = true AND tournament_id = $1
+          )
+          GROUP BY team_id
+      ) p ON t.id = p.team_id
+      WHERE t.status = true AND t.tournament_id = (
+          SELECT id FROM tournaments WHERE is_closed = false
+      );
+    `;
+    const res = await db.pool.query(query, [id]);
+    return res.rows[0].total_count;
   },
 
 };

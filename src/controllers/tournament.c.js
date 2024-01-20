@@ -279,9 +279,20 @@ module.exports = {
       title: "Giải đấu",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
       nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
-      stats: getGeneralStatistics(),
+      stats: {
+        totalPlayers: await TournamentModel.countPlayersInTournament(tournament.id),
+        // totalGoals
+        // totalMatches
+        // ownGoals
+        // totalCards
+        // mostGoalsMatch
+
+        // topScorers
+        // leaderboard
+        // recentSchedules
+      },
       subNavigation: 0,
     });
   },
@@ -289,11 +300,13 @@ module.exports = {
   // GET /tournament/teams
   getTeams: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     res.render('tournament/teams', {
       title: "Danh sách đội",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       allTeams: getAllTeams(),
       subNavigation: 1,
       subSubNavigation: 0,
@@ -303,11 +316,13 @@ module.exports = {
   // GET /tournament/teams/leaderboard
   getTeamsLeaderboard: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     res.render('tournament/teams-leaderboard', {
       title: "Bảng xếp hạng",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       teams: getAllTeams(),
       subNavigation: 1,
       subSubNavigation: 1,
@@ -317,6 +332,7 @@ module.exports = {
   // GET /tournament/matches?round=
   getMatches: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     const round = req.query.round || 1;
     const countMatches = getMatches().reduce((count, round) => {
       return count + round.dates.reduce((count, date) => {
@@ -327,7 +343,8 @@ module.exports = {
       title: "Lịch thi đấu",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       round: round,
       rounds: getMatches(),
       countMatches: countMatches,
@@ -338,11 +355,13 @@ module.exports = {
   // GET /tournament/statistics
   getStatistics: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     res.render('tournament/statistics', {
       title: "Thống kê",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       teams: getAllTeams(),
       subNavigation: 3,
       subSubNavigation: 0,
@@ -352,11 +371,13 @@ module.exports = {
   // GET /tournament/statistics/players
   getStatisticsPlayers: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     res.render('tournament/statistics-players', {
       title: "Thống kê",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       statistics: getPlayerStatistics(),
       subNavigation: 3,
       subSubNavigation: 1,
@@ -366,11 +387,13 @@ module.exports = {
   // GET /tournament/modifications
   getModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     res.render('tournament/modifications', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       subNavigation: 4,
       subSubNavigation: 0,
     });
@@ -379,11 +402,13 @@ module.exports = {
   // GET /tournament/modifications/teams
   getTeamsModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     res.render('tournament/modifications-teams', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       teams: getAllTeams(),
       subNavigation: 4,
       subSubNavigation: 1,
@@ -393,11 +418,13 @@ module.exports = {
   // GET /tournament/modifications/matches
   getMatchesModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
+    const tournament = await TournamentModel.getCurrentTournament();
     res.render('tournament/modifications-matches', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
-      tournament: await TournamentModel.getCurrentTournament(),
+      tournament: tournament,
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       rounds: getMatches(),
       subNavigation: 4,
       subSubNavigation: 2,

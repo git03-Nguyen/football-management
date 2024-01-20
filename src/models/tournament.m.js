@@ -1,6 +1,5 @@
 const dbTournaments = require("../utils/database/dbTournaments");
 const dbFormats = require("../utils/database/dbFormats");
-const TeamModel = require("./team.m");
 
 function convertDate(mDate) {
   if (mDate) {
@@ -77,6 +76,12 @@ module.exports = class TournamentModel {
   // Count number of active teams in tournament
   static async countActiveTeamsInTournament(id) {
     const count = await dbTournaments.countActiveTeamsInTournament(id);
+    return count;
+  }
+
+  // Count total number of players in tournament
+  static async countPlayersInTournament(id) {
+    const count = await dbTournaments.countPlayersInTournament(id);
     return count;
   }
 

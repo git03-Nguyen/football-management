@@ -31,7 +31,7 @@ module.exports = {
   getAllCurrentTeams: async () => {
     const currentTournamentId = await TournamentModel.getCurrentTournamentId();
     const query = `
-      SELECT * FROM teams WHERE tournament_id = $1;
+      SELECT * FROM teams WHERE tournament_id = $1 ORDER BY id ASC;
     `;
     const res = await db.pool.query(query, [currentTournamentId]);
     return res.rows;
