@@ -63,11 +63,6 @@ module.exports = class TournamentModel {
     }
     const tournament = new TournamentModel(result.rows[0]);
     tournament.format = await dbFormats.getFormatName(tournament.formatId);
-    const teams = await dbTournaments.getTeamsInTournament(tournament.id);
-    tournament.teams = [];
-    for (const team of teams) {
-      tournament.teams.push(new TeamModel(team));
-    }
     return tournament;
   }
 
@@ -79,5 +74,10 @@ module.exports = class TournamentModel {
     return result.rows[0].id;
   }
 
+  // Count number of active teams in tournament
+  static async countActiveTeamsInTournament(id) {
+    const count = await dbTournaments.countActiveTeamsInTournament(id);
+    return count;
+  }
 
 }

@@ -53,7 +53,15 @@ module.exports = {
     return await db.pool.query(query, values);
   },
 
-  getTeamsInTournament: async (id) => {
+  countActiveTeamsInTournament: async (id) => {
+    const query = `
+      SELECT COUNT(*) FROM teams WHERE tournament_id = $1 AND status = true;
+    `;
+    const res = await db.pool.query(query, [id]);
+    return res.rows[0].count;
+  },
+
+  getActiveTeamsInTournament: async (id) => {
     const query = `
       SELECT * FROM teams WHERE tournament_id = $1 AND status = true;
     `;

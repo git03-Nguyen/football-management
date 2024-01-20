@@ -280,6 +280,7 @@ module.exports = {
       useTransHeader: true,
       user: user,
       tournament: await TournamentModel.getCurrentTournament(),
+      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       stats: getGeneralStatistics(),
       subNavigation: 0,
     });
