@@ -192,6 +192,22 @@ module.exports = {
     });
   },
 
+  // DELETE /teams/:teamId/edit/members/:playerId
+  deleteTeamMember: async function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = await TeamModel.getTeam(teamId);
+    if (!team) return next();
+    if (team.ownerId != user.id) return next();// check if user is owner of this team, TODO: use middleware instead
+    const playerId = req.params.playerId;
+    try {
+      await TeamModel.removePlayer(teamId, playerId);
+    } catch (err) {
+      console.log(err);
+    }
+    res.redirect(`/teams/${teamId}/edit/members`);
+  },
+
   // GET /teams/create
   getCreateTeam: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
@@ -216,5 +232,7 @@ module.exports = {
       team: team,
     });
   },
+
+
 
 }

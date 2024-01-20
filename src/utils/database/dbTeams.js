@@ -78,4 +78,12 @@ module.exports = {
     return res.rowCount;
   },
 
+  removePlayer: async (teamId, playerId) => {
+    const query = `
+      UPDATE players SET team_id = NULL WHERE id = $1;
+    `;
+    const res = await db.pool.query(query, [playerId]);
+    return res.rowCount;
+  },
+
 };

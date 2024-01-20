@@ -54,12 +54,12 @@
               <a href="/players/{{this.id}}">{{this.name}}</a>
             </td>
             <td>{{this.number}}</td>
-            <td>{{this.birthYear}}</td>
+            <td>{{this.birthyear}}</td>
             <td>{{this.positions}}</td>
             <td>{{this.phone}}</td>
             <td>
               <div class="d-flex align-items-center justify-content-center">
-                <button class="btn btn-outline-danger ms-2">
+                <button class="btn btn-outline-danger ms-2 btn-delete" data-id="{{this.id}}">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </div>
@@ -74,3 +74,28 @@
 
   </div>
 </div>
+
+<script>
+  const btnDelete = document.querySelectorAll('.btn-delete');
+  btnDelete.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      const teamId = '{{team.id}}';
+      const url = `/teams/${teamId}/edit/members/${id}`;
+      const options = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      fetch(url, options)
+        .then(res => res.json())
+        .then(res => {
+          if (res.status === 'success') {
+            window.location.reload();
+          }
+        })
+        .catch(err => console.log(err));
+    });
+  });
+</script>

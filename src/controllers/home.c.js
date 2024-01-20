@@ -1,5 +1,6 @@
 const TournamentModel = require("../models/tournament.m");
 const TeamModel = require("../models/team.m");
+const dbPlayers = require("../utils/database/dbPlayers");
 
 module.exports = {
 
@@ -12,7 +13,7 @@ module.exports = {
       user: user,
       nOfTournaments: await TournamentModel.count(),
       nOfTeams: await TeamModel.countAllTeams(),
-      nOfPlayers: 0,
+      nOfPlayers: await dbPlayers.countAllPlayers(),
     });
   },
 
