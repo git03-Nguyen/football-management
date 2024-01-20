@@ -159,6 +159,22 @@ module.exports = {
     });
   },
 
+  // POST /teams/:teamId/edit
+  postEditTeam: async function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = await TeamModel.getTeam(teamId);
+    if (!team) return next();
+    if (team.ownerId != user.id) return next(); // check if user is owner of this team, TODO: use middleware instead
+    try {
+      await TeamModel.updateTeam(teamId, req.body);
+    } catch (err) {
+      console.log(err);
+      res.redirect(`/teams/${teamId}/edit`);
+    }
+    res.redirect(`/teams/${teamId}`);
+  },
+
   // GET /teams/:teamId/edit/members
   getEditTeamMembers: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;

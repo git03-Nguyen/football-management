@@ -58,6 +58,10 @@ module.exports = class TeamModel {
     return teams;
   }
 
+  static async updateTeam(id, team) {
+    return await dbTeams.updateTeam(id, team);
+  }
+
 }
 
 

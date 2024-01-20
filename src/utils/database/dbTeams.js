@@ -55,7 +55,7 @@ module.exports = {
 
   getPlayers: async (id) => {
     const query = `
-      SELECT * FROM players WHERE team_id = $1;
+      SELECT * FROM players WHERE team_id = $1 ORDER BY id ASC;
     `;
     const res = await db.pool.query(query, [id]);
     return res.rows;
@@ -67,6 +67,15 @@ module.exports = {
     `;
     const res = await db.pool.query(query, [ownerId]);
     return res.rows;
+  },
+
+  updateTeam: async (id, team) => {
+    console.log(team);
+    const query = `
+      UPDATE teams SET name = $1, contact_name = $2, contact_email = $3, contact_phone = $4, level = $5, introduction = $6, has_uniform = $7, profile = $8 WHERE id = $9;
+    `;
+    const res = await db.pool.query(query, [team.name, team.contactName, team.contactEmail, team.contactPhone, team.level, team.introduction, false, team.profile, id]);
+    return res.rowCount;
   },
 
 };
