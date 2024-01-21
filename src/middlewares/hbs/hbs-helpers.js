@@ -24,6 +24,15 @@ module.exports = {
     return res;
   },
 
+  // input: 1 and 4, output: [1, 2]
+  range2: function (from, to) {
+    let res = [];
+    for (let i = from; i <= to / 2; i++) {
+      res.push(i);
+    }
+    return res;
+  },
+
   sum: function (arg1, arg2) {
     return (+arg1) + (+arg2);
   },

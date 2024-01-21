@@ -111,25 +111,21 @@
             </tr>
           </thead>
           <tbody>
-
+            {{#each (range 1 match.players.length)}}
             <tr>
-              <th scope="row" class="fw-normal">1</th>
+              <th scope="row" class="fw-normal">{{sum 1 @index}}</th>
               <td>
-                Nguyễn Tiến Thái (19)
+                {{#with (lookup ../match.players1 @index)}}
+                {{this.name}} ({{this.number}})
+                {{/with}}
               </td>
               <td>
-                Thanh An Thắng (23)
+                {{#with (lookup ../match.players2 @index)}}
+                {{this.name}} ({{this.number}})
+                {{/with}}
               </td>
             </tr>
-            <tr>
-              <th scope="row" class="fw-normal">2</th>
-              <td>
-                Nguyễn Tiến Thái (19)
-              </td>
-              <td>
-                Thanh An Thắng (23)
-              </td>
-            </tr>
+            {{/each}}
 
           </tbody>
         </table>

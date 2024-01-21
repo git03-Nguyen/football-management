@@ -257,6 +257,10 @@ module.exports = {
     const teams = await TeamModel.getTeamsLeaderboard();
     match.name1 = teams.find(t => t.id === match.teamId1).name;
     match.name2 = teams.find(t => t.id === match.teamId2).name;
+    match.players1 = await PlayerModel.getAllPlayersFromTeam(match.teamId1);
+    match.players2 = await PlayerModel.getAllPlayersFromTeam(match.teamId2);
+    match.players = []; match.players.length = Math.max(match.players1.length, match.players2.length);
+
     res.render('tournament/matches/match', {
       title: "Trận đấu",
       useTransHeader: true,
