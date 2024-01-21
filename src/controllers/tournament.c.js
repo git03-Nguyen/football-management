@@ -11,6 +11,12 @@ module.exports = {
     const tournament = await TournamentModel.getCurrentTournament();
     const teams = await TeamModel.getTeamsLeaderboard();
     const matches = await MatchModel.getMatchesInTournament(tournament.id);
+    // only take 5 matches the most recent (both played and not played)
+    matches.sort((a, b) => {
+      // use abs
+      return Math.abs(new Date(b.date) - new Date(a.date));
+    });
+
     matches.forEach(match => {
       match.name1 = teams.find(t => t.id === match.teamId1).name;
       match.name2 = teams.find(t => t.id === match.teamId2).name;
@@ -250,6 +256,8 @@ module.exports = {
     const date = new Date(match.date);
     match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const teams = await TeamModel.getTeamsLeaderboard();
+    match.name1 = teams.find(t => t.id === match.teamId1).name;
+    match.name2 = teams.find(t => t.id === match.teamId2).name;
     res.render('tournament/matches/match', {
       title: "Trận đấu",
       useTransHeader: true,
