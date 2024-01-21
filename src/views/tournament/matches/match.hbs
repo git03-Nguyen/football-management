@@ -145,8 +145,28 @@
         <p class="m-0"><strong>50'00'':</strong> Tỉ số 3-1 bởi Nguyễn Văn Đức!</p>
         <p class="m-0"><strong>54'05'':</strong> Tỉ số 4-1 bởi Nguyễn Thế Hưng!</p>
         <p class="m-0"><strong>90'05:</strong> Trận đấu kết thúc!</p> -->
-        {{#each match.logs}}
-        <p class="m-0"><strong>{{this.time}}:</strong> {{this.log}}</p>
+        {{#each match.events}}
+        {{#ifEquals this.type 'goal'}}
+        <p class="m-0"><strong>{{this.time}}:</strong> <span class="text-uppercase">{{this.name}}</span> ghi bàn!</p>
+        {{/ifEquals}}
+        {{#ifEquals this.type 'own_goal'}}
+        <p class="m-0"><strong>{{this.time}}:</strong> <span class="text-uppercase">{{this.name}}</span> phản lưới nhà!
+        </p>
+        {{/ifEquals}}
+        {{#ifEquals this.type 'yellow_card'}}
+        <p class="m-0"><strong>{{this.time}}:</strong> <span class="text-uppercase">{{this.name}}</span> nhận thẻ vàng!
+        </p>
+        {{/ifEquals}}
+        {{#ifEquals this.type 'red_card'}}
+        <p class="m-0"><strong>{{this.time}}:</strong> <span class="text-uppercase">{{this.name}}</span> nhận thẻ đỏ!
+        </p>
+        {{/ifEquals}}
+        {{#ifEquals this.type 'start'}}
+        <p class="m-0"><strong>{{this.time}}:</strong> Trận đấu bắt đầu!</p>
+        {{/ifEquals}}
+        {{#ifEquals this.type 'end'}}
+        <p class="m-0"><strong>{{this.time}}:</strong> Trận đấu kết thúc!</p>
+        {{/ifEquals}}
         {{/each}}
       </div>
 

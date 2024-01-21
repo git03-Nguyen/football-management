@@ -42,17 +42,7 @@ module.exports = class Match {
     this.views = match.views;
     this.isPlayed = match.is_played;
     this.isFinished = match.is_finished;
-    this.logs = match.logs;
-    this.logsTime = match.log_times;
-    // put logs and logsTime into an array
-    if (this.logs) {
-      this.logs = this.logs.map((log, index) => {
-        return {
-          log,
-          time: this.logsTime[index]
-        };
-      });
-    }
+    this.events = match.events;
 
   }
 
@@ -77,7 +67,9 @@ module.exports = class Match {
 
   static async getMatch(id) {
     const match = await dbMatches.getMatch(id);
-    return new Match(match);
+    let matchObj = new Match(match);
+    matchObj.events = await dbMatches.getMatchEvents(id);
+    return matchObj;
   }
 
   static async shortUpdateMatch(id, match) {

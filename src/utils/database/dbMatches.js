@@ -21,6 +21,17 @@ module.exports = {
     return res.rows[0];
   },
 
+  getMatchEvents: async function (id) {
+    const query = `
+      SELECT players.name, match_events.type, match_events.time
+      FROM match_events LEFT JOIN players ON match_events.player_id = players.id
+      WHERE match_events.match_id = $1
+      ORDER BY match_events.time, match_events.id
+    `;
+    const res = await db.pool.query(query, [id]);
+    return res.rows;
+  },
+
   shortUpdateMatch: async function (id, match) {
     const query = `
       UPDATE matches
