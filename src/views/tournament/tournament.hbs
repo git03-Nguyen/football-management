@@ -13,15 +13,15 @@
 
           <div class="col text-center top-scorer">
             <div class="position-relative">
-              <img src="/img/teams/{{this.teamId}}/{{this.name}}.png" alt=""
-                class="avatar mb-2 rounded-circle border border-2" height="100" width="100">
+              <img src="/img/players/{{this.id}}.png" alt="" class="avatar mb-2 rounded-circle border border-2"
+                height="100" width="100">
               <span class="position-absolute bg-primary-color rounded-circle">{{this.number}}</span>
               <a href="/teams/{{this.teamId}}">
-                <img src="/img/teams/{{this.teamId}}/info/logo.png" alt=""
+                <img src="/img/teams/{{this.teamId}}/logo.png" alt=""
                   class="position-absolute rounded-circle border border-2" height="30" width="30">
               </a>
             </div>
-            <a href="/teams/{{this.teamId}}/players/{{this.number}}" class="text-decoration-none">
+            <a href="/players/{{this.id}}" class="text-decoration-none">
               <p class="m-0 w-100 text-wrap">{{this.name}}</p>
             </a>
           </div>

@@ -3,56 +3,6 @@ const TeamModel = require('../models/team.m');
 const MatchModel = require('../models/match.m');
 const PlayerModel = require('../models/player.m');
 
-function getPlayerStatistics() {
-  return [
-    {
-      playerId: 1,
-      playerName: 'Nguyễn Tiến Thái',
-      number: 15,
-      teamId: 1,
-      teamName: 'Đội bóng 1',
-      nOfMatches: 5,
-      nOfGoals: 15,
-      nOfOwnGoals: 0,
-      nOfDoubleKicks: 2,
-      nOfHatTricks: 1,
-      nOfPokers: 0,
-      nOfYellowCards: 2,
-      nOfRedCards: 0,
-    },
-    {
-      playerId: 2,
-      playerName: 'Thanh An Thắng',
-      number: 22,
-      teamId: 1,
-      teamName: 'Đội bóng 1',
-      nOfMatches: 5,
-      nOfGoals: 12,
-      nOfOwnGoals: 1,
-      nOfDoubleKicks: 1,
-      nOfHatTricks: 0,
-      nOfPokers: 0,
-      nOfYellowCards: 2,
-      nOfRedCards: 0,
-    },
-    {
-      playerId: 3,
-      playerName: 'Bùi Anh Tuấn',
-      number: 12,
-      teamId: 1,
-      teamName: 'Đội bóng 1',
-      nOfMatches: 5,
-      nOfGoals: 10,
-      nOfOwnGoals: 0,
-      nOfDoubleKicks: 0,
-      nOfHatTricks: 0,
-      nOfPokers: 0,
-      nOfYellowCards: 2,
-      nOfRedCards: 0,
-    },
-  ];
-}
-
 module.exports = {
 
   // GET /tournament
@@ -65,6 +15,7 @@ module.exports = {
       match.name1 = teams.find(t => t.id === match.teamId1).name;
       match.name2 = teams.find(t => t.id === match.teamId2).name;
     });
+    const players = await PlayerModel.getPlayersStatistics(tournament.id);
     res.render('tournament/tournament', {
       title: "Giải đấu",
       useTransHeader: true,
@@ -81,7 +32,7 @@ module.exports = {
         totalCards: await MatchModel.getNumberOfCardsInTournament(tournament.id),
         // mostGoalsMatch
 
-        // topScorers
+        topScorers: players.slice(0, 3),
         // leaderboard
         // recentSchedules
       },

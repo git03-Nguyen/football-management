@@ -44,7 +44,8 @@ module.exports = {
       FROM players_statistics 
       JOIN players ON players.id = players_statistics.player_id
       JOIN teams ON teams.id = players.team_id
-      WHERE teams.tournament_id = $1;
+      WHERE teams.tournament_id = $1
+      ORDER BY players_statistics.goals DESC, players_statistics.yellow_cards DESC, players_statistics.red_cards DESC, players.id ASC;
     `;
     const res = await db.pool.query(query, [tournamentId]);
     return res.rows;
