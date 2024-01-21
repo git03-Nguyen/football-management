@@ -50,8 +50,30 @@ module.exports = class Match {
     return rounds;
   }
 
+  static async getMatchesInTournament(tournamentId) {
+    const matches = await dbMatches.getMatchesInTournament(tournamentId);
+    return matches.map(match => new Match(match));
+  }
+
   static async shortUpdateMatch(id, match) {
     return await dbMatches.shortUpdateMatch(id, match);
+  }
+
+  static async getNumberOfGoalsInTournament(tournamentId) {
+    const matches = await dbMatches.getMatchesInTournament(tournamentId);
+    let goals = 0;
+    matches.forEach(match => {
+      goals += match.scores_1 + match.scores_2;
+    });
+    return goals;
+  }
+
+  static async getNumberOfOwnGoalsInTournament(tournamentId) {
+    return await dbMatches.getNumberOfOwnGoalsInTournament(tournamentId);
+  }
+
+  static async getNumberOfCardsInTournament(tournamentId) {
+    return await dbMatches.getNumberOfCardsInTournament(tournamentId);
   }
 
 

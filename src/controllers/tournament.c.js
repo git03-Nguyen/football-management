@@ -277,18 +277,26 @@ module.exports = {
   getTournament: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = await TournamentModel.getCurrentTournament();
+    const teams = await TeamModel.getTeamsLeaderboard();
+    const matches = await MatchModel.getMatchesInTournament(tournament.id);
+    matches.forEach(match => {
+      match.name1 = teams.find(t => t.id === match.teamId1).name;
+      match.name2 = teams.find(t => t.id === match.teamId2).name;
+    });
     res.render('tournament/tournament', {
       title: "Giải đấu",
       useTransHeader: true,
       user: user,
       tournament: tournament,
-      nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
+      nOfActiveTeams: teams.length,
+      teams: teams.slice(0, 5),
+      matches: matches.slice(0, 5),
       stats: {
         totalPlayers: await TournamentModel.countPlayersInTournament(tournament.id),
-        // totalGoals
-        // totalMatches
-        // ownGoals
-        // totalCards
+        totalGoals: await MatchModel.getNumberOfGoalsInTournament(tournament.id),
+        totalMatches: matches.length,
+        ownGoals: await MatchModel.getNumberOfOwnGoalsInTournament(tournament.id),
+        totalCards: await MatchModel.getNumberOfCardsInTournament(tournament.id),
         // mostGoalsMatch
 
         // topScorers
