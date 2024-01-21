@@ -386,13 +386,14 @@ module.exports = {
   getStatistics: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = await TournamentModel.getCurrentTournament();
+    const teams = await TeamModel.getTeamsLeaderboard();
     res.render('tournament/statistics', {
       title: "Thống kê",
       useTransHeader: true,
       user: user,
       tournament: tournament,
       nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
-      teams: getAllTeams(),
+      teams: teams,
       subNavigation: 3,
       subSubNavigation: 0,
     });
