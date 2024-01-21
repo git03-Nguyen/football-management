@@ -30,14 +30,17 @@ module.exports = class PlayerModel {
   }
 
   static async getPlayersStatistics(tournamentId) {
-    const players = await PlayerModel.getPlayersInTournament(tournamentId);
     const statistics = await dbPlayers.getPlayersStatistics(tournamentId);
-    return players.map(player => {
-      const playerStatistics = statistics.find(stat => stat.player_id === player.id);
-      return {
-        ...player,
-        ...playerStatistics
-      };
+    return statistics.map(player => {
+      const playerObj = new PlayerModel(player);
+      playerObj.goals = player.goals;
+      playerObj.yellow_cards = player.yellow_cards;
+      playerObj.red_cards = player.red_cards;
+      playerObj.own_goals = player.own_goals;
+      playerObj.doubles = player.doubles;
+      playerObj.hattricks = player.hattricks;
+      playerObj.pokers = player.pokers;
+      return playerObj;
     });
   }
 

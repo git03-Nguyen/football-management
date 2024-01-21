@@ -148,7 +148,6 @@ module.exports = {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = await TournamentModel.getCurrentTournament();
     const players = await PlayerModel.getPlayersStatistics(tournament.id);
-    console.log(players);
     res.render('tournament/statistics-players', {
       title: "Thống kê",
       useTransHeader: true,
