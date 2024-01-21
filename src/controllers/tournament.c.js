@@ -245,12 +245,18 @@ module.exports = {
   getMatchById: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const matchId = req.params.id;
+    const match = await MatchModel.getMatch(matchId);
+    // match.date is yyyy-mm-dd, let convert to dd/mm/yyyy
+    const date = new Date(match.date);
+    match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const teams = await TeamModel.getTeamsLeaderboard();
     res.render('tournament/matches/match', {
       title: "Trận đấu",
       useTransHeader: true,
       user: user,
       tournament: await TournamentModel.getCurrentTournament(),
-      // match: getMatches()[0].dates[0].matches[0],
+      match: match,
+      teams: teams.slice(0, 5),
       subNavigation: 0,
     });
   },

@@ -63,6 +63,11 @@ module.exports = class Match {
     return matches.map(match => new Match(match));
   }
 
+  static async getMatch(id) {
+    const match = await dbMatches.getMatch(id);
+    return new Match(match);
+  }
+
   static async shortUpdateMatch(id, match) {
     return await dbMatches.shortUpdateMatch(id, match);
   }
@@ -83,6 +88,8 @@ module.exports = class Match {
   static async getNumberOfCardsInTournament(tournamentId) {
     return await dbMatches.getNumberOfCardsInTournament(tournamentId);
   }
+
+
 
   // static async getMostGoalsMatchInTournament(tournamentId) {
   //   const matches = await dbMatches.getMatchesInTournament(tournamentId);

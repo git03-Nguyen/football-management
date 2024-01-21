@@ -5,31 +5,30 @@
 <div class="container-fluid mx-5 text-light">
 
   <div class="my-3 mx-5 d-flex justify-content-center align-items-center">
-    <p class="h3 m-0">TSS FC</p>
-    <img src="/img/teams/1/info/logo.png" alt="logo" class="mx-3" width="50px" height="50px">
-    <p class="h3 m-0 fw-bold">4 - 1</p>
-    <img src="/img/teams/1/info/logo.png" alt="logo" class="mx-3" width="50px" height="50px">
-    <p class="h3 m-0">TSS FC</p>
+    <p class="h3 m-0">{{match.name1}}</p>
+    <img src="/img/teams/{{match.teamId1}}/logo.png" alt="logo" class="mx-3" width="50px" height="50px">
+    <p class="h3 m-0 fw-bold">{{match.scores1}} - {{match.scores2}}</p>
+    <img src="/img/teams/{{match.teamId2}}/logo.png" alt="logo" class="mx-3" width="50px" height="50px">
+    <p class="h3 m-0">{{match.name2}}</p>
   </div>
 
   <div class="text-center mb-3">
-    <p class="mb-1"><strong>Thời gian:</strong> 18:00 - 28/12/2023</p>
-    <p class="mb-2"><strong>Địa điểm: </strong> Sân vận động Quân khu 7, số 2A, Đ. Phan Đình Giót, Phường 2, Tân Bình,
-      TP. HCM.</p>
+    <p class="mb-1"><strong>Thời gian:</strong> {{match.time}} - {{match.date}}</p>
+    <p class="mb-2"><strong>Địa điểm: </strong> {{match.place}}</p>
     <div class="d-flex justify-content-center align-items-center">
       <button id="btnFree" class="ms-3" disabled>FREE</button>
       <i class="fas fa-eye fs-5 text-light ms-3 me-2"></i>
-      <p class="text-light m-0">59</p>
+      <p class="text-light m-0">60</p>
     </div>
   </div>
 
   {{#if user.isAdmin}}
   <div id="sub-navigation" class="d-flex justify-content-center align-items-center mt-2">
-    <a href="/tournament/matches/1"
+    <a href="/tournament/matches/{{match.id}}"
       class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 0}}active{{/ifEquals}}">
       <p class="h5">Thông tin</p>
     </a>
-    <a href="/tournament/matches/1/edit"
+    <a href="/tournament/matches/{{match.id}}/edit"
       class="text-light fw-bold text-decoration-none me-4 {{#ifEquals subNavigation 1}}active{{/ifEquals}}">
       <p class="h5">Tuỳ chỉnh</p>
     </a>

@@ -15,6 +15,12 @@ module.exports = {
     return res.rows;
   },
 
+  getMatch: async function (id) {
+    const query = `SELECT * FROM matches WHERE id = $1`;
+    const res = await db.pool.query(query, [id]);
+    return res.rows[0];
+  },
+
   shortUpdateMatch: async function (id, match) {
     const query = `
       UPDATE matches

@@ -117,7 +117,7 @@ module.exports = {
 
   getTeamsStatistics: async () => {
     const query = `
-      SELECT * FROM teams_statistics ORDER BY team_id ASC;
+      SELECT * FROM teams_statistics ORDER BY score ASC, team_id ASC;
     `;
     const res = await db.pool.query(query);
     return res.rows;

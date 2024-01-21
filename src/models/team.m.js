@@ -105,6 +105,17 @@ module.exports = class TeamModel {
         team.score = statistics.score;
       }
     });
+    teams.sort((a, b) => {
+      if (a.score > b.score) return -1;
+      if (a.score < b.score) return 1;
+      if (a.goalDifference > b.goalDifference) return -1;
+      if (a.goalDifference < b.goalDifference) return 1;
+      if (a.nOfGoals > b.nOfGoals) return -1;
+      if (a.nOfGoals < b.nOfGoals) return 1;
+      if (a.nOfGoalsAgainst < b.nOfGoalsAgainst) return -1;
+      if (a.nOfGoalsAgainst > b.nOfGoalsAgainst) return 1;
+      return 0;
+    });
     return teams;
   }
 

@@ -13,25 +13,25 @@
         <div class="row row-cols-4 m-0 mb-3 text-light">
           <div class="col px-1">
             <div class="bg-primary-color p-2 rounded">
-              <p class="m-0 display-1 fw-bold">0</p>
+              <p class="m-0 display-2 fw-bold text-center" id="day">0</p>
               <p class="m-0 h4 fw-bold">ngày</p>
             </div>
           </div>
           <div class="col px-1">
             <div class="bg-primary-color p-2 rounded">
-              <p class="m-0 display-1 fw-bold">0</p>
+              <p class="m-0 display-2 fw-bold text-center" id="hour">0</p>
               <p class="m-0 h4 fw-bold">giờ</p>
             </div>
           </div>
           <div class="col px-1">
             <div class="bg-primary-color p-2 rounded">
-              <p class="m-0 display-1 fw-bold">0</p>
+              <p class="m-0 display-2 fw-bold text-center" id="minute">0</p>
               <p class="m-0 h4 fw-bold">phút</p>
             </div>
           </div>
           <div class="col px-1">
             <div class="bg-primary-color p-2 rounded">
-              <p class="m-0 display-1 fw-bold">0</p>
+              <p class="m-0 display-2 fw-bold text-center" id="second">0</p>
               <p class="m-0 h4 fw-bold">giây</p>
             </div>
           </div>
@@ -45,10 +45,7 @@
           <p class="h5 m-0 fw-bold ">Địa điểm trận đấu</p>
         </div>
 
-        <p class="mb-1 text-start"><strong>Địa điểm:</strong> Sân vận động Quân khu 7, số 2A, Đ. Phan Đình Giót, Phường
-          2, Tân
-          Bình, TP. HCM.
-        </p>
+        <p class="mb-1 text-start"><strong>Địa điểm:</strong> {{match.place}}</p>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.635863047679!2d106.6797512748567!3d10.762521589385393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1bfc262bf1%3A0x4e843897f2900135!2zMjI3IMSQLiBOZ3V54buFbiBWxINuIEPhu6ssIFBoxrDhu51uZyA0LCBRdeG6rW4gNSwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1704601347126!5m2!1sen!2s"
           class="border-0 w-100 mb-3" height="200" allowfullscreen="" loading="lazy"
@@ -63,14 +60,14 @@
         <table class="table table-hover rounded mb-3">
           <tbody>
 
-            {{#each stats.leaderboard}}
+            {{#each teams}}
 
             <tr>
               <th scope="row" class="py-2 pt-3 fw-normal text-start">{{#sum @index 1}}{{/sum}}</th>
               <td class="py-2 pt-3">
                 <div class="d-flex align-items-center">
-                  <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" class="me-2" height="25" width="25">
-                  <a href="/teams/{{this.teamId}}" class="text-decoration-none h6 align-bottom mb-0">{{this.name}}</a>
+                  <img src="/img/teams/{{this.id}}/logo.png" alt="" class="me-2" height="25" width="25">
+                  <a href="/teams/{{this.id}}" class="text-decoration-none h6 align-bottom mb-0">{{this.name}}</a>
                 </div>
               </td>
               <td class="py-2 pt-3 fw-bold text-end">{{this.score}} điểm</td>
@@ -103,12 +100,12 @@
             <tr>
               <th scope="col" class="bg-yellow-color fw-normal text-light align-middle">#</th>
               <th scope="col" class="bg-yellow-color fw-normal text-light text-uppercase">
-                <img src="/img/teams/1/info/logo.png" alt="" height="35" class="d-inline me-1">
-                FC HDT
+                <img src="/img/teams/{{match.teamId1}}/logo.png" alt="" height="35" class="d-inline me-1">
+                {{match.name1}}
               </th>
               <th scope="col" class="bg-yellow-color fw-normal text-light text-uppercase">
-                <img src="/img/teams/1/info/logo.png" alt="" height="35" class="d-inline me-1">
-                FC Liên Quân
+                <img src="/img/teams/{{match.teamId2}}/logo.png" alt="" height="35" class="d-inline me-1">
+                {{match.name2}}
               </th>
             </tr>
           </thead>
@@ -124,7 +121,7 @@
               </td>
             </tr>
             <tr>
-              <th scope="row" class="fw-normal">1</th>
+              <th scope="row" class="fw-normal">2</th>
               <td>
                 Nguyễn Tiến Thái (19)
               </td>
@@ -161,9 +158,9 @@
       <div class="d-flex justify-content-center">
         <div class="w-50">
           <div class="d-flex justify-content-around align-items-center mb-1">
-            <img src="/img/teams/1/info/logo.png" alt="" height="50">
+            <img src="/img/teams/{{match.teamId1}}/logo.png" alt="" height="50">
             <p class="m-0 h5 fw-bold text-primary-color">| V.S |</p>
-            <img src="/img/teams/1/info/logo.png" alt="" height="50">
+            <img src="/img/teams/{{match.teamId2}}/logo.png" alt="" height="50">
           </div>
           <div class="d-flex justify-content-between align-items-center fw-bold">
             <p class="m-0 text-success">0</p>
@@ -193,3 +190,42 @@
 
   </div>
 </div>
+
+<script>
+  // Calculate from now to match time
+  // match time is both match.date and match.time
+  const dateStr = '{{match.date}}';
+  const timeStr = '{{match.time}}:00';
+
+  // Convert date string to 'yyyy-mm-dd' format
+  const [dd, mm, yyyy] = dateStr.split('/');
+  const convertedDateStr = `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
+
+  // Combine date and time strings into a single string
+  const combinedDateTimeString = `${convertedDateStr}T${timeStr}`;
+  const matchTime = new Date(combinedDateTimeString);
+
+  const now = new Date();
+
+  if (matchTime < now) {
+    day.innerHTML = 0;
+    hour.innerHTML = 0;
+    minute.innerHTML = 0;
+    second.innerHTML = 0;
+  } else {
+    day.innerHTML = Math.floor((matchTime - now) / (1000 * 60 * 60 * 24));
+    hour.innerHTML = Math.floor((matchTime - now) % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+    minute.innerHTML = Math.floor((matchTime - now) % (1000 * 60 * 60) / (1000 * 60));
+    second.innerHTML = Math.floor((matchTime - now) % (1000 * 60) / 1000);
+
+    setInterval(() => {
+      const now = new Date();
+      day.innerHTML = Math.floor((matchTime - now) / (1000 * 60 * 60 * 24));
+      hour.innerHTML = Math.floor((matchTime - now) % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+      minute.innerHTML = Math.floor((matchTime - now) % (1000 * 60 * 60) / (1000 * 60));
+      second.innerHTML = Math.floor((matchTime - now) % (1000 * 60) / 1000);
+      console.log('counting...');
+    }, 1000);
+  }
+
+</script>
