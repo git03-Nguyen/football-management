@@ -115,14 +115,17 @@
             </td>
           </tr>
           {{/ifEquals}}
-
-
-
           {{/each}}
-
 
         </tbody>
       </table>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-primary">
+        <i class="fas fa-save me-1"></i>
+        Lưu
+      </button>
     </div>
 
     {{!-- Cards --}}
@@ -150,63 +153,83 @@
           </tr>
         </thead>
         <tbody>
+
+          {{#each match.cards}}
+          {{#ifEquals this.team_id ../match.teamId1}}
           <tr>
-            <th scope="row">1</th>
-            <td class="text-start" style="width: 15rem">
-
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  Chọn đội
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
-
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">TSS FC</a>
-
-                </div>
-              </div>
+            <th scope="row">{{sum @index 1}}</th>
+            <td class="text-start">
+              <select class="form-select" aria-label="Default select example">
+                <option disabled>Chọn đội</option>
+                <option value="{{this.team_id}}" selected>{{../match.name1}}</option>
+                <option value="{{this.team_id}}">{{../match.name2}}</option>
+              </select>
             </td>
             <td class="text-start" style="width: 15rem;">
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  Cầu thủ nhận thẻ
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
-
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
-
-                </div>
-              </div>
+              <select class="form-select" aria-label="Default select example">
+                <option disabled>Chọn cầu thủ</option>
+                {{#each ../match.players1}}
+                <option value="{{this.id}}" {{#ifEquals this.id ../this.id}}selected{{/ifEquals}}>{{this.name}}</option>
+                {{/each}}
+              </select>
             </td>
             <td style="width: fit-content;">
               <div class="input-group">
-                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;"
+                  value="{{this.time}}">
               </div>
             </td>
             <td>
-              <input type="checkbox" name="isRedCard" id="isRedCard" class="">
+              <input type="checkbox" name="isRedCard" id="isRedCard" style="width: 10rem;" {{#if
+                this.isRedCard}}checked{{/if}}>
             </td>
             <td>
-              <a href="">
-                <button class="btn btn-outline-danger">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </a>
+              <button class="btn btn-outline-danger">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </td>
           </tr>
+          {{else}}
+          <tr>
+            <th scope="row">{{sum @index 1}}</th>
+            <td class="text-start">
+              <select class="form-select" aria-label="Default select example">
+                <option disabled>Chọn đội</option>
+                <option value="{{this.team_id}}">{{../match.name1}}</option>
+                <option value="{{this.team_id}}" selected>{{../match.name2}}</option>
+              </select>
+            </td>
+            <td class="text-start" style="width: 15rem;">
+              <select class="form-select" aria-label="Default select example">
+                <option disabled>Chọn cầu thủ</option>
+                {{#each ../match.players2}}
+                <option value="{{this.id}}" {{#ifEquals this.id ../this.id}}selected{{/ifEquals}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </td>
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;"
+                  value="{{this.time}}">
+              </div>
+            </td>
+            <td>
+              <input type="checkbox" name="isRedCard" id="isRedCard" style="width: 10rem;" {{#if
+                this.isRedCard}}checked{{/if}}>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+          {{/ifEquals}}
+          {{/each}}
 
 
         </tbody>
       </table>
     </div>
-
 
 
     <div class="d-flex justify-content-center">
@@ -218,3 +241,9 @@
 
   </div>
 </div>
+
+<script>
+
+
+
+</script>
