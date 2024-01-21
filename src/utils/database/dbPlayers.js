@@ -27,4 +27,27 @@ module.exports = {
     return res.rows[0];
   },
 
+  getPlayersInTournament: async (tournamentId) => {
+    const query = `
+      SELECT p.id, p.name, p.number, p.birthyear, p.positions, p.phone, p.team_id, t.name AS team_name
+      FROM players p
+      JOIN teams t ON t.id = p.team_id
+      WHERE t.tournament_id = $1;
+    `;
+    const res = await db.pool.query(query, [tournamentId]);
+    return res.rows;
+  },
+
+  getPlayersStatistics: async (tournamentId) => {
+    const query = `
+      SELECT players_statistics.*, teams.name AS team_name
+      FROM players_statistics 
+      JOIN players ON players.id = players_statistics.player_id
+      JOIN teams ON teams.id = players.team_id
+      WHERE teams.tournament_id = $1;
+    `;
+    const res = await db.pool.query(query, [tournamentId]);
+    return res.rows;
+  }
+
 };

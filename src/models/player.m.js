@@ -24,6 +24,22 @@ module.exports = class PlayerModel {
     return await dbPlayers.getPlayer(id);
   }
 
+  static async getPlayersInTournament(tournamentId) {
+    const res = await dbPlayers.getPlayersInTournament(tournamentId);
+    return res.map(player => new PlayerModel(player));
+  }
+
+  static async getPlayersStatistics(tournamentId) {
+    const players = await PlayerModel.getPlayersInTournament(tournamentId);
+    const statistics = await dbPlayers.getPlayersStatistics(tournamentId);
+    return players.map(player => {
+      const playerStatistics = statistics.find(stat => stat.player_id === player.id);
+      return {
+        ...player,
+        ...playerStatistics
+      };
+    });
+  }
 
 }
 

@@ -44,33 +44,33 @@
           </tr>
         </thead>
         <tbody>
-          {{#each statistics}}
+          {{#each players}}
           <tr>
             <th scope="row" class="fw-normal">{{sum @index 1}}</th>
             <td>
-              <img src="/img/teams/{{this.teamId}}/{{this.playerName}}.png" alt="" height="40" class="rounded-circle">
+              <img src="/img/players/{{this.id}}.png" alt="" height="40" class="rounded-circle">
             </td>
             <td>
-              <a href="/tournament/players/{{this.playerId}}">
-                <p class="m-0 text-start">{{this.playerName}}</p>
+              <a href="/players/{{this.id}}">
+                <p class="m-0 text-start">{{this.name}}</p>
               </a>
             </td>
             <td>{{this.number}}</td>
             <td>
-              <a href="/tournament/teams/{{this.teamId}}">
+              <a href="/teams/{{this.teamId}}">
                 <div class="d-flex justify-content-center align-items-center">
-                  <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" height="30px" class="me-2">
-                  <p class="m-0 text-start">{{this.teamName}}</p>
+                  <img src="/img/teams/{{this.teamId}}/logo.png" alt="" height="30px" class="me-2">
+                  <p class="m-0 text-start">{{this.team_name}}</p>
 
                 </div>
               </a>
             </td>
-            <td>{{this.nOfGoals}}</td>
-            <td>{{this.nOfOwnGoals}}</td>
-            <td>{{this.nOfDoubleKicks}}</td>
-            <td>{{this.nOfHatTricks}}</td>
-            <td>{{this.nOfPokers}}</td>
-            <td>{{this.nOfYellowCards}} / {{this.nOfRedCards}}</td>
+            <td>{{this.goals}}</td>
+            <td>{{this.own_goals}}</td>
+            <td>{{this.doubles}}</td>
+            <td>{{this.hattricks}}</td>
+            <td>{{this.pokers}}</td>
+            <td>{{this.yellow_cards}} / {{this.red_cards}}</td>
           </tr>
           {{/each}}
         </tbody>
