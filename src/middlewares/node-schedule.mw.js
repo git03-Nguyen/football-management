@@ -3,7 +3,6 @@ const dbMatches = require('../utils/database/dbMatches');
 
 async function run() {
   await dbMatches.updateMatchesPlayedOrFinished();
-  console.log("Schedule job is running");
 }
 
 module.exports = async () => {

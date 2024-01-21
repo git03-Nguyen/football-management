@@ -84,7 +84,8 @@ module.exports = {
         (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
 
     UPDATE matches
-    SET is_finished = true
+    SET is_finished = true,
+        winner_id = CASE WHEN scores_1 > scores_2 THEN team_id_1 WHEN scores_1 < scores_2 THEN team_id_2 ELSE NULL END
     WHERE (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
     `;
     await db.pool.query(query2);
