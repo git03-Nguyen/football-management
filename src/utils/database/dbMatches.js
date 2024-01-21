@@ -55,25 +55,37 @@ module.exports = {
 
   updateMatchesPlayedOrFinished: async function () {
     const query = `
-    UPDATE public.matches
-    SET 
-      is_played = true,
-      logs = logs || ARRAY['Trận đấu bắt đầu!'],
-      log_times = log_times || ARRAY['00p00s']
-    WHERE 
-      (date <= CURRENT_DATE AND "time" <= CURRENT_TIME) AND is_played = false;
+    INSERT INTO match_events (match_id, type, time)
+    SELECT
+        id AS match_id,
+        'start' AS type,
+        '00p00s' AS time
+    FROM
+        matches
+    WHERE
+        matches.date <= CURRENT_DATE AND matches."time" <= CURRENT_TIME AND matches.is_played = false;
+
+    UPDATE matches
+    SET is_played = true
+    WHERE
+        matches.date <= CURRENT_DATE AND matches."time" <= CURRENT_TIME AND matches.is_played = false;
     `;
     await db.pool.query(query);
     // update finished after 2 hours
     const query2 = `
-    UPDATE matches
-    SET 
-      is_finished = true,
-      logs = logs || ARRAY['Trận đấu kết thúc!'],
-      log_times = log_times || ARRAY['90p00s'],
-      winner_id = CASE WHEN scores_1 > scores_2 THEN team_id_1 WHEN scores_1 < scores_2 THEN team_id_2 ELSE NULL END
+    INSERT INTO match_events (match_id, type, time)
+    SELECT
+        id AS match_id,
+        'end' AS type,
+        '90p00s' AS time
+    FROM
+        matches
     WHERE 
-      (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
+        (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
+
+    UPDATE matches
+    SET is_finished = true
+    WHERE (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
     `;
     await db.pool.query(query2);
   },
