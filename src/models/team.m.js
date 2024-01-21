@@ -86,6 +86,28 @@ module.exports = class TeamModel {
     return await dbTeams.getTeamsStatistics();
   }
 
+  static async getTeamsLeaderboard() {
+    const teams = await TeamModel.getAllActiveTeams();
+    const teamStatistics = await TeamModel.getTeamsStatistics();
+    teams.forEach(team => {
+      const statistics = teamStatistics.find(stat => stat.team_id === team.id);
+      if (statistics) {
+        team.nOfPlayedMatches = statistics.played;
+        team.nOfWins = statistics.wins;
+        team.nOfDraws = statistics.draws;
+        team.nOfLosses = statistics.losses;
+        team.nOfnOfGoals = statistics.goals;
+        team.nOfOwnGoals = statistics.own_goals;
+        team.nOfGoalsAgainst = statistics.a_goals;
+        team.goalDifference = statistics.goals - statistics.a_goals;
+        team.nOfRedCards = statistics.red_cards;
+        team.nOfYellowCards = statistics.yellow_cards;
+        team.score = statistics.score;
+      }
+    });
+    return teams;
+  }
+
 }
 
 
