@@ -456,13 +456,20 @@ module.exports = {
   getMatchesModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = await TournamentModel.getCurrentTournament();
+    const rounds = await MatchModel.getRoundsInTournament(tournament.id);
+    const round = req.query.round || 1;
+    const matches = rounds[round - 1];
+    const teams = await TeamModel.getAllActiveTeams();
     res.render('tournament/modifications-matches', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
       tournament: tournament,
       nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
-      rounds: getMatches(),
+      round: round,
+      rounds: rounds,
+      matches: matches,
+      teams: teams,
       subNavigation: 4,
       subSubNavigation: 2,
     });
@@ -551,6 +558,21 @@ module.exports = {
       if (!team.profile) throw new Error('Chưa có hồ sơ đội bóng');
       if (!team.status) throw new Error('Đội bóng chưa được chấp nhận sẵn rồi');
       await TeamModel.updateTeamStatus(teamId, false);
+      res.json({ status: 'success' });
+    } catch (error) {
+      console.log(error);
+      res.json({ status: 'error' });
+    }
+  },
+
+  // PUT /tournament/modifications/matches
+  putModificationsMatches: async function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const matches = req.body.matches;
+    try {
+      for (const match of matches) {
+        await MatchModel.shortUpdateMatch(match.id, match);
+      }
       res.json({ status: 'success' });
     } catch (error) {
       console.log(error);

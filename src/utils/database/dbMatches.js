@@ -10,9 +10,19 @@ module.exports = {
   },
 
   getMatchesInTournament: async function (tournamentId) {
-    const query = `SELECT * FROM matches WHERE tournament_id = $1 ORDER BY round`;
+    const query = `SELECT * FROM matches WHERE tournament_id = $1 ORDER BY round, id`;
     const res = await db.pool.query(query, [tournamentId]);
     return res.rows;
+  },
+
+  shortUpdateMatch: async function (id, match) {
+    const query = `
+      UPDATE matches
+      SET team_id_1 = $1, team_id_2 = $2, place = $3, date = $4, time = $5
+      WHERE id = $6
+    `;
+    const res = await db.pool.query(query, [match.teamId1, match.teamId2, match.place, match.date, match.time, id]);
+    return res.rows[0];
   },
 
 };

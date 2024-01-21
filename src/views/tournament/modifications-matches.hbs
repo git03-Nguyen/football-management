@@ -23,19 +23,18 @@
 
     </div>
 
+
     <div class="d-flex justify-content-between align-items-end p-0 px-2 my-2">
       <div class="dropdown open">
         <button class="btn btn-outline-dark dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          Vòng {{this.round}}
+          Vòng {{round}}
         </button>
         <div class="dropdown-menu" aria-labelledby="triggerId">
-
           {{#each this.rounds}}
           <a class="dropdown-item {{#ifEquals ../round (sum @index 1)}}disabled{{/ifEquals}}"
             href="/tournament/modifications/matches?round={{sum @index 1}}">Vòng {{sum @index 1}}</a>
           {{/each}}
-
         </div>
       </div>
 
@@ -47,100 +46,137 @@
       </a>
     </div>
 
-    <div class="my-3" id="table-teams">
-      <table class="table">
-        <thead class="table-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col" class="text-start">Đội thứ nhất</th>
-            <th scope="col" class="text-start">Đội thứ hai</th>
-            <th scope="col">Địa điểm</th>
-            <th scope="col">Ngày</th>
-            <th scope="col">Giờ</th>
-            <th scope="col">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td class="text-start" style="width: 15rem;">
-              {{!-- Dropdown to choose team in registering list --}}
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  Chọn đội
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+    <form id="matches-table" action="/tournament/modifications/matches" method="PUT">
 
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">TSS FC</a>
-
+      <div class="my-3" id="table-teams">
+        <table class="table">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col" class="text-start">Đội thứ nhất</th>
+              <th scope="col" class="text-start">Đội thứ hai</th>
+              <th scope="col">Địa điểm</th>
+              <th scope="col">Ngày</th>
+              <th scope="col">Giờ</th>
+              <th scope="col">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each matches}}
+            <tr data-for="{{this.id}}">
+              <th scope="row">{{sum @index 1}}</th>
+              <td class="text-start" style="width: 15rem;">
+                <!-- input select dropdown -->
+                <select class="form-select" aria-label="Default select example" style="width: 15rem;" name="teamId1">
+                  {{#each ../teams}}
+                  <option value="{{this.id}}" {{#ifEquals ../teamId1 this.id}}selected{{/ifEquals}}>
+                    {{this.name}}
+                  </option>
+                  {{/each}}
+                </select>
+              </td>
+              <td class="text-start" style="width: 15rem;">
+                <!-- input select dropdown -->
+                <select class="form-select" aria-label="Default select example" style="width: 15rem;" name="teamId2">
+                  {{#each ../teams}}
+                  <option value="{{this.id}}" {{#ifEquals ../teamId2 this.id}}selected{{/ifEquals}}>{{this.name}}
+                  </option>
+                  {{/each}}
+                </select>
+              </td>
+              <td>
+                {{!-- Input text --}}
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Địa điểm" value="{{this.place}}" name="place">
                 </div>
-              </div>
-            </td>
-            <td class="text-start" style="width: 15rem;">
-              {{!-- Dropdown to choose team in registering list --}}
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  Chọn đội
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
-
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">Good Morning FC</a>
-
+              </td>
+              <td>
+                {{!-- Input date --}}
+                <div class="input-group">
+                  <input type="date" class="form-control" placeholder="Ngày" style="width: 6rem;" value="{{this.date}}"
+                    name="date">
                 </div>
-              </div>
-            </td>
-            <td>
-              {{!-- Input text --}}
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Địa điểm">
-              </div>
-            </td>
-            <td>
-              {{!-- Input date --}}
-              <div class="input-group">
-                <input type="date" class="form-control" placeholder="Ngày" style="width: 6rem;">
-              </div>
-            </td>
-            <td style="width: fit-content;">
-              {{!-- Input time --}}
-              <div class="input-group">
-                <input type="time" class="form-control" placeholder="Giờ" style="width: 3rem;">
-              </div>
-            </td>
-            <td>
-              {{!-- Edit --}}
-              <a href="">
-                <button class="btn btn-outline-dark">
-                  <i class="fas fa-edit"></i>
-                </button>
-              </a>
-            </td>
-          </tr>
+              </td>
+              <td style="width: 10rem;">
+                {{!-- Input time --}}
+                <div class="input-group">
+                  <input type="time" class="form-control" placeholder="Giờ" style="width: 3rem;" value="{{this.time}}"
+                    name="time">
+                </div>
+              </td>
+              <td>
+                {{!-- Edit --}}
+                <a href="/tournament/matches/{{this.id}}/edit">
+                  <button class="btn btn-outline-dark">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </a>
+              </td>
+            </tr>
+            {{/each}}
 
+          </tbody>
+        </table>
+      </div>
 
-        </tbody>
-      </table>
-    </div>
+      <div class="text-center">
+        <a href="">
+          <button class="btn btn-primary" type="submit">Lưu</button>
+        </a>
 
-    <div class="text-center">
-      <a href="">
-        <button class="btn btn-primary">Lưu</button>
-      </a>
+      </div>
 
-    </div>
-
-
-
-
-
+    </form>
 
   </div>
 </div>
+
+<script>
+
+
+
+  // send data to server
+  const form = document.querySelector('#matches-table');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // group each row by data-for attribute, every data-for is a match
+    const matches = [];
+    const rows = document.querySelectorAll('[data-for]');
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const match = {
+        id: row.getAttribute('data-for'),
+        teamId1: row.querySelector('[name="teamId1"]').value,
+        teamId2: row.querySelector('[name="teamId2"]').value,
+        place: row.querySelector('[name="place"]').value,
+        date: row.querySelector('[name="date"]').value,
+        time: row.querySelector('[name="time"]').value,
+      }
+      matches.push(match);
+    }
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ matches }),
+    }
+    console.log(options.body);
+    fetch('/tournament/modifications/matches', options)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.status === 'success') {
+          window.location.reload();
+        }
+      })
+      .catch(err => console.log(err));
+  })
+
+
+
+
+
+</script>

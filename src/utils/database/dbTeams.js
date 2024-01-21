@@ -37,6 +37,15 @@ module.exports = {
     return res.rows;
   },
 
+  getAllActiveTeams: async () => {
+    const currentTournamentId = await TournamentModel.getCurrentTournamentId();
+    const query = `
+      SELECT * FROM teams WHERE tournament_id = $1 AND status = true ORDER BY id ASC;
+    `;
+    const res = await db.pool.query(query, [currentTournamentId]);
+    return res.rows;
+  },
+
   getTeam: async (id) => {
     const query = `
       SELECT * FROM teams WHERE id = $1;

@@ -38,6 +38,18 @@ module.exports = class TeamModel {
     return array;
   }
 
+  static async getAllActiveTeams() {
+    const res = await dbTeams.getAllActiveTeams();
+    let array = [];
+    for (const team of res) {
+      let teamObj = new TeamModel(team);
+      teamObj.players = {};
+      teamObj.players.length = await dbTeams.countPlayers(team.id);
+      array.push(teamObj);
+    }
+    return array;
+  }
+
   static async getTeam(id) {
     const res = await dbTeams.getTeam(id);
     if (!res) return null;

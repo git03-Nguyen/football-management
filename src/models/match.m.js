@@ -49,5 +49,9 @@ module.exports = class Match {
     return rounds;
   }
 
+  static async shortUpdateMatch(id, match) {
+    return await dbMatches.shortUpdateMatch(id, match);
+  }
+
 
 };
