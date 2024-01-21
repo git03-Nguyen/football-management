@@ -33,6 +33,7 @@ module.exports = class Match {
     this.place = match.place;
     this.requireTickets = false;
     this.views = match.views;
+    this.isPlayed = match.is_played;
   }
 
   static async getRoundsInTournament(tournamentId) {

@@ -361,6 +361,20 @@ module.exports = {
     for (let i = 0; i < rounds.length; i++) {
       countMatches += rounds[i].length;
     }
+    // group matches by date
+    const dates = [];
+    const teams = await TeamModel.getAllActiveTeams();
+    for (const match of matches) {
+      match.name1 = teams.find(t => t.id === match.teamId1).name;
+      match.name2 = teams.find(t => t.id === match.teamId2).name;
+      const date = dates.find(d => d.date === match.date);
+      if (!date) {
+        dates.push({ date: match.date, matches: [match] });
+      } else {
+        date.matches.push(match);
+      }
+    }
+    console.log(dates);
 
     res.render('tournament/matches', {
       title: "Lịch thi đấu",
@@ -371,7 +385,7 @@ module.exports = {
       round: round,
       rounds: rounds,
       countAllMatches: countMatches,
-      matches: matches,
+      dates: dates,
       subNavigation: 2,
     });
   },

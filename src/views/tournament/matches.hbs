@@ -22,7 +22,6 @@
     </div>
 
     <div class="table-responsive mb-3" id="table-leaderboard">
-      {{#with (lookup this.rounds (sum this.round -1))}}
       {{#each this.dates}}
       <table class="table table-hover table-borderless rounded mb-0">
         <thead>
@@ -34,38 +33,38 @@
           {{#each this.matches}}
 
           <tr class="text-center">
-            <td class="py-2">
+            <td class="py-2  w-50">
               <div class="d-flex justify-content-end align-items-center">
-                <a href="/tournament/teams/{{this.teamId1}}">
+                <a href="/teams/{{this.teamId1}}">
                   <p class="m-0">{{this.name1}}</p>
                 </a>
-                <img src="/img/teams/{{this.teamId1}}/info/logo.png" alt="" height="30px" class="ms-2">
+                <img src="/img/teams/{{this.teamId1}}/logo.png" alt="" height="30px" class="ms-2">
               </div>
             </td>
 
             {{#if this.isPlayed}}
             <td class="py-2" style="white-space: nowrap; width: 1%;">
-              <a href="/tournament/matches/{{this.matchId}}">
-                <div class="rounded w-auto bg-success px-3">
-                  <p class="m-0">{{this.score1}} - {{this.score2}}</p>
+              <a href="/tournament/matches/{{this.id}}">
+                <div class="rounded bg-success px-3">
+                  <p class="m-0" style="width:fit-content;">{{this.score1}} - {{this.score2}}</p>
                 </div>
               </a>
             </td>
             {{else}}
             <td class="py-2" style="white-space: nowrap; width: 1%;">
-              <a href="/tournament/matches/{{this.matchId}}">
-                <div class="rounded w-auto text-decoration-underline px-2"
+              <a href="/tournament/matches/{{this.id}}">
+                <div class="rounded text-decoration-underline px-2"
                   style="font-size: 0.9rem ;text-underline-offset: 0.2rem;">
-                  <p class="m-0">{{this.time}}</p>
+                  <p class="m-0" style="width:fit-content;">{{this.time}}</p>
                 </div>
               </a>
             </td>
             {{/if}}
 
-            <td class="py-2">
+            <td class="py-2 w-50">
               <div class="d-flex justify-content-start align-items-center">
-                <img src="/img/teams/{{this.teamId2}}/info/logo.png" alt="" height="30px" class="me-2">
-                <a href="/tournament/teams/{{this.teamId2}}">
+                <img src="/img/teams/{{this.teamId2}}/logo.png" alt="" height="30px" class="me-2">
+                <a href="/teams/{{this.teamId2}}">
                   <p class="m-0">{{this.name2}}</p>
                 </a>
               </div>
@@ -80,7 +79,6 @@
       <div class="bg-white-color" style="height: 30px;"></div>
       {{/if}}
       {{/each}}
-      {{/with}}
 
 
     </div>
