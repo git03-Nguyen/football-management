@@ -140,14 +140,17 @@
         <p class="h5 m-0 fw-bold ">Chi tiết trận đấu</p>
       </div>
       <div class="mb-3 text-start">
-        <p class="m-0"><strong>00'00'':</strong> Trận đấu bắt đầu!</p>
+        <!-- <p class="m-0"><strong>00'00'':</strong> Trận đấu bắt đầu!</p>
         <p class="m-0"><strong>05'01'':</strong> Tỉ số 0-1 bởi LÊ ĐÌNH NGUYÊN!</p>
         <p class="m-0"><strong>36'00'':</strong> Tỉ số 1-1 bởi Nguyễn Văn Dương!</p>
         <p class="m-0"><strong>42'00'':</strong> Tỉ số 2-1 bởi Phạm Văn Vỹ!</p>
         <p class="m-0"><strong>42'54'':</strong> Thẻ vàng LÊ ĐÌNH NGUYÊN!</p>
         <p class="m-0"><strong>50'00'':</strong> Tỉ số 3-1 bởi Nguyễn Văn Đức!</p>
         <p class="m-0"><strong>54'05'':</strong> Tỉ số 4-1 bởi Nguyễn Thế Hưng!</p>
-        <p class="m-0"><strong>90'05:</strong> Trận đấu kết thúc!</p>
+        <p class="m-0"><strong>90'05:</strong> Trận đấu kết thúc!</p> -->
+        {{#each match.logs}}
+        <p class="m-0"><strong>{{../match.logTimes.[@index]}}:</strong> {{this}}</p>
+        {{/each}}
       </div>
 
       <!-- thống kê -->

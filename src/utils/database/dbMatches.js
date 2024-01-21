@@ -55,16 +55,24 @@ module.exports = {
 
   updateMatchesPlayedOrFinished: async function () {
     const query = `
-    UPDATE matches
-    SET is_played = true
-    WHERE (date <= CURRENT_DATE AND "time" <= CURRENT_TIME)
+    UPDATE public.matches
+    SET 
+      is_played = true,
+      logs = logs || ARRAY['Trận đấu bắt đầu!'],
+      log_times = log_times || ARRAY['00p00s']
+    WHERE 
+      (date <= CURRENT_DATE AND "time" <= CURRENT_TIME) AND is_played = false;
     `;
     await db.pool.query(query);
     // update finished after 2 hours
     const query2 = `
     UPDATE matches
-    SET is_finished = true
-    WHERE (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours'))
+    SET 
+      is_finished = true,
+      logs = logs || ARRAY['Trận đấu kết thúc!'],
+      log_times = log_times || ARRAY['90p00s']
+    WHERE 
+      (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
     `;
     await db.pool.query(query2);
   },
