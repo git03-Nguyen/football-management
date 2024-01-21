@@ -69,6 +69,15 @@ module.exports = class Match {
     const match = await dbMatches.getMatch(id);
     let matchObj = new Match(match);
     matchObj.events = await dbMatches.getMatchEvents(id);
+    // each event is an object with properties: name, team_id, type, time
+    matchObj.yellowCards1 = matchObj.events.filter(event => event.type === 'yellow_card' && event.team_id === matchObj.teamId1);
+    matchObj.yellowCards2 = matchObj.events.filter(event => event.type === 'yellow_card' && event.team_id === matchObj.teamId2);
+    matchObj.redCards1 = matchObj.events.filter(event => event.type === 'red_card' && event.team_id === matchObj.teamId1);
+    matchObj.redCards2 = matchObj.events.filter(event => event.type === 'red_card' && event.team_id === matchObj.teamId2);
+    matchObj.ownGoals1 = matchObj.events.filter(event => event.type === 'own_goal' && event.team_id === matchObj.teamId1);
+    matchObj.ownGoals2 = matchObj.events.filter(event => event.type === 'own_goal' && event.team_id === matchObj.teamId2);
+    matchObj.goals1 = matchObj.events.filter(event => event.type === 'goal' && event.team_id === matchObj.teamId1);
+    matchObj.goals2 = matchObj.events.filter(event => event.type === 'goal' && event.team_id === matchObj.teamId2);
     return matchObj;
   }
 
