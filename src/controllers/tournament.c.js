@@ -1,5 +1,6 @@
 const TournamentModel = require('../models/tournament.m');
 const TeamModel = require('../models/team.m');
+const MatchModel = require('../models/match.m');
 
 function getGeneralStatistics() {
   return {
@@ -334,12 +335,14 @@ module.exports = {
   getMatches: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = await TournamentModel.getCurrentTournament();
+    const rounds = await MatchModel.getRoundsInTournament(tournament.id);
     const round = req.query.round || 1;
-    const countMatches = getMatches().reduce((count, round) => {
-      return count + round.dates.reduce((count, date) => {
-        return count + date.matches.length;
-      }, 0);
-    }, 0);
+    const matches = rounds[round - 1];
+    let countMatches = 0;
+    for (let i = 0; i < rounds.length; i++) {
+      countMatches += rounds[i].length;
+    }
+
     res.render('tournament/matches', {
       title: "Lịch thi đấu",
       useTransHeader: true,
@@ -347,8 +350,9 @@ module.exports = {
       tournament: tournament,
       nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
       round: round,
-      rounds: getMatches(),
-      countMatches: countMatches,
+      rounds: rounds,
+      countAllMatches: countMatches,
+      matches: matches,
       subNavigation: 2,
     });
   },

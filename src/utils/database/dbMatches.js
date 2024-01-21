@@ -3,18 +3,16 @@ const db = require('./db-config');
 
 module.exports = {
 
-  countRoundsInTournament: (tournamentId) => {
-    const query = `
-      SELECT COUNT(*) FROM rounds WHERE tournament_id = $1;
-    `;
-    return db.pool.query(query, [tournamentId]);
+  countRoundsInTournament: async function (tournamentId) {
+    const query = `SELECT MAX(round) FROM matches WHERE tournament_id = $1`;
+    const res = await db.pool.query(query, [tournamentId]);
+    return res.rows[0].max;
   },
 
-  countMatchesInTournament(tournamentId) {
-    const query = `
-      SELECT COUNT(*) FROM matches WHERE tournament_id = $1;
-    `;
-    return db.pool.query(query, [tournamentId]);
+  getMatchesInTournament: async function (tournamentId) {
+    const query = `SELECT * FROM matches WHERE tournament_id = $1 ORDER BY round`;
+    const res = await db.pool.query(query, [tournamentId]);
+    return res.rows;
   },
 
 };

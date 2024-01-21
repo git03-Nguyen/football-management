@@ -35,5 +35,19 @@ module.exports = class Match {
     this.views = match.views;
   }
 
+  static async getRoundsInTournament(tournamentId) {
+    const matches = await dbMatches.getMatchesInTournament(tournamentId);
+    const nOfRounds = await dbMatches.countRoundsInTournament(tournamentId);
+    const rounds = [];
+    for (let i = 0; i < nOfRounds; i++) {
+      rounds.push([]);
+    }
+    matches.forEach(match => {
+      const matchObj = new Match(match);
+      rounds[matchObj.round - 1].push(matchObj);
+    });
+    return rounds;
+  }
+
 
 };
