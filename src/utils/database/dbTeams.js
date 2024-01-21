@@ -86,4 +86,24 @@ module.exports = {
     return res.rowCount;
   },
 
+  updateTeamStatus: async (id, status) => {
+    if (status) {
+      const currentTournament = await TournamentModel.getCurrentTournament();
+      // count (status = true) teams in current tournament
+      const query = `
+        SELECT COUNT(*) FROM teams WHERE tournament_id = $1 AND status = true;
+      `;
+      const res = await db.pool.query(query, [currentTournament.id]);
+      const count = res.rows[0].count;
+      if (count >= currentTournament.maxTeams) {
+        return 0;
+      }
+    }
+    const query = `
+      UPDATE teams SET status = $1 WHERE id = $2;
+    `;
+    const res = await db.pool.query(query, [status, id]);
+    return res.rowCount;
+  },
+
 };

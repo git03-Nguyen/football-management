@@ -522,5 +522,37 @@ module.exports = {
     });
   },
 
+  // PUT /tournament/modifications/teams/:teamId/accept
+  putModificationsTeamsAccept: async function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    try {
+      const team = await TeamModel.getTeam(teamId);
+      if (!team.profile) throw new Error('Chưa có hồ sơ đội bóng');
+      if (team.status) throw new Error('Đội bóng đã được chấp nhận');
+      await TeamModel.updateTeamStatus(teamId, true);
+      res.json({ status: 'success' });
+    } catch (error) {
+      console.log(error);
+      res.json({ status: 'error' });
+    }
+  },
+
+  // PUT /tournament/modifications/teams/:teamId/reject
+  putModificationsTeamsReject: async function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    try {
+      const team = await TeamModel.getTeam(teamId);
+      if (!team.profile) throw new Error('Chưa có hồ sơ đội bóng');
+      if (!team.status) throw new Error('Đội bóng chưa được chấp nhận sẵn rồi');
+      await TeamModel.updateTeamStatus(teamId, false);
+      res.json({ status: 'success' });
+    } catch (error) {
+      console.log(error);
+      res.json({ status: 'error' });
+    }
+  },
+
 
 }

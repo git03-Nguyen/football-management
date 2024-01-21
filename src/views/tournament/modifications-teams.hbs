@@ -78,16 +78,14 @@
             </td>
             <td>
               <div class="d-flex align-items-center justify-content-center">
-                <a href="/tournament/modifications/teams/{{this.id}}/accept">
-                  <button class="btn btn-outline-success" {{#if this.status}}disabled{{/if}}>
-                    <i class="fas fa-check"></i>
-                  </button>
-                </a>
-                <a href="/tournament/modifications/teams/{{this.id}}/decline">
-                  <button class="btn btn-outline-danger ms-2" {{#unless this.status}}disabled{{/unless}}>
-                    <i class="fas fa-times"></i>
-                  </button>
-                </a>
+                <button data-accept="{{this.id}}" class="btn btn-outline-success btn-accept" {{#if
+                  this.status}}disabled{{/if}}>
+                  <i class="fas fa-check"></i>
+                </button>
+                <button data-reject="{{this.id}}" class="btn btn-outline-danger ms-2 btn-reject" {{#unless
+                  this.status}}disabled{{/unless}}>
+                  <i class="fas fa-times"></i>
+                </button>
               </div>
             </td>
           </tr>
@@ -97,9 +95,54 @@
       </table>
     </div>
 
-
-
-
-
   </div>
 </div>
+
+<script>
+  const acceptButtons = document.querySelectorAll('.btn-accept');
+  const rejectButtons = document.querySelectorAll('.btn-reject');
+  const nOfTeams = document.getElementById('nOfTeams');
+
+  acceptButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const teamId = button.dataset.accept;
+      const response = await fetch(`/tournament/modifications/teams/${teamId}/accept`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = await response.json();
+      if (result.status == 'success') {
+        button.disabled = true;
+        button.nextElementSibling.disabled = false;
+        button.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling
+          .innerHTML = '<span class="badge bg-success">Đã duyệt</span>';
+        const activeTeams = parseInt(nOfTeams.innerHTML.split('/')[0]);
+        nOfTeams.innerHTML = `${activeTeams + 1}/{{tournament.maxTeams}}`;
+      }
+    });
+  });
+
+  rejectButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const teamId = button.dataset.reject;
+      const response = await fetch(`/tournament/modifications/teams/${teamId}/reject`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = await response.json();
+      if (result.status == 'success') {
+        button.disabled = true;
+        button.previousElementSibling.disabled = false;
+        button.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling
+          .innerHTML = '<span class="badge bg-warning">Chưa duyệt</span>';
+        const activeTeams = parseInt(nOfTeams.innerHTML.split('/')[0]);
+        nOfTeams.innerHTML = `${activeTeams - 1}/{{tournament.maxTeams}}`;
+      }
+    });
+  });
+
+</script>

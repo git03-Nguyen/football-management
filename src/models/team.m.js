@@ -66,6 +66,10 @@ module.exports = class TeamModel {
     return await dbTeams.removePlayer(teamId, playerId);
   }
 
+  static async updateTeamStatus(id, status) {
+    return await dbTeams.updateTeamStatus(id, status);
+  }
+
 }
 
 

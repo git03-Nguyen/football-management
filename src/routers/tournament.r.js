@@ -27,6 +27,9 @@ router.post('/modifications/info', checkAdmin, controller.postModificationsInfo)
 router.post('/modifications/logo', checkAdmin, uploadLogo.single('logo'), controller.posModificationsLogo);
 router.post('/modifications/banner', checkAdmin, uploadBanner.single('banner'), controller.postModificationsBanner);
 
+router.put('/modifications/teams/:teamId/accept', checkAdmin, controller.putModificationsTeamsAccept);
+router.put('/modifications/teams/:teamId/reject', checkAdmin, controller.putModificationsTeamsReject);
+
 router.get('/matches/:id/edit', checkAdmin, controller.getMatchByIdEdit);
 router.get('/matches/:id/edit/players', checkAdmin, controller.getMatchByIdEditPlayers);
 router.get('/matches/:id/edit/tickets', checkAdmin, controller.getMatchByIdEditTickets); // => Not implemente
