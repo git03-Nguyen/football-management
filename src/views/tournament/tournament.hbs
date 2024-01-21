@@ -213,14 +213,14 @@
                 {{#with stats.mostGoalsMatch}}
 
                 <div class="d-flex align-items-center align-self-center mb-2">
-                  <img src="/img/teams/{{this.teamId1}}/info/logo.png" alt="" class="me-2" height="35">
+                  <img src="/img/teams/{{this.teamId1}}/logo.png" alt="" class="me-2" height="35">
                   <a href="/teams/{{this.teamId1}}" class="text-decoration-none h5 fw-bold m-0">{{this.name1}}</a>
                 </div>
-                <a class="h5 fw-bold text-center mb-2 text-decoration-none" href="/matches/{{this.matchId}}">
-                  {{this.score1}} - {{this.score2}}
+                <a class="h5 fw-bold text-center mb-2 text-decoration-none" href="/tournament/matches/{{this.id}}">
+                  {{this.scores1}} - {{this.scores2}}
                 </a>
                 <div class="d-flex align-items-center align-self-center">
-                  <img src="/img/teams/{{this.teamId2}}/info/logo.png" alt="" class="me-2" height="35">
+                  <img src="/img/teams/{{this.teamId2}}/logo.png" alt="" class="me-2" height="35">
                   <a href="/teams/{{this.teamId2}}" class="text-decoration-none h5 fw-bold m-0">{{this.name2}}</a>
                 </div>
 

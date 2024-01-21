@@ -34,6 +34,7 @@ module.exports = class Match {
     this.requireTickets = false;
     this.views = match.views;
     this.isPlayed = match.is_played;
+    this.isFinished = match.is_finished;
   }
 
   static async getRoundsInTournament(tournamentId) {
@@ -76,5 +77,17 @@ module.exports = class Match {
     return await dbMatches.getNumberOfCardsInTournament(tournamentId);
   }
 
+  // static async getMostGoalsMatchInTournament(tournamentId) {
+  //   const matches = await dbMatches.getMatchesInTournament(tournamentId);
+  //   let maxGoals = 0;
+  //   let maxMatch = null;
+  //   matches.forEach(match => {
+  //     if (match.scores_1 + match.scores_2 > maxGoals) {
+  //       maxGoals = match.scores_1 + match.scores_2;
+  //       maxMatch = match;
+  //     }
+  //   });
+  //   return maxMatch;
+  // }
 
 };

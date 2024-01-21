@@ -15,6 +15,13 @@ module.exports = {
       match.name1 = teams.find(t => t.id === match.teamId1).name;
       match.name2 = teams.find(t => t.id === match.teamId2).name;
     });
+    const mostGoalsMatch = matches.reduce((prev, curr) => {
+      if (curr.scores1 + curr.scores2 > prev.scores1 + prev.scores2) {
+        return curr;
+      } else {
+        return prev;
+      }
+    });
     const players = await PlayerModel.getPlayersStatistics(tournament.id);
     res.render('tournament/tournament', {
       title: "Giải đấu",
@@ -30,8 +37,7 @@ module.exports = {
         totalMatches: matches.length,
         ownGoals: await MatchModel.getNumberOfOwnGoalsInTournament(tournament.id),
         totalCards: await MatchModel.getNumberOfCardsInTournament(tournament.id),
-        // mostGoalsMatch
-
+        mostGoalsMatch: mostGoalsMatch,
         topScorers: players.slice(0, 3),
         // leaderboard
         // recentSchedules
