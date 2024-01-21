@@ -17,6 +17,13 @@ function convertDate(mDate) {
   return `${mDate.yyyy}-${mDate.mm}-${mDate.dd}`
 }
 
+function convertTime(mTime) {
+  if (mTime) {
+    mTime = mTime.slice(0, 5);
+  }
+  return mTime;
+}
+
 module.exports = class Match {
 
   constructor(match) {
@@ -28,7 +35,7 @@ module.exports = class Match {
     this.scores2 = match.scores_2;
     this.winnerId = match.winner_id;
     this.date = convertDate(match.date);
-    this.time = match.time;
+    this.time = convertTime(match.time);
     this.round = match.round;
     this.place = match.place;
     this.requireTickets = false;

@@ -12,6 +12,8 @@ require('./middlewares/hbs/hbs.mw')(app);
 
 require('./middlewares/passport.mw')(app);
 
+require('./middlewares/node-schedule.mw');
+
 require('./routers/index.r')(app);
 
 

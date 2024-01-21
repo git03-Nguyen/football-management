@@ -105,7 +105,6 @@ module.exports = {
         date.matches.push(match);
       }
     }
-    console.log(dates);
 
     res.render('tournament/matches', {
       title: "Lịch thi đấu",

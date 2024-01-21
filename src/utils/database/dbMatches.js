@@ -45,6 +45,22 @@ module.exports = {
     `;
     const res = await db.pool.query(query, [tournamentId]);
     return (+res.rows[0].sum1) + (+res.rows[0].sum2);
-  }
+  },
+
+  updateMatchesPlayedOrFinished: async function () {
+    const query = `
+    UPDATE matches
+    SET is_played = true
+    WHERE (date <= CURRENT_DATE AND "time" <= CURRENT_TIME)
+    `;
+    await db.pool.query(query);
+    // update finished after 2 hours
+    const query2 = `
+    UPDATE matches
+    SET is_finished = true
+    WHERE (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours'))
+    `;
+    await db.pool.query(query2);
+  },
 
 };
