@@ -1,4 +1,5 @@
 const TournamentModel = require('../models/tournament.m');
+const TeamModel = require('../models/team.m');
 
 function getGeneralStatistics() {
   return {
@@ -426,13 +427,22 @@ module.exports = {
   getTeamsModifications: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = await TournamentModel.getCurrentTournament();
+    const teams = await TeamModel.getAllCurrentTeams();
+    // remove all teams that has no team.profile
+    for (let i = 0; i < teams.length; i++) {
+      if (!teams[i].profile) {
+        teams.splice(i, 1);
+        i--;
+      }
+    }
+
     res.render('tournament/modifications-teams', {
       title: "Chỉnh sửa",
       useTransHeader: true,
       user: user,
       tournament: tournament,
       nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
-      teams: getAllTeams(),
+      teams: teams,
       subNavigation: 4,
       subSubNavigation: 1,
     });

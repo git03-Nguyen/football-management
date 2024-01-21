@@ -26,7 +26,7 @@
             <th scope="col">Tên liên hệ</th>
             <th scope="col">Số điện thoại</th>
             <th scope="col">Email</th>
-            <th scope="col">Đang tham gia</th>
+            <th scope="col">Trạng thái</th>
             <th scope="col">Thao tác</th>
           </tr>
         </thead>
@@ -51,7 +51,15 @@
               <a href="/tournament" class="link-success">Đã duyệt</a>
             </td>
             {{else}}
-            <td>Đang chờ</td>
+            {{#if this.profile}}
+            <td>
+              <a href="/tournament" class="link-warning">Chưa duyệt</a>
+            </td>
+            {{else}}
+            <td>
+              <a href="/teams/{{this.id}}/edit" class="link-danger">Chưa nộp hồ sơ</a>
+            </td>
+            {{/if}}
             {{/if}}
             <td>
               <div class="d-flex align-items-center justify-content-center">

@@ -25,8 +25,7 @@
 
     <div class="mb-1 mt-2 text-muted">
       {{!-- Hiển thị <input>10</input> bản ghi trên một trang --}}
-      Hiển thị <strong>10</strong> bản ghi trên
-      một trang.
+      Hiển thị tổng số <strong>{{teams.length}}</strong> bản ghi.
 
     </div>
 
@@ -46,23 +45,32 @@
           </tr>
         </thead>
         <tbody>
+
+          {{#each teams}}
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">{{sum @index 1}}</th>
             <td>
-              <img src="/img/teams/1/info/logo.png" alt="team-logo" height="40px" width="40px" class="rounded-circle">
+              <img src="/img/teams/{{this.id}}/logo.png" alt="team-logo" height="40px" width="40px"
+                class="rounded-circle">
             </td>
             <td class="text-start">
-              <a href="/teams/1">TSS FC</a>
+              <a href="/teams/{{this.id}}">{{this.name}}</a>
             </td>
+            {{#if this.status}}
             <td>
               <span class="badge bg-success">Đã duyệt</span>
             </td>
-            <td>Mr. Ánh</td>
-            <td>0345678901</td>
-            <td>nguyendinhanhvlqt@gmail.com</td>
+            {{else}}
+            <td>
+              <span class="badge bg-warning">Chưa duyệt</span>
+            </td>
+            {{/if}}
+            <td>{{this.contactName}}</td>
+            <td>{{this.contactPhone}}</td>
+            <td>{{this.contactEmail}}</td>
             <td>
               {{!-- Button download --}}
-              <a href="/teams/1/download">
+              <a href="{{this.profile}}" target="_blank">
                 <button class="btn btn-outline-dark">
                   <i class="fas fa-download"></i>
                 </button>
@@ -70,46 +78,24 @@
             </td>
             <td>
               <div class="d-flex align-items-center justify-content-center">
-                <a>
-                  <button class="btn btn-outline-success" disabled>
+                <a href="/tournament/modifications/teams/{{this.id}}/accept">
+                  <button class="btn btn-outline-success" {{#if this.status}}disabled{{/if}}>
                     <i class="fas fa-check"></i>
                   </button>
                 </a>
-                <a href="/teams/1/decline">
-                  <button class="btn btn-outline-danger ms-2">
+                <a href="/tournament/modifications/teams/{{this.id}}/decline">
+                  <button class="btn btn-outline-danger ms-2" {{#unless this.status}}disabled{{/unless}}>
                     <i class="fas fa-times"></i>
                   </button>
                 </a>
               </div>
             </td>
           </tr>
-
+          {{/each}}
 
         </tbody>
       </table>
     </div>
-
-    {{!-- Pagination --}}
-
-    <nav aria-label="Page navigation" class="mt-4" id="teams-pagination">
-      <ul class="pagination justify-content-center">
-        <li class="page-item {{#ifEquals this.page 1}}disabled{{/ifEquals}}">
-          <a class="page-link" href="/teams?page={{sum -1 this.page}}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        {{#each (range 1 this.nOfPages)}}
-        <li class="page-item {{#ifEquals this ../page}}active" aria-current="page{{/ifEquals}}">
-          <a class="page-link" href="/teams?page={{this}}">{{this}}</a>
-        </li>
-        {{/each}}
-        <li class="page-item {{#ifEquals this.page this.nOfPages}}disabled{{/ifEquals}}">
-          <a class="page-link" href="/teams?page={{sum 1 this.page}}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
 
 
 
