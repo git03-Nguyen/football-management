@@ -23,7 +23,7 @@ module.exports = {
 
   getMatchEvents: async function (id) {
     const query = `
-      SELECT players.name, players.team_id, match_events.type, match_events.time
+      SELECT players.id, players.name, players.team_id, match_events.type, match_events.time
       FROM match_events LEFT JOIN players ON match_events.player_id = players.id
       WHERE match_events.match_id = $1
       ORDER BY match_events.time, match_events.id

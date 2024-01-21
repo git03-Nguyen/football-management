@@ -32,7 +32,7 @@ router.put('/modifications/teams/:teamId/reject', checkAdmin, controller.putModi
 
 router.put('/modifications/matches', checkAdmin, controller.putModificationsMatches);
 
-router.get('/matches/:id/edit', checkAdmin, controller.getMatchByIdEdit);
+router.get('/matches/:id/edit', /*checkAdmin,*/ controller.getMatchByIdEdit);
 router.get('/matches/:id/edit/players', checkAdmin, controller.getMatchByIdEditPlayers);
 router.get('/matches/:id/edit/tickets', checkAdmin, controller.getMatchByIdEditTickets); // => Not implemente
 

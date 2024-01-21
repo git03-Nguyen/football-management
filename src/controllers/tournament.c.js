@@ -276,12 +276,43 @@ module.exports = {
   getMatchByIdEdit: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const matchId = req.params.id;
+    const match = await MatchModel.getMatch(matchId);
+    // match.date is yyyy-mm-dd, let convert to dd/mm/yyyy
+    const date = new Date(match.date);
+    match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const teams = await TeamModel.getTeamsLeaderboard();
+    match.name1 = teams.find(t => t.id === match.teamId1).name;
+    match.name2 = teams.find(t => t.id === match.teamId2).name;
+    match.players1 = await PlayerModel.getAllPlayersFromTeam(match.teamId1);
+    match.players2 = await PlayerModel.getAllPlayersFromTeam(match.teamId2);
+    match.players = [...match.players1, ...match.players2];
+    // push match.ownGoals1 and match.ownGoals2 and match.goals1 and match.goals2 to match.goals
+    match.goals = [];
+    match.ownGoals1.forEach(goal => { goal.isOwnGoal = true; match.goals.push(goal); });
+    match.ownGoals2.forEach(goal => { goal.isOwnGoal = true; match.goals.push(goal); });
+    match.goals1.forEach(goal => { goal.isOwnGoal = false; match.goals.push(goal); });
+    match.goals2.forEach(goal => { goal.isOwnGoal = false; match.goals.push(goal); });
+    // sort match.goals by time
+    match.goals.sort((a, b) => {
+      return a.time - b.time;
+    });
+
+    // push match.yellowCards1 and match.yellowCards2 and match.redCards1 and match.redCards2 to match.cards
+    match.cards = [];
+    match.yellowCards1.forEach(card => { card.isRedCard = false; match.cards.push(card); });
+    match.yellowCards2.forEach(card => { card.isRedCard = false; match.cards.push(card); });
+    match.redCards1.forEach(card => { card.isRedCard = true; match.cards.push(card); });
+    match.redCards2.forEach(card => { card.isRedCard = true; match.cards.push(card); });
+    // sort match.cards by time
+    match.cards.sort((a, b) => {
+      return a.time - b.time;
+    });
     res.render('tournament/matches/match-edit', {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
       tournament: await TournamentModel.getCurrentTournament(),
-      // match: getMatches()[0].dates[0].matches[0],
+      match: match,
       subNavigation: 1,
       subSubNavigation: 0,
     });

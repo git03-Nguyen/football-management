@@ -6,19 +6,19 @@
       {{#ifEquals subSubNavigation 0}}
       <a class="h6 fw-bold active">Thông số</a>
       {{else}}
-      <a href="/tournament/matches/1/edit" class="h6 fw-bold text-decoration-none">Thông số</a>
+      <a href="/tournament/matches/{{match.id}}/edit" class="h6 fw-bold text-decoration-none">Thông số</a>
       {{/ifEquals}}
 
       {{#ifEquals subSubNavigation 1}}
       <a class="h6 fw-bold ms-3 active">Đội hình</a>
       {{else}}
-      <a href="/tournament/matches/1/edit/players" class="h6 fw-bold ms-3 text-decoration-none">Đội hình</a>
+      <a href="/tournament/matches/{{match.id}}/edit/players" class="h6 fw-bold ms-3 text-decoration-none">Đội hình</a>
       {{/ifEquals}}
 
       {{#ifEquals subSubNavigation 2}}
       <a class="h6 fw-bold ms-3 active">Bán vé</a>
       {{else}}
-      <a href="/tournament/matches/1/edit/tickets" class="h6 fw-bold ms-3 text-decoration-none">Bán vé</a>
+      <a href="/tournament/matches/{{match.id}}/edit/tickets" class="h6 fw-bold ms-3 text-decoration-none">Bán vé</a>
       {{/ifEquals}}
     </div>
 
@@ -27,7 +27,7 @@
         <i class="fas fa-file-lines fa-2x me-2"></i>
         <p class="h5 m-0 fw-bold ">Thống kê bàn thắng</p>
       </div>
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" id="add-goal">
         <i class="fa fa-plus"></i>
         Thêm
       </button>
@@ -40,80 +40,85 @@
             <th scope="col">#</th>
             <th scope="col" class="text-start">Đội bóng</th>
             <th scope="col">Ghi bàn</th>
-            <th scope="col">Kiến tạo</th>
             <th scope="col">Số phút</th>
             <th scope="col">Phản lưới nhà</th>
             <th scope="col">Thao tác</th>
           </tr>
         </thead>
         <tbody>
+
+          {{#each match.goals}}
+          {{#ifEquals this.team_id ../match.teamId1}}
           <tr>
-            <th scope="row">1</th>
-            <td class="text-start" style="width: 10rem;">
-
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 10rem;">
-                  Chọn đội
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 10rem;">
-
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">TSS FC</a>
-
-                </div>
-              </div>
+            <th scope="row">{{sum @index 1}}</th>
+            <td class="text-start" style="">
+              <select class="form-select" aria-label="Default select example">
+                <option disabled>Chọn đội</option>
+                <option value="{{this.team_id}}" selected>{{../match.name1}}</option>
+                <option value="{{this.team_id}}">{{../match.name2}}</option>
+              </select>
             </td>
-            <td class="text-start" style="width: 15rem;">
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  Cầu thủ ghi bàn
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
-
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
-
-                </div>
-              </div>
-            </td>
-            <td class="text-start" style="width: 15rem;">
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  Cầu thủ kiến tạo
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
-
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
-
-                </div>
-              </div>
+            <td class="text-start" style="">
+              <select class="form-select" aria-label="Default select example">
+                <option disabled>Chọn cầu thủ</option>
+                {{#each ../match.players1}}
+                <option value="{{this.id}}" {{#ifEquals this.id ../this.id}}selected{{/ifEquals}}>{{this.name}}</option>
+                {{/each}}
+              </select>
             </td>
             <td style="width: fit-content;">
               <div class="input-group">
-                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;"
+                  value="{{this.time}}">
               </div>
             </td>
-            <td>
-              <input type="checkbox" name="isOwnGoal" id="isOwnGoal" class="">
+            <td style="width: 10rem;">
+              <input type="checkbox" name="isOwnGoal" id="isOwnGoal" class="" {{#if this.isOwnGoal}}checked{{/if}}>
             </td>
             <td>
-              <a href="">
-                <button class="btn btn-outline-danger">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </a>
+              <button class="btn btn-outline-danger">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </td>
           </tr>
+          {{else}}
+          <tr>
+            <th scope="row">{{sum @index 1}}</th>
+            <td class="text-start" style="">
+              <select class="form-select" aria-label="Default select example">
+                <option disabled>Chọn đội</option>
+                <option value="{{this.team_id}}">{{../match.name1}}</option>
+                <option value="{{this.team_id}}" selected>{{../match.name2}}</option>
+              </select>
+            </td>
+            <td class="text-start" style="">
+              <select class="form-select" aria-label="Default select example">
+                <option disabled>Chọn cầu thủ</option>
+                {{#each ../match.players2}}
+                <option value="{{this.id}}" {{#ifEquals this.id ../this.id}}selected{{/ifEquals}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </td>
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;"
+                  value="{{this.time}}">
+              </div>
+            </td>
+            <td style="width: 10rem;">
+              <input type="checkbox" name="isOwnGoal" id="isOwnGoal" class="" {{#if this.isOwnGoal}}checked{{/if}}>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+          {{/ifEquals}}
+
+
+
+          {{/each}}
 
 
         </tbody>
@@ -202,41 +207,6 @@
       </table>
     </div>
 
-    {{!-- Penalties --}}
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center text-primary-color mb-3">
-        <i class="fas fa-file-lines fa-2x me-2"></i>
-        <p class="h5 m-0 fw-bold ">Thống kê phạt đền</p>
-      </div>
-      <button class="btn btn-primary">
-        <i class="fa fa-plus"></i>
-        Thêm
-      </button>
-    </div>
-
-    <div class="my-3" id="table-penalties">
-      <table class="table">
-        <thead class="table-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col" class="text-start">Đội bóng</th>
-            <th scope="col">Thực hiện</th>
-            <th scope="col">Số phút</th>
-            <th scope="col">Bàn thắng</th>
-            <th scope="col">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="6">
-              <p class="text-muted mb-0"><em>Không có dữ liệu.</em></p>
-            </td>
-          </tr>
-
-
-        </tbody>
-      </table>
-    </div>
 
 
     <div class="d-flex justify-content-center">
