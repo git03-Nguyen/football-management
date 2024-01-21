@@ -1,6 +1,6 @@
 const schedule = require('node-schedule');
 
-module.exports = schedule.scheduleJob("* */5 * * * *", async () => {
+module.exports = schedule.scheduleJob("*/5 * * * *", async () => {
   const dbMatches = require('../utils/database/dbMatches');
   try {
     await dbMatches.updateMatchesPlayedOrFinished();

@@ -42,6 +42,19 @@ module.exports = class Match {
     this.views = match.views;
     this.isPlayed = match.is_played;
     this.isFinished = match.is_finished;
+    this.logs = match.logs;
+    this.logsTime = match.log_times;
+    console.log(this.logsTime);
+    // put logs and logsTime into an array
+    if (this.logs) {
+      this.logs = this.logs.map((log, index) => {
+        return {
+          log,
+          time: this.logsTime[index]
+        };
+      });
+    }
+
   }
 
   static async getRoundsInTournament(tournamentId) {

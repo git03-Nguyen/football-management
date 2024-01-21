@@ -149,7 +149,7 @@
         <p class="m-0"><strong>54'05'':</strong> Tỉ số 4-1 bởi Nguyễn Thế Hưng!</p>
         <p class="m-0"><strong>90'05:</strong> Trận đấu kết thúc!</p> -->
         {{#each match.logs}}
-        <p class="m-0"><strong>{{../match.logTimes.[@index]}}:</strong> {{this}}</p>
+        <p class="m-0"><strong>{{this.time}}:</strong> {{this.log}}</p>
         {{/each}}
       </div>
 

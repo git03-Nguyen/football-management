@@ -70,7 +70,8 @@ module.exports = {
     SET 
       is_finished = true,
       logs = logs || ARRAY['Trận đấu kết thúc!'],
-      log_times = log_times || ARRAY['90p00s']
+      log_times = log_times || ARRAY['90p00s'],
+      winner_id = CASE WHEN scores_1 > scores_2 THEN team_id_1 WHEN scores_1 < scores_2 THEN team_id_2 ELSE 0 END
     WHERE 
       (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
     `;
