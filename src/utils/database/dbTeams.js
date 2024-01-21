@@ -115,4 +115,12 @@ module.exports = {
     return res.rowCount;
   },
 
+  getTeamsStatistics: async () => {
+    const query = `
+      SELECT * FROM teams_statistics ORDER BY team_id ASC;
+    `;
+    const res = await db.pool.query(query);
+    return res.rows;
+  }
+
 };

@@ -17,7 +17,7 @@
     </div>
 
     <div class="d-flex justify-content-between align-items-end mb-3">
-      <p class="m-0">Có tổng cộng 8 đội và 160 cầu thủ tham gia giải đấu.</p>
+      <p class="m-0">Có tổng cộng {{nOfActiveTeams}} đội tham gia giải đấu.</p>
       <a href="/tournament/teams/download">
         <button class="btn btn-success">
           <i class="fas fa-download"></i>
@@ -28,14 +28,14 @@
 
     <div class="row row-cols-4 m-0 mt-3 row-gap-5" id="teams">
 
-      {{#each allTeams}}
+      {{#each teams}}
 
       <div class="col m-0 px-0">
         <div
           class="d-flex flex-column justify-content-center align-items-center border border-black border-2 rounded shadow mx-4"
           style="height: 300px;">
-          <a href="/teams/{{this.teamId}}" class="text-decoration-none">
-            <img src="/img/teams/{{this.teamId}}/info/logo.png" alt="" height="120"
+          <a href="/teams/{{this.id}}" class="text-decoration-none">
+            <img src="/img/teams/{{this.id}}/logo.png" alt="" height="120"
               class="rounded-circle border-black border-3 mb-2">
             <p class="m-0 text-primary-color fw-bold h5 mb-3">{{this.name}}</p>
           </a>

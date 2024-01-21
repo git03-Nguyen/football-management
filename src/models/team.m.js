@@ -82,6 +82,10 @@ module.exports = class TeamModel {
     return await dbTeams.updateTeamStatus(id, status);
   }
 
+  static async getTeamsStatistics() {
+    return await dbTeams.getTeamsStatistics();
+  }
+
 }
 
 

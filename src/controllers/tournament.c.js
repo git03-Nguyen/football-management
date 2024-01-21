@@ -303,13 +303,32 @@ module.exports = {
   getTeams: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const tournament = await TournamentModel.getCurrentTournament();
+    const teams = await TeamModel.getAllActiveTeams();
+    const teamStatistics = await TeamModel.getTeamsStatistics();
+    teams.forEach(team => {
+      const statistics = teamStatistics.find(stat => stat.team_id === team.id);
+      if (statistics) {
+        team.nOfPlayedMatches = statistics.played;
+        team.nOfWins = statistics.wins;
+        team.nOfDraws = statistics.draws;
+        team.nOfLosses = statistics.losses;
+        team.score = statistics.score;
+      } else {
+        team.nOfPlayedMatches = 0;
+        team.nOfWins = 0;
+        team.nOfDraws = 0;
+        team.nOfLosses = 0;
+        team.score = 0;
+      }
+    });
+
     res.render('tournament/teams', {
       title: "Danh sách đội",
       useTransHeader: true,
       user: user,
       tournament: tournament,
       nOfActiveTeams: await TournamentModel.countActiveTeamsInTournament(tournament.id),
-      allTeams: getAllTeams(),
+      teams: teams,
       subNavigation: 1,
       subSubNavigation: 0,
     });
