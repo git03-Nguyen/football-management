@@ -4,7 +4,8 @@ const fs = require('fs');
 
 const storage = multer.diskStorage({
   destination: async function (req, file, callback) {
-    const path = `./public/img/teams/${req.params.teamId}`;
+    const teamId = req.params.teamId;
+    const path = `./public/img/teams/${teamId}`;
     fs.mkdirSync(path, { recursive: true });
     callback(null, path);
   },

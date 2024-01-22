@@ -26,6 +26,10 @@ module.exports = class TeamModel {
     return await dbTeams.countTeamsInTournament(id);
   }
 
+  static async createTeam(team) {
+    return await dbTeams.createTeam(team);
+  }
+
   static async getAllCurrentTeams() {
     const res = await dbTeams.getAllCurrentTeams();
     let array = [];

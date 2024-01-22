@@ -9,6 +9,8 @@ const { checkAuthenticated, checkAdmin } = require('../utils/auth-helper'); // T
 router.get('/', controller.getTeams);
 
 router.get('/create', checkAuthenticated, controller.getCreateTeam);
+router.post('/create-info', checkAuthenticated, controller.postCreateTeam);
+router.post('/:teamId/update-logo', checkAuthenticated, uploadLogo.single('logo'), controller.postUpdateLogo); // TODO: checkOwnTeam
 
 router.get('/:teamId', controller.getTeam);
 

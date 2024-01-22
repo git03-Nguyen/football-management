@@ -20,6 +20,16 @@ module.exports = {
     return res.rows[0].count;
   },
 
+  createTeam: async (team) => {
+    const currentTournamentId = await TournamentModel.getCurrentTournamentId();
+    const query = `
+      INSERT INTO teams (name, contact_name, contact_email, contact_phone, level, introduction, has_uniform, profile, tournament_id, owner_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING id;
+    `;
+    const res = await db.pool.query(query, [team.name, team.contactName, team.contactEmail, team.contactPhone, team.level, team.introduction, false, team.profile, currentTournamentId, team.ownerId]);
+    return res.rows[0].id;
+  },
+
   getAllTeams: async () => {
     const query = `
       SELECT * FROM teams;

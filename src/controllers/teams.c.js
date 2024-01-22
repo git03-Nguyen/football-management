@@ -218,6 +218,30 @@ module.exports = {
     });
   },
 
+  // POST /teams/create-info
+  postCreateTeam: async function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    try {
+      console.log(JSON.stringify({ ...req.body, ownerId: user.id }));
+      const id = await TeamModel.createTeam({ ...req.body, ownerId: user.id });
+      console.log(id);
+      res.status(200).json({ status: 'success', teamId: id });
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({ status: 'error' });
+    }
+  },
+
+  // POST /teams/:id/update-logo
+  postUpdateLogo: async function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = await TeamModel.getTeam(teamId);
+    if (!team) return next();
+    if (team.ownerId != user.id) return next();// check if user is owner of this team, TODO: use middleware instead
+    res.status(200).json({ status: 'success', teamId: teamId });
+  },
+
   // GET /teams/:teamId/statistics => not implemented yet
   getTeamStatistics: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
