@@ -1,95 +1,5 @@
 const TeamModel = require('../models/team.m');
-
-function getTeams() {
-  return [
-    // 8 teams for testing, have same teamId=1, another fields are different
-    {
-      teamId: 1,
-      name: "Manchester United",
-      level: "Trung cấp",
-      description: "Đội bóng của Sir Alex",
-      members: ["Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái"],
-      nOfMembers: 5,
-      contactName: "Mr. Alex",
-      contactPhone: "0123456789",
-      contactEmail: "mailmail@gmail.com",
-      ownerId: 2,
-      hasUniform: true,
-    },
-    {
-      teamId: 2,
-      name: "Manchester United",
-      level: "Trung cấp",
-      description: "Đội bóng của Sir Alex",
-      members: ["Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái"],
-      nOfMembers: 5,
-      contactName: "Mr. Alex",
-      contactPhone: "0123456789",
-      contactEmail: "mailmail@gmail.com",
-      ownerId: 1,
-    },
-    {
-      teamId: 2,
-      name: "Manchester United",
-      level: "Trung cấp",
-      description: "Đội bóng của Sir Alex",
-      members: ["Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái"],
-      nOfMembers: 5,
-      contactName: "Mr. Alex",
-      contactPhone: "0123456789",
-      contactEmail: "mailmail@gmail.com",
-      ownerId: 1,
-    },
-    {
-      teamId: 2,
-      name: "Manchester United",
-      level: "Trung cấp",
-      description: "Đội bóng của Sir Alex",
-      members: ["Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái"],
-      nOfMembers: 5,
-      contactName: "Mr. Alex",
-      contactPhone: "0123456789",
-      contactEmail: "mailmail@gmail.com",
-      ownerId: 1,
-    },
-    {
-      teamId: 2,
-      name: "Manchester United",
-      level: "Trung cấp",
-      description: "Đội bóng của Sir Alex",
-      members: ["Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái"],
-      nOfMembers: 5,
-      contactName: "Mr. Alex",
-      contactPhone: "0123456789",
-      contactEmail: "mailmail@gmail.com",
-      ownerId: 1,
-    },
-    {
-      teamId: 2,
-      name: "Manchester United",
-      level: "Trung cấp",
-      description: "Đội bóng của Sir Alex",
-      members: ["Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái"],
-      nOfMembers: 5,
-      contactName: "Mr. Alex",
-      contactPhone: "0123456789",
-      contactEmail: "mailmail@gmail.com",
-      ownerId: 1,
-    },
-    {
-      teamId: 2,
-      name: "Manchester United",
-      level: "Trung cấp",
-      description: "Đội bóng của Sir Alex",
-      members: ["Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái", "Nguyễn Tiến Thái"],
-      nOfMembers: 5,
-      contactName: "Mr. Alex",
-      contactPhone: "0123456789",
-      contactEmail: "mailmail@gmail.com",
-      ownerId: 1,
-    },
-  ];
-}
+const PlayerModel = require('../models/player.m');
 
 module.exports = {
 
@@ -192,6 +102,32 @@ module.exports = {
     });
   },
 
+  // POST /teams/:teamId/edit/members - to add new member
+  postEditTeamMembers: async function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = await TeamModel.getTeam(teamId);
+    if (!team) return next();
+    if (team.ownerId != user.id) return next();// check if user is owner of this team, TODO: use middleware instead
+    try {
+      const playerId = await PlayerModel.addNewPlayer(req.body, teamId);
+      res.json({ status: 'success', playerId: playerId });
+    } catch (err) {
+      console.log(err);
+      return res.json({ status: 'error' });
+    }
+  },
+
+  // POST /teams/:teamId/edit/members/:playerId/avatar
+  postUpdatePlayerAvatar: async function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const playerId = req.params.playerId;
+    const player = await PlayerModel.getPlayer(playerId);
+    if (!player) return next();
+    // if (player.teamId != user.id) return next();// check if user is owner of this team, TODO: use middleware instead
+    res.status(200).json({ status: 'success', playerId: playerId });
+  },
+
   // DELETE /teams/:teamId/edit/members/:playerId
   deleteTeamMember: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
@@ -204,8 +140,9 @@ module.exports = {
       await TeamModel.removePlayer(teamId, playerId);
     } catch (err) {
       console.log(err);
+      return res.status(400).json({ status: 'error', msg: 'Không thể xóa cầu thủ này' });
     }
-    res.redirect(`/teams/${teamId}/edit/members`);
+    res.status(200).json({ status: 'success' });
   },
 
   // GET /teams/create

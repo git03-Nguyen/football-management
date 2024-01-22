@@ -100,6 +100,16 @@ module.exports = {
       playerObj.pokers = player2.pokers;
       return playerObj;
     });
-  }
+  },
+
+  addNewPlayer: async (player, teamId) => {
+    const query = `
+      INSERT INTO players (name, number, birthyear, positions, phone, team_id)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *;
+    `;
+    const res = await db.pool.query(query, [player.name, player.number, player.birthyear, player.positions, player.phone, teamId]);
+    return res.rows[0].id;
+  },
 
 };

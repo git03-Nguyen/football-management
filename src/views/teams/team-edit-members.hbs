@@ -21,7 +21,7 @@
       <div class="text-muted m-0">
         Hiển thị tổng số <strong>{{team.players.length}}</strong> thành viên.
       </div>
-      <button class="btn btn-success">
+      <button class="btn btn-success" id="btn-add">
         <i class="fas fa-plus"></i>
         <span class="ms-1">Thêm người</span>
       </button>
@@ -67,6 +67,40 @@
           </tr>
           {{/each}}
 
+          <!-- This row for add new people -->
+          <tr id="add-row" class="d-none">
+            <th scope="row">#</th>
+            <td>
+              <label for="avatar">
+                <img src="/img/avatars/avt-default.png" alt="team-member" height="40px" width="40px" id="avt-img"
+                  class="rounded-circle">
+              </label>
+              <input type="file" name="avatar" id="avatar" class="d-none">
+            </td>
+            <td class="text-start">
+              <input type="text" name="name" id="name" class="form-control" placeholder="Nhập tên thành viên">
+            </td>
+            <td>
+              <input type="number" name="number" id="number" class="form-control" placeholder="Nhập số áo">
+            </td>
+            <td>
+              <input type="number" name="birthyear" id="birthyear" class="form-control" placeholder="Nhập năm sinh">
+            </td>
+            <td>
+              <input type="text" name="positions" id="positions" class="form-control" placeholder="Nhập vị trí thi đấu">
+            </td>
+            <td>
+              <input type="text" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại">
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <button class="btn btn-outline-success ms-2" id="btn-confirm-add">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+
 
         </tbody>
       </table>
@@ -75,27 +109,143 @@
   </div>
 </div>
 
+<!-- Toast message -->
+<div id="toastMessage" class="toast align-items-center text-white bg-success border-0 position-fixed" role="alert"
+  aria-live="assertive" aria-atomic="true" style="bottom: 10px; right: 10px; z-index: 9999;">
+  <div class="d-flex">
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+      aria-label="Close"></button>
+  </div>
+</div>
+
+
 <script>
+  const avatar = document.getElementById('avatar');
+  const avatarImg = document.querySelector('#avt-img');
+  avatar.addEventListener('change', () => {
+    const file = avatar.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      avatarImg.src = reader.result;
+    }
+    reader.readAsDataURL(file);
+  })
+</script>
+
+<script>
+
   const btnDelete = document.querySelectorAll('.btn-delete');
   btnDelete.forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-id');
-      const teamId = '{{team.id}}';
-      const url = `/teams/${teamId}/edit/members/${id}`;
-      const options = {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      fetch(url, options)
-        .then(res => res.json())
-        .then(res => {
-          if (res.status === 'success') {
-            window.location.reload();
-          }
-        })
-        .catch(err => console.log(err));
+      // cofirm delete
+      const isDelete = confirm('Bạn có chắc chắn muốn xóa thành viên này?');
+      if (isDelete) {
+        deletePlayer(btn);
+      }
     });
   });
+
+  async function deletePlayer(btn) {
+    const id = btn.getAttribute('data-id');
+    const teamId = '{{team.id}}';
+    const url = `/teams/${teamId}/edit/members/${id}`;
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    fetch(url, options)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if (res.status === 'success') {
+          window.location.reload();
+        } else {
+          throw new Error("Có lỗi xảy ra, vui lòng thử lại sau.");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        showToast('error', err.message);
+      });
+  }
+
+</script>
+
+<script>
+  const btnAdd = document.querySelector('#btn-add');
+  const addRow = document.querySelector('#add-row');
+  const btnConfirmAdd = document.querySelector('#btn-confirm-add');
+
+  btnAdd.addEventListener('click', () => {
+    console.log('show add row');
+    addRow.classList.toggle('d-none');
+  });
+
+  btnConfirmAdd.addEventListener('click', () => {
+    const name = document.querySelector('#name').value;
+    const number = document.querySelector('#number').value;
+    const birthyear = document.querySelector('#birthyear').value;
+    const positions = document.querySelector('#positions').value;
+    const phone = document.querySelector('#phone').value;
+    const avatar = document.querySelector('#avatar').files[0];
+
+    const data = {
+      name,
+      number,
+      birthyear,
+      positions,
+      phone
+    };
+
+    if (name === '' || number === '' || birthyear === '' || positions === '' || phone === '' || !avatar) {
+      showToast('error', 'Vui lòng nhập đầy đủ thông tin.');
+      return;
+    }
+
+    console.log(data);
+
+    const teamId = '{{team.id}}';
+    const url = `/teams/${teamId}/edit/members`;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    };
+
+    fetch(url, options)
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === 'success') {
+          const formData = new FormData();
+          formData.append('avatar', avatar);
+          fetch(`/teams/${teamId}/edit/members/${res.playerId}/avatar`, {
+            method: 'POST',
+            body: formData
+          })
+            .then(res => res.json())
+            .then(res => {
+              if (res.status === 'success') {
+                window.location.reload();
+              } else {
+                throw new Error("Có lỗi xảy ra, vui lòng thử lại sau.");
+              }
+            })
+            .catch(err => { throw new Error("Có lỗi xảy ra, vui lòng thử lại sau.") });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        showToast('error', err.message);
+      });
+  });
+
+
+
 </script>

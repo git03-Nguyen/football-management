@@ -3,6 +3,7 @@ const router = express.Router();
 
 const controller = require('../controllers/teams.c');
 const uploadLogo = require('../utils/multer/upload-team-logo');
+const uploadAvatar = require('../utils/multer/upload-player-avatar');
 
 const { checkAuthenticated, checkAdmin } = require('../utils/auth-helper'); // TODO: checkOwnTeam
 
@@ -21,6 +22,8 @@ router.post('/:teamId/edit', checkAuthenticated, uploadLogo.single('logo'), cont
 
 router.get('/:teamId/edit/members', checkAuthenticated, controller.getEditTeamMembers); // TODO: checkOwnTeam
 router.delete('/:teamId/edit/members/:playerId', checkAuthenticated, controller.deleteTeamMember); // TODO: checkOwnTeam
+router.post('/:teamId/edit/members', checkAuthenticated, controller.postEditTeamMembers); // TODO: checkOwnTeam
+router.post('/:teamId/edit/members/:playerId/avatar', checkAuthenticated, uploadAvatar.single('avatar'), controller.postUpdatePlayerAvatar); // TODO: checkOwnTeam
 
 router.delete('/:teamId/delete', checkAuthenticated, controller.deleteTeam); // TODO: checkOwnTeam
 

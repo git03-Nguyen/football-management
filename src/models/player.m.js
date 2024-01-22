@@ -44,6 +44,9 @@ module.exports = class PlayerModel {
     });
   }
 
+  static async addNewPlayer(player, teamId) {
+    return await dbPlayers.addNewPlayer(player, teamId);
+  }
 }
 
 
