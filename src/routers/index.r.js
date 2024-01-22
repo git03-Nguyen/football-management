@@ -37,9 +37,11 @@ module.exports = function (app) {
 
   // 404
   app.use(function (req, res, next) {
+    const user = (req.isAuthenticated() ? req.user : null);
     res.status(404).render('404', {
       title: "404",
       headerTrans: false,
+      user: user,
     });
   });
 
