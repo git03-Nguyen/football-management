@@ -102,8 +102,8 @@ module.exports = {
     const dates = [];
     const teams = await TeamModel.getAllActiveTeams();
     for (const match of matches) {
-      match.name1 = teams.find(t => t.id === match.teamId1).name;
-      match.name2 = teams.find(t => t.id === match.teamId2).name;
+      match.name1 = teams.find(t => t.id === match.teamId1)?.name;
+      match.name2 = teams.find(t => t.id === match.teamId2)?.name;
       const date = dates.find(d => d.date === match.date);
       if (!date) {
         dates.push({ date: match.date, matches: [match] });
@@ -255,8 +255,8 @@ module.exports = {
     const date = new Date(match.date);
     match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const teams = await TeamModel.getTeamsLeaderboard();
-    match.name1 = teams.find(t => t.id === match.teamId1).name;
-    match.name2 = teams.find(t => t.id === match.teamId2).name;
+    match.name1 = teams.find(t => t.id === match.teamId1)?.name;
+    match.name2 = teams.find(t => t.id === match.teamId2)?.name;
     match.players1 = await PlayerModel.getAllPlayersFromTeam(match.teamId1);
     match.players2 = await PlayerModel.getAllPlayersFromTeam(match.teamId2);
     match.players = []; match.players.length = Math.max(match.players1.length, match.players2.length);
@@ -281,8 +281,8 @@ module.exports = {
     const date = new Date(match.date);
     match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const teams = await TeamModel.getTeamsLeaderboard();
-    match.name1 = teams.find(t => t.id === match.teamId1).name;
-    match.name2 = teams.find(t => t.id === match.teamId2).name;
+    match.name1 = teams.find(t => t.id === match.teamId1)?.name;
+    match.name2 = teams.find(t => t.id === match.teamId2)?.name;
     match.players1 = await PlayerModel.getAllPlayersFromTeam(match.teamId1);
     match.players2 = await PlayerModel.getAllPlayersFromTeam(match.teamId2);
     match.players = [...match.players1, ...match.players2];
@@ -359,8 +359,8 @@ module.exports = {
     const date = new Date(match.date);
     match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const teams = await TeamModel.getTeamsLeaderboard();
-    match.name1 = teams.find(t => t.id === match.teamId1).name;
-    match.name2 = teams.find(t => t.id === match.teamId2).name;
+    match.name1 = teams.find(t => t.id === match.teamId1)?.name;
+    match.name2 = teams.find(t => t.id === match.teamId2)?.name;
     match.players1 = await PlayerModel.getAllPlayersFromTeam(match.teamId1);
     match.players2 = await PlayerModel.getAllPlayersFromTeam(match.teamId2);
     match.players = [...match.players1, ...match.players2];
@@ -384,8 +384,8 @@ module.exports = {
     const date = new Date(match.date);
     match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const teams = await TeamModel.getTeamsLeaderboard();
-    match.name1 = teams.find(t => t.id === match.teamId1).name;
-    match.name2 = teams.find(t => t.id === match.teamId2).name;
+    match.name1 = teams.find(t => t.id === match.teamId1)?.name;
+    match.name2 = teams.find(t => t.id === match.teamId2)?.name;
     match.players1 = await PlayerModel.getAllPlayersFromTeam(match.teamId1);
     match.players2 = await PlayerModel.getAllPlayersFromTeam(match.teamId2);
     match.players = [...match.players1, ...match.players2];
