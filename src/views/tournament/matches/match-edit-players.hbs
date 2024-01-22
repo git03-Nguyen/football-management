@@ -25,8 +25,8 @@
     {{!-- First team --}}
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex align-items-center align-items-center text-primary-color mb-3">
-        <img src="/img/teams/1/info/logo.png" height="35" class="me-2" alt="">
-        <p class="h5 m-0 fw-bold ">FC HDT</p>
+        <img src="/img/teams/{{match.teamId1}}/logo.png" height="35" class="me-2" alt="">
+        <p class="h5 m-0 fw-bold ">{{match.name1}}</p>
       </div>
       <button class="btn btn-primary">
         <i class="fa fa-plus"></i>
@@ -47,53 +47,32 @@
           </tr>
         </thead>
         <tbody>
+          {{#each match.players1}}
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">{{sum @index 1}}</th>
 
             <td class="text-start" style="width: 15rem;">
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  Cầu thủ trên sân
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+              <select class="form-select" aria-label="Default select example" style="width: 15rem;">
+                <option selected>{{this.name}}</option>
+              </select>
+            </td>
 
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
-
-                </div>
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;">
               </div>
             </td>
 
             <td style="width: fit-content;">
               <div class="input-group">
-                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
-              </div>
-            </td>
-
-            <td style="width: fit-content;">
-              <div class="input-group">
-                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;">
               </div>
             </td>
 
             <td class="text-start" style="width: 15rem;">
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  -
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
-
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
-
-                </div>
-              </div>
+              <select class="form-select" aria-label="Default select example" style="width: 15rem;">
+                <option selected>-</option>
+              </select>
             </td>
 
             <td>
@@ -104,6 +83,7 @@
               </a>
             </td>
           </tr>
+          {{/each}}
 
 
         </tbody>
@@ -113,8 +93,8 @@
     {{!-- Second team --}}
     <div class="d-flex justify-content-between align-items-center mt-2">
       <div class="d-flex align-items-center align-items-center text-primary-color mb-3">
-        <img src="/img/teams/1/info/logo.png" height="35" class="me-2" alt="">
-        <p class="h5 m-0 fw-bold ">FC HDT</p>
+        <img src="/img/teams/{{match.teamId2}}/logo.png" height="35" class="me-2" alt="">
+        <p class="h5 m-0 fw-bold ">{{match.name2}}</p>
       </div>
       <button class="btn btn-primary">
         <i class="fa fa-plus"></i>
@@ -135,53 +115,32 @@
           </tr>
         </thead>
         <tbody>
+          {{#each match.players2}}
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">{{sum @index 1}}</th>
 
             <td class="text-start" style="width: 15rem;">
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  Cầu thủ trên sân
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
+              <select class="form-select" aria-label="Default select example" style="width: 15rem;">
+                <option selected>{{this.name}}</option>
+              </select>
+            </td>
 
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
-
-                </div>
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;">
               </div>
             </td>
 
             <td style="width: fit-content;">
               <div class="input-group">
-                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
-              </div>
-            </td>
-
-            <td style="width: fit-content;">
-              <div class="input-group">
-                <input type="text" class="form-control text-center" placeholder="00'00''" style="width: 3rem;">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;">
               </div>
             </td>
 
             <td class="text-start" style="width: 15rem;">
-              <div class="dropdown open">
-                <button class="btn btn-outline-dark dropdown-toggle text-start" type="button" id="triggerId"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 15rem;">
-                  -
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId" style="width: 15rem;">
-
-                  {{!-- {{#each this.teams}}
-                  <a class="dropdown-item" href="#">{{this}}</a>
-                  {{/each}} --}}
-                  <a class="dropdown-item" href="#">Nguyễn Tiến Thái</a>
-
-                </div>
-              </div>
+              <select class="form-select" aria-label="Default select example" style="width: 15rem;">
+                <option selected>-</option>
+              </select>
             </td>
 
             <td>
@@ -192,7 +151,7 @@
               </a>
             </td>
           </tr>
-
+          {{/each}}
 
         </tbody>
       </table>

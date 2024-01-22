@@ -322,12 +322,22 @@ module.exports = {
   getMatchByIdEditPlayers: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const matchId = req.params.id;
+    const match = await MatchModel.getMatch(matchId);
+    // match.date is yyyy-mm-dd, let convert to dd/mm/yyyy
+    const date = new Date(match.date);
+    match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const teams = await TeamModel.getTeamsLeaderboard();
+    match.name1 = teams.find(t => t.id === match.teamId1).name;
+    match.name2 = teams.find(t => t.id === match.teamId2).name;
+    match.players1 = await PlayerModel.getAllPlayersFromTeam(match.teamId1);
+    match.players2 = await PlayerModel.getAllPlayersFromTeam(match.teamId2);
+    match.players = [...match.players1, ...match.players2];
     res.render('tournament/matches/match-edit-players', {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
       tournament: await TournamentModel.getCurrentTournament(),
-      // match: getMatches()[0].dates[0].matches[0],
+      match: match,
       subNavigation: 1,
       subSubNavigation: 1,
     });
@@ -337,11 +347,22 @@ module.exports = {
   getMatchByIdEditTickets: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;
     const matchId = req.params.id;
+    const match = await MatchModel.getMatch(matchId);
+    // match.date is yyyy-mm-dd, let convert to dd/mm/yyyy
+    const date = new Date(match.date);
+    match.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const teams = await TeamModel.getTeamsLeaderboard();
+    match.name1 = teams.find(t => t.id === match.teamId1).name;
+    match.name2 = teams.find(t => t.id === match.teamId2).name;
+    match.players1 = await PlayerModel.getAllPlayersFromTeam(match.teamId1);
+    match.players2 = await PlayerModel.getAllPlayersFromTeam(match.teamId2);
+    match.players = [...match.players1, ...match.players2];
     res.render('tournament/matches/match-edit-tickets', {
       title: "Chỉnh sửa trận đấu",
       useTransHeader: true,
       user: user,
       tournament: await TournamentModel.getCurrentTournament(),
+      match: match,
       subNavigation: 1,
       subSubNavigation: 2,
     });
