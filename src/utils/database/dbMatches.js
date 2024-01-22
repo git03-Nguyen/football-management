@@ -74,12 +74,16 @@ module.exports = {
     FROM
         matches
     WHERE
-        matches.date <= CURRENT_DATE AND matches."time" <= CURRENT_TIME AND matches.is_played = false;
+        matches.is_played = false AND 
+        (matches."date" < CURRENT_DATE OR 
+		    (matches."time" <= CURRENT_TIME AND matches."date" = CURRENT_DATE));
 
     UPDATE matches
     SET is_played = true
     WHERE
-        matches.date <= CURRENT_DATE AND matches."time" <= CURRENT_TIME AND matches.is_played = false;
+        matches.is_played = false AND 
+        (matches."date" < CURRENT_DATE OR 
+		    (matches."time" <= CURRENT_TIME AND matches."date" = CURRENT_DATE));
     `;
     await db.pool.query(query);
     // update finished after 2 hours
@@ -92,12 +96,16 @@ module.exports = {
     FROM
         matches
     WHERE 
-        (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
+        is_finished = false AND
+        (matches."date" < CURRENT_DATE OR
+        (matches."time" < CURRENT_TIME - INTERVAL '2 hours' AND matches."date" = CURRENT_DATE));
 
     UPDATE matches
-    SET is_finished = true,
-        winner_id = CASE WHEN scores_1 > scores_2 THEN team_id_1 WHEN scores_1 < scores_2 THEN team_id_2 ELSE NULL END
-    WHERE (date < CURRENT_DATE) OR ((date = CURRENT_DATE) AND ("time" < CURRENT_TIME - INTERVAL '2 hours')) AND is_finished = false;
+    SET is_finished = true
+    WHERE 
+        is_finished = false AND
+        (matches."date" < CURRENT_DATE OR
+        (matches."time" < CURRENT_TIME - INTERVAL '2 hours' AND matches."date" = CURRENT_DATE));
     `;
     await db.pool.query(query2);
   },
