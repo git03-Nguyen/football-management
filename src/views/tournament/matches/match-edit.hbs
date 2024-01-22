@@ -167,7 +167,7 @@
         <i class="fas fa-file-lines fa-2x me-2"></i>
         <p class="h5 m-0 fw-bold ">Thống kê thẻ vàng/đỏ</p>
       </div>
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" id="btn-toggle-add-card">
         <i class="fa fa-plus"></i>
         Thêm
       </button>
@@ -258,6 +258,37 @@
           </tr>
           {{/ifEquals}}
           {{/each}}
+
+          <!-- For add new card -->
+          <tr id="row-add-card" class="d-none">
+            <th scope="row">#</th>
+            <td class="text-start">
+              <select class="form-select" aria-label="Default select example" id="select-team-card">
+                <option selected>Chọn đội</option>
+                <option value="{{match.teamId1}}">{{match.name1}}</option>
+                <option value="{{match.teamId2}}">{{match.name2}}</option>
+              </select>
+            </td>
+            <td class="text-start" style="width: 15rem;">
+              <select class="form-select" aria-label="Default select example" id="select-player-card">
+                <option selected>Chọn cầu thủ</option>
+              </select>
+            </td>
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;"
+                  value="00p00s" id="select-time-card">
+              </div>
+            </td>
+            <td>
+              <input type="checkbox" name="isRedCard" style="width: 10rem;" id="select-red-card">
+            </td>
+            <td>
+              <button class="btn btn-outline-success" id="add-card">
+                <i class="fas fa-check"></i>
+              </button>
+            </td>
+          </tr>
 
 
         </tbody>
@@ -356,7 +387,7 @@
     })
       .then(res => res.json())
       .then(res => {
-        if (res.status == 200) {
+        if (res.status == 'success') {
           showToast('success', 'Thêm thành công');
           setTimeout(() => {
             location.reload();
@@ -371,9 +402,76 @@
       });
 
   });
+</script>
 
+<script>
+  const btnToggleAddCard = document.getElementById('btn-toggle-add-card');
+  const rowAddCard = document.getElementById('row-add-card');
+  const btnAddCard = document.getElementById('add-card');
+  const selectTeamCard = document.getElementById('select-team-card');
+  const selectPlayerCard = document.getElementById('select-player-card');
+  const selectTimeCard = document.getElementById('select-time-card');
+  const selectRedCard = document.getElementById('select-red-card');
 
+  btnToggleAddCard.addEventListener('click', () => {
+    rowAddCard.classList.toggle('d-none');
+  });
 
+  selectTeamCard.addEventListener('change', () => {
+    if (selectTeamCard.value == '{{match.teamId1}}') {
+      selectPlayerCard.innerHTML = '';
+      players1.forEach(player => {
+        selectPlayerCard.innerHTML += `<option value="${player.id}">${player.name}</option>`;
+      });
+    } else {
+      selectPlayerCard.innerHTML = '';
+      players2.forEach(player => {
+        selectPlayerCard.innerHTML += `<option value="${player.id}">${player.name}</option>`;
+      });
+    }
+  });
 
+  btnAddCard.addEventListener('click', () => {
+    const teamId = selectTeamCard.value;
+    const playerId = selectPlayerCard.value;
+    const time = selectTimeCard.value;
+    const isRedCard = selectRedCard.checked;
+    const matchId = '{{match.id}}';
+
+    if (teamId == 'Chọn đội' || playerId == 'Chọn cầu thủ' || time == '00p00s') {
+      showToast('error', 'Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
+
+    fetch(`/tournament/matches/{{match.id}}/edit/cards`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        matchId,
+        teamId,
+        playerId,
+        time,
+        isRedCard
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status == 'success') {
+          showToast('success', 'Thêm thành công');
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        } else {
+          showToast('error', 'Thêm thất bại');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        showToast('error', 'Thêm thất bại');
+      });
+
+  });
 
 </script>

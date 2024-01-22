@@ -294,7 +294,10 @@ module.exports = {
     match.goals2.forEach(goal => { goal.isOwnGoal = false; match.goals.push(goal); });
     // sort match.goals by time
     match.goals.sort((a, b) => {
-      return a.time - b.time;
+      // time is string
+      if (a.time < b.time) return -1;
+      if (a.time > b.time) return 1;
+      return 0;
     });
 
     // push match.yellowCards1 and match.yellowCards2 and match.redCards1 and match.redCards2 to match.cards
@@ -305,7 +308,10 @@ module.exports = {
     match.redCards2.forEach(card => { card.isRedCard = true; match.cards.push(card); });
     // sort match.cards by time
     match.cards.sort((a, b) => {
-      return a.time - b.time;
+      // time is string
+      if (a.time < b.time) return -1;
+      if (a.time > b.time) return 1;
+      return 0;
     });
     res.render('tournament/matches/match-edit', {
       title: "Chỉnh sửa trận đấu",
@@ -324,10 +330,23 @@ module.exports = {
     const goal = req.body;
     try {
       await MatchModel.addNewGoal(goal);
-      res.status(200).json({ status: 'success' });
+      res.json({ status: 'success' });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ status: 'error' });
+      res.json({ status: 'error' });
+    }
+  },
+
+  // POST /tournament/matches/:id/edit/cards
+  addNewCard: async function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const card = req.body;
+    try {
+      await MatchModel.addNewCard(card);
+      res.json({ status: 'success' });
+    } catch (error) {
+      console.log(error);
+      res.json({ status: 'error' });
     }
   },
 

@@ -116,10 +116,22 @@ module.exports = {
     }
     const { matchId, playerId, teamId, time, isOwnGoal } = goal;
     const query = `
-    INSERT INTO match_events (match_id, player_id, team_id, type, time)
-    VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO match_events (match_id, player_id, team_id, type, time)
+      VALUES ($1, $2, $3, $4, $5)
     `;
     await db.pool.query(query, [matchId, playerId, teamId, isOwnGoal ? 'own_goal' : 'goal', time]);
+  },
+
+  addNewCard: async function (card) {
+    if (!card.matchId || !card.playerId || !card.teamId || !card.time) {
+      throw new Error('Invalid card');
+    }
+    const { matchId, playerId, teamId, time, isRedCard } = card;
+    const query = `
+      INSERT INTO match_events (match_id, player_id, team_id, type, time)
+      VALUES ($1, $2, $3, $4, $5)
+    `;
+    await db.pool.query(query, [matchId, playerId, teamId, isRedCard ? 'red_card' : 'yellow_card', time]);
   },
 
 };

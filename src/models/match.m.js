@@ -106,6 +106,10 @@ module.exports = class Match {
     return await dbMatches.addNewGoal(goal);
   }
 
+  static async addNewCard(card) {
+    return await dbMatches.addNewCard(card);
+  }
+
 
 
   // static async getMostGoalsMatchInTournament(tournamentId) {

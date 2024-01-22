@@ -34,6 +34,7 @@ router.put('/modifications/matches', checkAdmin, controller.putModificationsMatc
 
 router.get('/matches/:id/edit', /*checkAdmin,*/ controller.getMatchByIdEdit);
 router.post('/matches/:id/edit/goals', /*checkAdmin,*/ controller.addNewGoal);
+router.post('/matches/:id/edit/cards', /*checkAdmin,*/ controller.addNewCard);
 router.get('/matches/:id/edit/players', checkAdmin, controller.getMatchByIdEditPlayers);
 router.get('/matches/:id/edit/tickets', checkAdmin, controller.getMatchByIdEditTickets); // => Not implemente
 
