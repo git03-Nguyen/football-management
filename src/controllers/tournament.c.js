@@ -318,6 +318,19 @@ module.exports = {
     });
   },
 
+  // POST /tournament/matches/:id/edit/goals
+  addNewGoal: async function (req, res) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const goal = req.body;
+    try {
+      await MatchModel.addNewGoal(goal);
+      res.status(200).json({ status: 'success' });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ status: 'error' });
+    }
+  },
+
   // GET /tournament/matches/:id/edit/players
   getMatchByIdEditPlayers: async function (req, res) {
     const user = req.isAuthenticated() ? req.user : null;

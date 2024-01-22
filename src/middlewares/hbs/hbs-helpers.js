@@ -51,7 +51,11 @@ module.exports = {
 
   isNull: function (arg1, options) {
     return !arg1 ? options.fn(this) : options.inverse(this);
-  }
+  },
+
+  js: function (context) {
+    return JSON.stringify(context);
+  },
 
   // other helpers...
 

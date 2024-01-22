@@ -110,4 +110,16 @@ module.exports = {
     await db.pool.query(query2);
   },
 
+  addNewGoal: async function (goal) {
+    if (!goal.matchId || !goal.playerId || !goal.teamId || !goal.time) {
+      throw new Error('Invalid goal');
+    }
+    const { matchId, playerId, teamId, time, isOwnGoal } = goal;
+    const query = `
+    INSERT INTO match_events (match_id, player_id, team_id, type, time)
+    VALUES ($1, $2, $3, $4, $5)
+    `;
+    await db.pool.query(query, [matchId, playerId, teamId, isOwnGoal ? 'own_goal' : 'goal', time]);
+  },
+
 };

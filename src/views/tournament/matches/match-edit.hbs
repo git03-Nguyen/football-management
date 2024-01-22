@@ -27,7 +27,7 @@
         <i class="fas fa-file-lines fa-2x me-2"></i>
         <p class="h5 m-0 fw-bold ">Thống kê bàn thắng</p>
       </div>
-      <button class="btn btn-primary" id="add-goal">
+      <button class="btn btn-primary" id="btn-toggle-add-goal">
         <i class="fa fa-plus"></i>
         Thêm
       </button>
@@ -62,7 +62,8 @@
               <select class="form-select" aria-label="Default select example">
                 <option disabled>Chọn cầu thủ</option>
                 {{#each ../match.players1}}
-                <option value="{{this.id}}" {{#ifEquals this.id ../this.id}}selected{{/ifEquals}}>{{this.name}}</option>
+                <option value="{{this.id}}" {{#ifEquals this.id ../this.id}}selected{{/ifEquals}}>{{this.name}}
+                </option>
                 {{/each}}
               </select>
             </td>
@@ -95,7 +96,8 @@
               <select class="form-select" aria-label="Default select example">
                 <option disabled>Chọn cầu thủ</option>
                 {{#each ../match.players2}}
-                <option value="{{this.id}}" {{#ifEquals this.id ../this.id}}selected{{/ifEquals}}>{{this.name}}</option>
+                <option value="{{this.id}}" {{#ifEquals this.id ../this.id}}selected{{/ifEquals}}>{{this.name}}
+                </option>
                 {{/each}}
               </select>
             </td>
@@ -116,6 +118,37 @@
           </tr>
           {{/ifEquals}}
           {{/each}}
+
+          <!-- For add new goal -->
+          <tr id="row-add-goal" class="d-none">
+            <th scope="row">#</th>
+            <td class="text-start" style="">
+              <select class="form-select" aria-label="Default select example" id="select-team-goal">
+                <option selected>Chọn đội</option>
+                <option value="{{match.teamId1}}">{{match.name1}}</option>
+                <option value="{{match.teamId2}}">{{match.name2}}</option>
+              </select>
+            </td>
+            <td class="text-start" style="">
+              <select class="form-select" aria-label="Default select example" id="select-player-goal">
+                <option selected>Chọn cầu thủ</option>
+              </select>
+            </td>
+            <td style="width: fit-content;">
+              <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="00p00s" style="width: 3rem;"
+                  value="00p00s" id="select-time-goal" required>
+              </div>
+            </td>
+            <td style="width: 10rem;">
+              <input type="checkbox" name="isOwnGoal" class="" id="select-own-goal">
+            </td>
+            <td>
+              <button class="btn btn-outline-success" id="btn-add-goal">
+                <i class="fas fa-check"></i>
+              </button>
+            </td>
+          </tr>
 
         </tbody>
       </table>
@@ -242,7 +275,104 @@
   </div>
 </div>
 
+<!-- Toast message -->
+<div id="toastMessage" class="toast align-items-center text-white bg-success border-0 position-fixed" role="alert"
+  aria-live="assertive" aria-atomic="true" style="bottom: 10px; right: 10px; z-index: 9999;">
+  <div class="d-flex">
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+      aria-label="Close"></button>
+  </div>
+</div>
+
 <script>
+  let players1String = `{{js match.players1}}`;
+  let players2String = `{{js match.players2}}`;
+  let players1 = [];
+  let players2 = [];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // delete all `&quot;` in string
+    players1String = players1String.replaceAll('&quot;', '"');
+    players2String = players2String.replaceAll('&quot;', '"');
+
+    players1 = JSON.parse(players1String);
+    players2 = JSON.parse(players2String);
+
+  });
+
+  const btnToggleAddGoal = document.getElementById('btn-toggle-add-goal');
+  const rowAddGoal = document.getElementById('row-add-goal');
+  const btnAddGoal = document.getElementById('btn-add-goal');
+  const selectTeamGoal = document.getElementById('select-team-goal');
+  const selectPlayerGoal = document.getElementById('select-player-goal');
+  const selectTimeGoal = document.getElementById('select-time-goal');
+  const selectOwnGoal = document.getElementById('select-own-goal');
+
+  btnToggleAddGoal.addEventListener('click', () => {
+    rowAddGoal.classList.toggle('d-none');
+  });
+
+  selectTeamGoal.addEventListener('change', () => {
+    if (selectTeamGoal.value == '{{match.teamId1}}') {
+      selectPlayerGoal.innerHTML = '';
+      players1.forEach(player => {
+        selectPlayerGoal.innerHTML += `<option value="${player.id}">${player.name}</option>`;
+      });
+    } else {
+      selectPlayerGoal.innerHTML = '';
+      players2.forEach(player => {
+        selectPlayerGoal.innerHTML += `<option value="${player.id}">${player.name}</option>`;
+      });
+    }
+  });
+
+  btnAddGoal.addEventListener('click', () => {
+    const teamId = selectTeamGoal.value;
+    const playerId = selectPlayerGoal.value;
+    const time = selectTimeGoal.value;
+    const isOwnGoal = selectOwnGoal.checked;
+    const matchId = '{{match.id}}';
+
+    if (teamId == 'Chọn đội' || playerId == 'Chọn cầu thủ' || time == '00p00s') {
+      showToast('error', 'Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
+
+    fetch(`/tournament/matches/{{match.id}}/edit/goals`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        matchId,
+        teamId,
+        playerId,
+        time,
+        isOwnGoal
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status == 200) {
+          showToast('success', 'Thêm thành công');
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        } else {
+          showToast('error', 'Thêm thất bại');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        showToast('error', 'Thêm thất bại');
+      });
+
+  });
+
+
 
 
 
