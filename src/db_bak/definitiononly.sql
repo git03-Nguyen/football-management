@@ -1,11 +1,46 @@
 --
+-- PostgreSQL database cluster dump
+--
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:3k7t8QofD1YDR2lExWBnLA==$F3743C8NPIbgSWzBjTYhJ0n6tLbhQfg1OaPmMccmB8A=:shd/SfAldu0sLgwYATplg8LQlnWhw3LiTjLXO28jQ2I=';
+
+--
+-- User Configurations
+--
+
+
+
+
+
+
+
+
+--
+-- Databases
+--
+
+--
+-- Database "template1" dump
+--
+
+\connect template1
+
+--
 -- PostgreSQL database dump
 --
 
 -- Dumped from database version 16.1
 -- Dumped by pg_dump version 16.1
-
--- Started on 2024-01-22 13:51:56
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -18,12 +53,315 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "DB_FootballTournament" dump
+--
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.1
+-- Dumped by pg_dump version 16.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: DB_FootballTournament; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE "DB_FootballTournament" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'English_United States.1252';
+
+
+ALTER DATABASE "DB_FootballTournament" OWNER TO postgres;
+
+\connect "DB_FootballTournament"
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: delete_teams_statistics_on_status_change(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.delete_teams_statistics_on_status_change() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF OLD.status = true AND NEW.status = false THEN
+        DELETE FROM teams_statistics WHERE team_id = OLD.id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.delete_teams_statistics_on_status_change() OWNER TO postgres;
+
+--
+-- Name: insert_teams_statistics_on_status_change(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.insert_teams_statistics_on_status_change() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.status = true AND OLD.status = false THEN
+        INSERT INTO teams_statistics (team_id)
+        VALUES (NEW.id);
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.insert_teams_statistics_on_status_change() OWNER TO postgres;
+
+--
+-- Name: update_a_goals_on_goal(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_a_goals_on_goal() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.type = 'goal' THEN
+        -- Find the team that the player belongs to in the match
+        DECLARE
+            team_conceded INT;
+        BEGIN
+            SELECT
+                CASE
+                    WHEN NEW.team_id = M.team_id_1 THEN M.team_id_2
+                    WHEN NEW.team_id = M.team_id_2 THEN M.team_id_1
+                    ELSE NULL
+                END
+            INTO team_conceded
+            FROM matches M
+            WHERE M.id = NEW.match_id;
+
+            -- Update a_goals for the team that conceded the goal
+            IF team_conceded IS NOT NULL THEN
+                UPDATE teams_statistics
+                SET a_goals = a_goals + 1
+                WHERE team_id = team_conceded;
+            END IF;
+        END;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_a_goals_on_goal() OWNER TO postgres;
+
+--
+-- Name: update_match_scores(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_match_scores() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.type = 'goal' THEN
+        UPDATE matches
+        SET
+            scores_1 = scores_1 + 1
+        WHERE
+            id = NEW.match_id
+            AND NEW.player_id IN (SELECT id FROM players WHERE team_id = matches.team_id_1);
+
+        UPDATE matches
+        SET
+            scores_2 = scores_2 + 1
+        WHERE
+            id = NEW.match_id
+            AND NEW.player_id IN (SELECT id FROM players WHERE team_id = matches.team_id_2);
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_match_scores() OWNER TO postgres;
+
+--
+-- Name: update_score_on_results_change(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_score_on_results_change() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    UPDATE teams_statistics
+    SET score = (NEW.wins * 3) + NEW.draws
+	WHERE team_id = NEW.team_id;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_score_on_results_change() OWNER TO postgres;
+
+--
+-- Name: update_teams_played(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_teams_played() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.is_played = true AND OLD.is_played = false THEN
+        UPDATE teams_statistics
+        SET played = played + 1
+        WHERE team_id = NEW.team_id_1 OR team_id = NEW.team_id_2;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_teams_played() OWNER TO postgres;
+
+--
+-- Name: update_teams_results(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_teams_results() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.is_finished = true AND OLD.is_finished = false THEN
+        IF NEW.scores_1 > NEW.scores_2 THEN
+            UPDATE teams_statistics
+            SET wins = wins + 1
+            WHERE team_id = NEW.team_id_1;
+            UPDATE teams_statistics
+            SET losses = losses + 1
+            WHERE team_id = NEW.team_id_2;
+        ELSIF NEW.scores_1 < NEW.scores_2 THEN
+            UPDATE teams_statistics
+            SET wins = wins + 1
+            WHERE team_id = NEW.team_id_2;
+            UPDATE teams_statistics
+            SET losses = losses + 1
+            WHERE team_id = NEW.team_id_1;
+        ELSE
+            UPDATE teams_statistics
+            SET draws = draws + 1
+            WHERE team_id = NEW.team_id_1 OR team_id = NEW.team_id_2;
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_teams_results() OWNER TO postgres;
+
+--
+-- Name: update_teams_statistics(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_teams_statistics() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.type = 'goal' THEN
+        -- Update goals for the team scoring the goal
+        UPDATE teams_statistics
+        SET goals = goals + 1
+        WHERE team_id = (SELECT team_id FROM players WHERE id = NEW.player_id);
+
+    ELSIF NEW.type = 'red_card' THEN
+        -- Update red cards for the team receiving the red card
+        UPDATE teams_statistics
+        SET red_cards = red_cards + 1
+        WHERE team_id = (SELECT team_id FROM players WHERE id = NEW.player_id);
+
+    ELSIF NEW.type = 'yellow_card' THEN
+        -- Update yellow cards for the team receiving the yellow card
+        UPDATE teams_statistics
+        SET yellow_cards = yellow_cards + 1
+        WHERE team_id = (SELECT team_id FROM players WHERE id = NEW.player_id);
+
+    ELSIF NEW.type = 'own_goal' THEN
+        -- Update own goals for the team scoring the own goal
+        UPDATE teams_statistics
+        SET own_goals = own_goals + 1
+        WHERE team_id = (SELECT team_id FROM players WHERE id = NEW.player_id);
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_teams_statistics() OWNER TO postgres;
+
+--
+-- Name: update_winner_on_scores_change(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_winner_on_scores_change() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.scores_1 IS DISTINCT FROM OLD.scores_1 OR NEW.scores_2 IS DISTINCT FROM OLD.scores_2 THEN
+        IF NEW.scores_1 > NEW.scores_2 THEN
+            UPDATE matches
+            SET winner_id = NEW.team_id_1
+            WHERE id = NEW.id;
+        ELSIF NEW.scores_1 < NEW.scores_2 THEN
+            UPDATE matches
+            SET winner_id = NEW.team_id_2
+            WHERE id = NEW.id;
+        ELSE
+            UPDATE matches
+            SET winner_id = NULL
+            WHERE id = NEW.id;
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_winner_on_scores_change() OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- TOC entry 216 (class 1259 OID 26414)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -43,7 +381,6 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 26413)
 -- Name: Users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -59,7 +396,6 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 220 (class 1259 OID 34620)
 -- Name: formats; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -72,7 +408,6 @@ CREATE TABLE public.formats (
 ALTER TABLE public.formats OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 34619)
 -- Name: formats_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -87,7 +422,6 @@ ALTER TABLE public.formats ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 229 (class 1259 OID 42905)
 -- Name: match_events; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -104,7 +438,6 @@ CREATE TABLE public.match_events (
 ALTER TABLE public.match_events OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 42904)
 -- Name: match_events_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -119,7 +452,6 @@ ALTER TABLE public.match_events ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY
 
 
 --
--- TOC entry 226 (class 1259 OID 42826)
 -- Name: matches; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -145,7 +477,6 @@ CREATE TABLE public.matches (
 ALTER TABLE public.matches OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 42825)
 -- Name: matches_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -160,7 +491,6 @@ ALTER TABLE public.matches ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 224 (class 1259 OID 42807)
 -- Name: players; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -178,7 +508,6 @@ CREATE TABLE public.players (
 ALTER TABLE public.players OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 42806)
 -- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -193,7 +522,6 @@ ALTER TABLE public.players ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 222 (class 1259 OID 34635)
 -- Name: teams; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -216,7 +544,6 @@ CREATE TABLE public.teams (
 ALTER TABLE public.teams OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 34634)
 -- Name: teams_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -231,7 +558,6 @@ ALTER TABLE public.teams ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 227 (class 1259 OID 42863)
 -- Name: teams_statistics; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -253,7 +579,6 @@ CREATE TABLE public.teams_statistics (
 ALTER TABLE public.teams_statistics OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 34601)
 -- Name: tournaments; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -277,7 +602,6 @@ CREATE TABLE public.tournaments (
 ALTER TABLE public.tournaments OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 34600)
 -- Name: tournament_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -293,138 +617,6 @@ ALTER TABLE public.tournaments ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY 
 
 
 --
--- TOC entry 4884 (class 0 OID 34620)
--- Dependencies: 220
--- Data for Name: formats; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO public.formats OVERRIDING SYSTEM VALUE VALUES (1, 'Đá vòng tròn');
-INSERT INTO public.formats OVERRIDING SYSTEM VALUE VALUES (2, 'Loại trực tiếp');
-INSERT INTO public.formats OVERRIDING SYSTEM VALUE VALUES (3, 'Chia bảng đấu');
-
-
---
--- TOC entry 4893 (class 0 OID 42905)
--- Dependencies: 229
--- Data for Name: match_events; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-
-
---
--- TOC entry 4890 (class 0 OID 42826)
--- Dependencies: 226
--- Data for Name: matches; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-
-
---
--- TOC entry 4888 (class 0 OID 42807)
--- Dependencies: 224
--- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-
-
---
--- TOC entry 4886 (class 0 OID 34635)
--- Dependencies: 222
--- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-
-
---
--- TOC entry 4891 (class 0 OID 42863)
--- Dependencies: 227
--- Data for Name: teams_statistics; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-
-
---
--- TOC entry 4882 (class 0 OID 34601)
--- Dependencies: 218
--- Data for Name: tournaments; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-
-
---
--- TOC entry 4880 (class 0 OID 26414)
--- Dependencies: 216
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (2, 'admin@admin.com', '$2b$10$F0bKh3vD8URyJrTqXNA0MuaBEHTy2RC5UyK2jtBbnpLf/Nyfle8jS', 'BTC Giải đấu', 'avt-default.png', '2003-05-19', '0357031330', 'Đây là tài khoản BTC.', 1);
-
-
---
--- TOC entry 4899 (class 0 OID 0)
--- Dependencies: 215
--- Name: Users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public."Users_id_seq"', 2, true);
-
-
---
--- TOC entry 4900 (class 0 OID 0)
--- Dependencies: 219
--- Name: formats_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.formats_id_seq', 1, true);
-
-
---
--- TOC entry 4901 (class 0 OID 0)
--- Dependencies: 228
--- Name: match_events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.match_events_id_seq', 1, true);
-
-
---
--- TOC entry 4902 (class 0 OID 0)
--- Dependencies: 225
--- Name: matches_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.matches_id_seq', 1, true);
-
-
---
--- TOC entry 4903 (class 0 OID 0)
--- Dependencies: 223
--- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.players_id_seq', 1, true);
-
-
---
--- TOC entry 4904 (class 0 OID 0)
--- Dependencies: 221
--- Name: teams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.teams_id_seq', 1, true);
-
-
---
--- TOC entry 4905 (class 0 OID 0)
--- Dependencies: 217
--- Name: tournament_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.tournament_id_seq', 1, true);
-
-
---
--- TOC entry 4699 (class 2606 OID 26424)
 -- Name: users Users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -433,7 +625,6 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4701 (class 2606 OID 26422)
 -- Name: users Users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -442,7 +633,6 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4705 (class 2606 OID 34625)
 -- Name: formats formats_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -451,7 +641,6 @@ ALTER TABLE ONLY public.formats
 
 
 --
--- TOC entry 4715 (class 2606 OID 42910)
 -- Name: match_events match_events_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -460,7 +649,6 @@ ALTER TABLE ONLY public.match_events
 
 
 --
--- TOC entry 4697 (class 2606 OID 42928)
 -- Name: match_events match_events_type_check; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -469,7 +657,6 @@ ALTER TABLE public.match_events
 
 
 --
--- TOC entry 4711 (class 2606 OID 42834)
 -- Name: matches matches_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -478,7 +665,6 @@ ALTER TABLE ONLY public.matches
 
 
 --
--- TOC entry 4709 (class 2606 OID 42811)
 -- Name: players players_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -487,7 +673,6 @@ ALTER TABLE ONLY public.players
 
 
 --
--- TOC entry 4713 (class 2606 OID 42871)
 -- Name: teams_statistics teams_in_tournament_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -496,7 +681,6 @@ ALTER TABLE ONLY public.teams_statistics
 
 
 --
--- TOC entry 4707 (class 2606 OID 34643)
 -- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -505,7 +689,6 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- TOC entry 4703 (class 2606 OID 34608)
 -- Name: tournaments tournament_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -514,7 +697,6 @@ ALTER TABLE ONLY public.tournaments
 
 
 --
--- TOC entry 4727 (class 2620 OID 42963)
 -- Name: teams trigger_delete_teams_statistics; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -522,7 +704,6 @@ CREATE TRIGGER trigger_delete_teams_statistics AFTER UPDATE OF status ON public.
 
 
 --
--- TOC entry 4728 (class 2620 OID 42940)
 -- Name: teams trigger_insert_teams_statistics; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -530,7 +711,6 @@ CREATE TRIGGER trigger_insert_teams_statistics AFTER UPDATE ON public.teams FOR 
 
 
 --
--- TOC entry 4733 (class 2620 OID 42957)
 -- Name: match_events trigger_update_a_goals_on_goal; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -538,7 +718,6 @@ CREATE TRIGGER trigger_update_a_goals_on_goal AFTER INSERT ON public.match_event
 
 
 --
--- TOC entry 4734 (class 2620 OID 42912)
 -- Name: match_events trigger_update_match_scores; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -546,7 +725,6 @@ CREATE TRIGGER trigger_update_match_scores AFTER INSERT ON public.match_events F
 
 
 --
--- TOC entry 4732 (class 2620 OID 42959)
 -- Name: teams_statistics trigger_update_score_on_results_change; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -554,7 +732,6 @@ CREATE TRIGGER trigger_update_score_on_results_change AFTER UPDATE OF wins, draw
 
 
 --
--- TOC entry 4729 (class 2620 OID 42930)
 -- Name: matches trigger_update_teams_played; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -562,7 +739,6 @@ CREATE TRIGGER trigger_update_teams_played AFTER UPDATE ON public.matches FOR EA
 
 
 --
--- TOC entry 4730 (class 2620 OID 42932)
 -- Name: matches trigger_update_teams_results; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -570,7 +746,6 @@ CREATE TRIGGER trigger_update_teams_results AFTER UPDATE ON public.matches FOR E
 
 
 --
--- TOC entry 4735 (class 2620 OID 42936)
 -- Name: match_events trigger_update_teams_statistics; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -578,7 +753,6 @@ CREATE TRIGGER trigger_update_teams_statistics AFTER INSERT ON public.match_even
 
 
 --
--- TOC entry 4731 (class 2620 OID 42961)
 -- Name: matches trigger_update_winner_on_scores_change; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -586,7 +760,6 @@ CREATE TRIGGER trigger_update_winner_on_scores_change AFTER UPDATE OF scores_1, 
 
 
 --
--- TOC entry 4725 (class 2606 OID 42951)
 -- Name: match_events match_events_match_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -595,7 +768,6 @@ ALTER TABLE ONLY public.match_events
 
 
 --
--- TOC entry 4726 (class 2606 OID 42946)
 -- Name: match_events match_events_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -604,7 +776,6 @@ ALTER TABLE ONLY public.match_events
 
 
 --
--- TOC entry 4720 (class 2606 OID 42835)
 -- Name: matches matches_team_id_1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -613,7 +784,6 @@ ALTER TABLE ONLY public.matches
 
 
 --
--- TOC entry 4721 (class 2606 OID 42840)
 -- Name: matches matches_team_id_2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -622,7 +792,6 @@ ALTER TABLE ONLY public.matches
 
 
 --
--- TOC entry 4722 (class 2606 OID 42845)
 -- Name: matches matches_tournament_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -631,7 +800,6 @@ ALTER TABLE ONLY public.matches
 
 
 --
--- TOC entry 4723 (class 2606 OID 42850)
 -- Name: matches matches_winner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -640,7 +808,6 @@ ALTER TABLE ONLY public.matches
 
 
 --
--- TOC entry 4719 (class 2606 OID 42812)
 -- Name: players players_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -649,7 +816,6 @@ ALTER TABLE ONLY public.players
 
 
 --
--- TOC entry 4724 (class 2606 OID 42872)
 -- Name: teams_statistics teams_in_tournament_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -658,7 +824,6 @@ ALTER TABLE ONLY public.teams_statistics
 
 
 --
--- TOC entry 4717 (class 2606 OID 42913)
 -- Name: teams teams_owner_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -667,7 +832,6 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- TOC entry 4718 (class 2606 OID 42801)
 -- Name: teams teams_tournament_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -676,7 +840,6 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- TOC entry 4716 (class 2606 OID 42795)
 -- Name: tournaments tournaments_format_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -684,9 +847,53 @@ ALTER TABLE ONLY public.tournaments
     ADD CONSTRAINT tournaments_format_id_fkey FOREIGN KEY (format_id) REFERENCES public.formats(id) NOT VALID;
 
 
--- Completed on 2024-01-22 13:51:56
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "postgres" dump
+--
+
+\connect postgres
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.1
+-- Dumped by pg_dump version 16.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+
 
 --
 -- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database cluster dump complete
 --
 
