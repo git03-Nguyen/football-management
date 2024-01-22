@@ -22,6 +22,7 @@ router.post('/:teamId/edit', checkAuthenticated, uploadLogo.single('logo'), cont
 router.get('/:teamId/edit/members', checkAuthenticated, controller.getEditTeamMembers); // TODO: checkOwnTeam
 router.delete('/:teamId/edit/members/:playerId', checkAuthenticated, controller.deleteTeamMember); // TODO: checkOwnTeam
 
+router.delete('/:teamId/delete', checkAuthenticated, controller.deleteTeam); // TODO: checkOwnTeam
 
 router.get('/:teamId/statistics', controller.getTeamStatistics); // Not implemented yet
 

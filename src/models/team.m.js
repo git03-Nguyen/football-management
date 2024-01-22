@@ -123,6 +123,10 @@ module.exports = class TeamModel {
     return teams;
   }
 
+  static async deleteTeam(id) {
+    return await dbTeams.deleteTeam(id);
+  }
+
 }
 
 

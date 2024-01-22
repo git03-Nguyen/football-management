@@ -131,6 +131,14 @@ module.exports = {
     `;
     const res = await db.pool.query(query);
     return res.rows;
-  }
+  },
+
+  deleteTeam: async (id) => {
+    const query = `
+      DELETE FROM teams WHERE id = $1;
+    `;
+    const res = await db.pool.query(query, [id]);
+    return res.rowCount;
+  },
 
 };

@@ -242,6 +242,22 @@ module.exports = {
     res.status(200).json({ status: 'success', teamId: teamId });
   },
 
+  // DELETE /teams/:teamId/delete
+  deleteTeam: async function (req, res, next) {
+    const user = req.isAuthenticated() ? req.user : null;
+    const teamId = req.params.teamId;
+    const team = await TeamModel.getTeam(teamId);
+    if (!team) return next();
+    if (team.ownerId != user.id) return next();// check if user is owner of this team, TODO: use middleware instead
+    try {
+      await TeamModel.deleteTeam(teamId);
+    } catch (err) {
+      console.log(err);
+      res.json({ status: 'error' });
+    }
+    res.json({ status: 'success' });
+  },
+
   // GET /teams/:teamId/statistics => not implemented yet
   getTeamStatistics: async function (req, res, next) {
     const user = req.isAuthenticated() ? req.user : null;
