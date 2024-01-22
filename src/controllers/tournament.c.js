@@ -18,8 +18,8 @@ module.exports = {
     });
 
     matches.forEach(match => {
-      match.name1 = teams.find(t => t.id === match.teamId1).name;
-      match.name2 = teams.find(t => t.id === match.teamId2).name;
+      match.name1 = teams.find(t => t.id === match.teamId1)?.name;
+      match.name2 = teams.find(t => t.id === match.teamId2)?.name;
     });
     const mostGoalsMatch = matches.reduce((prev, curr) => {
       if (curr.scores1 + curr.scores2 > prev.scores1 + prev.scores2) {

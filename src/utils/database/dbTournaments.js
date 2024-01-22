@@ -49,7 +49,52 @@ module.exports = {
       tournament.maxTeams,
       tournament.nOfPlayers,
     ];
-    return await db.pool.query(query, values);
+    const result = await db.pool.query(query, values);
+    const id = result.rows[0].id;
+
+    if (tournament.formatId == 1) {
+      // insert to matches(tournamet_id, date, time, round)
+      // number of matches: tournament.maxTeams * (tournament.maxTeams - 1) / 2
+      // date is between tournament.timeStart and tournament.timeEnd
+      // time is between 10:00 and 20:00, 3 hours between each match
+      // round is from 1 to tournament.maxTeams - 1
+      const matches = [];
+      const date = new Date(tournament.timeStart);
+      const time = new Date(tournament.timeStart);
+      time.setHours(10);
+      time.setMinutes(0);
+      time.setSeconds(0);
+      time.setMilliseconds(0);
+
+      for (let i = 0; i < tournament.maxTeams - 1; i++) {
+        const round = i + 1;
+        for (let j = 0; j < tournament.maxTeams / 2; j++) {
+          const timeStr = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
+          const dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+          matches.push({ tournament_id: id, date: dateStr, time: timeStr, round: round });
+          time.setHours(time.getHours() + 3);
+        }
+        date.setDate(date.getDate() + 1);
+        time.setHours(10);
+      }
+
+      const query = `
+        INSERT INTO matches (tournament_id, date, time, round)
+        VALUES ($1, $2, $3, $4);
+      `;
+
+      for (let i = 0; i < matches.length; i++) {
+        const values = [
+          matches[i].tournament_id,
+          matches[i].date,
+          matches[i].time,
+          matches[i].round,
+        ];
+        await db.pool.query(query, values);
+      }
+    }
+
+    return result;
   },
 
   countActiveTeamsInTournament: async (id) => {
