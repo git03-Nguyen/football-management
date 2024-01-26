@@ -1,105 +1,5 @@
---
--- PostgreSQL database cluster dump
---
-
-SET default_transaction_read_only = off;
-
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-
---
--- Roles
---
-
-CREATE ROLE postgres;
-ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:3k7t8QofD1YDR2lExWBnLA==$F3743C8NPIbgSWzBjTYhJ0n6tLbhQfg1OaPmMccmB8A=:shd/SfAldu0sLgwYATplg8LQlnWhw3LiTjLXO28jQ2I=';
-
---
--- User Configurations
---
-
-
-
-
-
-
-
-
---
--- Databases
---
-
---
--- Database "template1" dump
---
-
-\connect template1
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 16.1
--- Dumped by pg_dump version 16.1
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- PostgreSQL database dump complete
---
-
---
--- Database "DB_FootballTournament" dump
---
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 16.1
--- Dumped by pg_dump version 16.1
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: DB_FootballTournament; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE "DB_FootballTournament" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'English_United States.1252';
-
-
+CREATE DATABASE "DB_FootballTournament";
 ALTER DATABASE "DB_FootballTournament" OWNER TO postgres;
-
-\connect "DB_FootballTournament"
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
 
 --
 -- Name: delete_teams_statistics_on_status_change(); Type: FUNCTION; Schema: public; Owner: postgres
@@ -357,6 +257,7 @@ $$;
 
 ALTER FUNCTION public.update_winner_on_scores_change() OWNER TO postgres;
 
+--
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -848,52 +749,184 @@ ALTER TABLE ONLY public.tournaments
 
 
 --
+
+--
+-- TOC entry 4892 (class 0 OID 34620)
+-- Dependencies: 220
+-- Data for Name: formats; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.formats OVERRIDING SYSTEM VALUE VALUES (1, 'Đá vòng tròn');
+INSERT INTO public.formats OVERRIDING SYSTEM VALUE VALUES (2, 'Loại trực tiếp');
+INSERT INTO public.formats OVERRIDING SYSTEM VALUE VALUES (3, 'Chia bảng đấu');
+
+
+--
+-- TOC entry 4901 (class 0 OID 42905)
+-- Dependencies: 229
+-- Data for Name: match_events; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.match_events OVERRIDING SYSTEM VALUE VALUES (13, NULL, 42, 'start', '00p00s', NULL);
+INSERT INTO public.match_events OVERRIDING SYSTEM VALUE VALUES (14, NULL, 42, 'end', '90p00s', NULL);
+INSERT INTO public.match_events OVERRIDING SYSTEM VALUE VALUES (15, 5, 42, 'goal', '12p00s', 6);
+INSERT INTO public.match_events OVERRIDING SYSTEM VALUE VALUES (16, 10, 42, 'goal', '15p00s', 7);
+INSERT INTO public.match_events OVERRIDING SYSTEM VALUE VALUES (17, 5, 42, 'goal', '34p12s', 6);
+INSERT INTO public.match_events OVERRIDING SYSTEM VALUE VALUES (18, 11, 42, 'goal', '67p30s', 7);
+INSERT INTO public.match_events OVERRIDING SYSTEM VALUE VALUES (19, 7, 42, 'yellow_card', '88p44s', 6);
+INSERT INTO public.match_events OVERRIDING SYSTEM VALUE VALUES (20, NULL, 43, 'start', '00p00s', NULL);
+
+
+--
+-- TOC entry 4898 (class 0 OID 42826)
+-- Dependencies: 226
+-- Data for Name: matches; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.matches OVERRIDING SYSTEM VALUE VALUES (42, 6, 7, 7, '2024-01-24', 1, 'Sân vận động Quân khu 7', false, 0, 2, 2, NULL, true, true, '01:25:00');
+INSERT INTO public.matches OVERRIDING SYSTEM VALUE VALUES (43, 8, 9, 7, '2024-01-24', 1, 'Sân vận động Quân khu 7', false, 0, 0, 0, NULL, true, false, '07:00:00');
+INSERT INTO public.matches OVERRIDING SYSTEM VALUE VALUES (44, 6, 8, 7, '2024-01-25', 2, 'Sân vận động Quân khu 7', false, 0, 0, 0, NULL, false, false, '10:00:00');
+INSERT INTO public.matches OVERRIDING SYSTEM VALUE VALUES (45, 7, 9, 7, '2024-01-25', 2, 'Sân vận động Quân khu 7', false, 0, 0, 0, NULL, false, false, '13:00:00');
+INSERT INTO public.matches OVERRIDING SYSTEM VALUE VALUES (46, 6, 9, 7, '2024-01-26', 3, 'Sân vận động Quân khu 7', false, 0, 0, 0, NULL, false, false, '10:00:00');
+INSERT INTO public.matches OVERRIDING SYSTEM VALUE VALUES (47, 7, 8, 7, '2024-01-26', 3, 'Sân vận động Quân khu 7', false, 0, 0, 0, NULL, false, false, '13:00:00');
+
+
+--
+-- TOC entry 4896 (class 0 OID 42807)
+-- Dependencies: 224
+-- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (4, 'Bùi Văn A', 11, 2001, 'GK, LB', '0357031330', 6);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (5, 'Trương Văn B', 12, 2004, 'RB, CB', '0357031330', 6);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (6, 'Võ Văn C', 13, 2005, 'CM, LM', '0357031330', 6);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (7, 'Đỗ Văn D', 14, 2003, 'ST', '0357031330', 6);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (8, 'Huỳnh Văn E', 15, 2002, 'GK', '0357031330', 6);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (9, 'Nguyễn Văn F', 11, 2001, 'GK', '0357031330', 7);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (10, 'Lê Văn G', 12, 2002, 'LB, RB', '0357031330', 7);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (11, 'Vũ Văn H', 13, 2000, 'ST', '0357031330', 7);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (12, 'Lại Văn I', 14, 2003, 'CM, RM', '0357031330', 7);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (13, 'Trương Văn J', 15, 2004, 'CB, GK', '0357031330', 7);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (14, 'Hoàng Văn K', 11, 2001, 'GK', '0357031330', 8);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (15, 'Nguyễn Văn L', 12, 2003, 'LB, RB', '0357031330', 8);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (16, 'Bùi Văn M', 13, 2002, 'CM', '0357031330', 8);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (17, 'Lê Văn N', 14, 2000, 'ST', '0357031330', 8);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (18, 'Cao Văn O', 15, 2001, 'ST', '0357031330', 8);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (19, 'Phan Văn P', 11, 2001, 'GK', '0357031330', 9);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (20, 'Phạm Văn Q', 12, 2002, 'LB, CB', '0357031330', 9);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (21, 'Nguyễn Văn R', 13, 2003, 'CM', '0357031330', 9);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (22, 'Bùi Văn S', 14, 2000, 'ST', '0357031330', 9);
+INSERT INTO public.players OVERRIDING SYSTEM VALUE VALUES (23, 'Trần Văn T', 15, 2004, 'LM, RM', '0357031330', 9);
+
+
+--
+-- TOC entry 4894 (class 0 OID 34635)
+-- Dependencies: 222
+-- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.teams OVERRIDING SYSTEM VALUE VALUES (8, 'FC HDT', 7, 5, 'Mr. Troussier', 'user@user.com', '0357031330', 'Trung cấp', 'Hội anh em văn phòng.', false, 'https://drive.google.com/drive/folders/1sbmTpytDdDseVBqvUzzTXq9Im7bRXBsq', true);
+INSERT INTO public.teams OVERRIDING SYSTEM VALUE VALUES (9, 'FC ANH EM', 7, 2, 'Mr. Ánh', 'admin@admin.com', '0357031330', 'Sơ cấp', 'Cố gắng vì đam mê.', false, 'https://drive.google.com/drive/folders/1sbmTpytDdDseVBqvUzzTXq9Im7bRXBsq', true);
+INSERT INTO public.teams OVERRIDING SYSTEM VALUE VALUES (6, 'DOMINO TEAM', 7, 5, 'Mr. Thiên Ân', 'user@user.com', '0357031330', 'Sơ cấp', 'Chơi vui là chính.', false, 'https://drive.google.com/drive/folders/1sbmTpytDdDseVBqvUzzTXq9Im7bRXBsq', true);
+INSERT INTO public.teams OVERRIDING SYSTEM VALUE VALUES (7, 'FC AKT', 7, 5, 'Mr. Troussier', 'user@user.com', '0357031330', 'Chuyên nghiệp', 'Đội bóng chuyên nghiệp.', false, 'https://drive.google.com/drive/folders/1sbmTpytDdDseVBqvUzzTXq9Im7bRXBsq', true);
+
+
+--
+-- TOC entry 4899 (class 0 OID 42863)
+-- Dependencies: 227
+-- Data for Name: teams_statistics; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.teams_statistics VALUES (7, 0, 1, 0, 1, 1, 2, 2, 0, 0, 0);
+INSERT INTO public.teams_statistics VALUES (6, 0, 1, 0, 1, 1, 2, 2, 0, 1, 0);
+INSERT INTO public.teams_statistics VALUES (8, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO public.teams_statistics VALUES (9, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0);
+
+
+--
+-- TOC entry 4890 (class 0 OID 34601)
+-- Dependencies: 218
+-- Data for Name: tournaments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.tournaments OVERRIDING SYSTEM VALUE VALUES (7, 'HDT League Season 1', '2024-01-24', '2024-01-31', 'Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.635863047679!2d106.6797512748567!3d10.762521589385393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1bfc262bf1%3A0x4e843897f2900135!2zMjI3IMSQLiBOZ3V54buFbiBWxINuIEPhu6ssIFBoxrDhu51uZyA0LCBRdeG6rW4gNSwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1704601347126!5m2!1sen!2s', 'https://drive.google.com/file/d/1oM7kRm2XUMQ9Wdi5Gu6dAJj_fc0umABk/preview', 124, false, 1, 4, 5, false);
+
+
+--
+-- TOC entry 4888 (class 0 OID 26414)
+-- Dependencies: 216
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (2, 'admin@admin.com', '$2b$10$F0bKh3vD8URyJrTqXNA0MuaBEHTy2RC5UyK2jtBbnpLf/Nyfle8jS', 'BTC Giải đấu', 'avt-default.png', '2003-05-19', '0357031330', 'Đây là tài khoản BTC.', 1);
+INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (5, 'user@user.com', '$2b$10$eIu8Ygb4S.rcxF6DoImSz.lxOVkm0FAwL0lxxPVMZHDWWGq0gbZqe', 'BQL Đội bóng', 'avt-default.png', NULL, NULL, NULL, 0);
+
+
+--
+-- TOC entry 4909 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: Users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Users_id_seq"', 6, true);
+
+
+--
+-- TOC entry 4910 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: formats_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.formats_id_seq', 1, true);
+
+
+--
+-- TOC entry 4911 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: match_events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.match_events_id_seq', 20, true);
+
+
+--
+-- TOC entry 4912 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: matches_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.matches_id_seq', 47, true);
+
+
+--
+-- TOC entry 4913 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.players_id_seq', 23, true);
+
+
+--
+-- TOC entry 4914 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: teams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.teams_id_seq', 9, true);
+
+
+--
+-- TOC entry 4915 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: tournament_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tournament_id_seq', 7, true);
+
+
+-- Completed on 2024-01-26 22:20:58
+
+--
 -- PostgreSQL database dump complete
 --
-
---
--- Database "postgres" dump
---
-
-\connect postgres
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 16.1
--- Dumped by pg_dump version 16.1
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: adminpack; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
-
-
---
--- PostgreSQL database dump complete
---
-
---
--- PostgreSQL database cluster dump complete
---
-
