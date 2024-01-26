@@ -1,7 +1,0 @@
-# Changelog for PA5 - Final Submission
-
-1. Add new Test Plan for V1.0.
-
-2. Add new Test-Cases and Test-Report.
-
-3. Add new Project Contributions/Summary Report.
