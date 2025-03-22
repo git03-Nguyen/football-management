@@ -12,11 +12,11 @@
 
 | No. | Student ID |       Full name      |             Gmail             |     Role    |
 |:---:|:----------:|----------------------|-------------------------------|-------------|
-|  1  |  21120172  | Nguyễn Tuấn Đạt      | nguyentuandat2k3cmg@gmail.com | Team leader |
-|  2  |  21120171  | Nguyễn Đình Ánh      | nguyendinhanhvlqt@gmail.com   | BA          |
-|  3  |  21120036  | Triệu Hoàng Thiên Ân | thienan30012003bt@gmail.com   | Dev         |
-|  4  |  21120177  | Lê Minh Huy          | minhhuy14012003@gmail.com     | Dev         |
-|  5  |  21120201  | Bùi Đình Bảo         | bao.buidinh.03@gmail.com      | Tester      |
+|  1  |  21120172  | Nguyễn Tuấn Đạt      | -------------------@gmail.com | Team leader |
+|  2  |  21120171  | Nguyễn Đình Ánh      | -------------------@gmail.com   | BA          |
+|  3  |  21120036  | Triệu Hoàng Thiên Ân | -------------------@gmail.com   | Dev         |
+|  4  |  21120177  | Lê Minh Huy          | -------------------@gmail.com     | Dev         |
+|  5  |  21120201  | Bùi Đình Bảo         | -------------------@gmail.com      | Tester      |
 
 ### 3. Technology stack information:
 - **Vietnamese name:** Website Quản lý giải đấu bóng đá
