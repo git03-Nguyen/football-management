@@ -5,22 +5,9 @@
 - **Course name:** Introduction to Software Engineering
 - **Course ID:** CSC13002
 - **Class:** CQ21_3
-
-### 2. Team information:
 - **Group name:** *Group11/Code of Duty*
-- **Members:**
 
-| No. | Student ID |       Full name      |             Gmail             |     Role    |
-|:---:|:----------:|----------------------|-------------------------------|-------------|
-|  1  |  21120172  | Nguyễn Tuấn Đạt      | -------------------@gmail.com | Team leader |
-|  2  |  21120171  | Nguyễn Đình Ánh      | -------------------@gmail.com   | BA          |
-|  3  |  21120036  | Triệu Hoàng Thiên Ân | -------------------@gmail.com   | Dev         |
-|  4  |  21120177  | Lê Minh Huy          | -------------------@gmail.com     | Dev         |
-|  5  |  21120201  | Bùi Đình Bảo         | -------------------@gmail.com      | Tester      |
-
-### 3. Technology stack information:
+### 2. Technology stack information:
 - **Vietnamese name:** Website Quản lý giải đấu bóng đá
-- **Front-end:** HTML, CSS, Javascript
-- **Back-end:** Javascript (Node.js - Express.js) 
+- **Code-base:** Node.js (Express.js), SSR with Handlebars.js
 - **Database:** PostgreSQL
-
